@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSH Data Visning</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        #data-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>SSH Server Data</h1>
+    <button onclick="fetchSSHData()">Last Data</button>
+    <div id="data-container">Trykk på knappen for å laste data...</div>
+
+    <script>
+        function fetchSSHData() {
+            fetch('ssh_connect.php')  // Henter PHP-skriptet
+                .then(response => response.text())  // Konverterer respons til tekst
+                .then(data => {
+                    document.getElementById('data-container').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Feil ved henting av data:', error);
+                    document.getElementById('data-container').innerHTML = '<p class="error">Kunne ikke hente data.</p>';
+                });
+        }
+    </script>
+
+</body>
+</html>
