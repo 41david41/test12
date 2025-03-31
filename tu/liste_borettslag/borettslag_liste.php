@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="../css/liste.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down,arrow_drop_up" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="../redirectToPage.js"></script>
-    <script src="borettslag_liste.js"></script>
     <style>
         #header {
             width: 100%;
@@ -26,19 +24,19 @@
 
 <body>
 <div id="header">
-        <?php include("../header/header.php"); ?>
-    </div>
+  <?php include("../header/header.php"); ?>
+</div>
     
 
     <div class="headline-container">
-            <h1 class="text-3xl font-light headline-left">Kundegruppe</h1>
+            <h1 class="text-3xl font-light headline-left">Borettslag</h1>
         
           <div class="button-container">
             <div class="dropdown">
-                <button class="dropdown-btn" id="kundegruppeBtn">Borettslag </button>
+                <button class="dropdown-btn" id="kundegruppeBtn">Bytt kundetype<span class="material-symbols-outlined pil">arrow_drop_down</span> </button>
                   <div class="dropdown-content">
-                    <a href="#" onclick="redirectToPage('liste_privatkunde/privatkunde_liste.php')">Privatkunde</a>
-                    <a href="#" onclick="redirectToPage('liste_bedriftkunde/bedriftkunde_liste.php')">Bedriftskunde</a>
+                    <a href="#" onclick="redirectToPage('liste_privatkunde/privatkunde_liste.php')">Privatkunder</a>
+                    <a href="#" onclick="redirectToPage('liste_bedriftkunde/bedriftkunde_liste.php')">Bedriftskunder</a>
                 </div>
             </div>
             <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslag.html')"><button class="pluss-btn">➕</button></a>
@@ -47,11 +45,19 @@
  
     
     <div class="container">
-      <!--<div class="view-options">
-            <button class="grid-view-button">🔲</button>
-            <button class="list-view-button">☰</button>
-            <button class="measure-button">📏</button>
-        </div>-->
+      <div class="visning-sok-wrapper">
+        <div class="left-spacer"></div> <!-- tom plass på venstre side -->
+        
+        <div class="view-options">
+          <button onclick="settVisning('grid')">🔲</button>
+          <button onclick="settVisning('liste')">☰</button>
+        </div>
+      
+        <div class="search-container">
+          <input type="text" id="sokefelt" placeholder="Søk..." oninput="filtrerKunder()">
+        </div>
+      </div>
+      
     
         <div id="borettslag-tabell" class="kundeprofil-grid"></div>
 
@@ -64,6 +70,7 @@
         </div>
       </div>
       
+      <script src="borettslag_liste.js"></script>
 </body>
 </html>
 
