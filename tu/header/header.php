@@ -2,7 +2,10 @@
 include("../db2.php"); // Inkluder databasen
 
 // Start session og hent brukernavn
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $username = isset($_SESSION['db_username']) ? $_SESSION['db_username'] : "Ukjent Bruker";
 $password = isset($_SESSION['db_password']) ? $_SESSION['db_password'] : null;
 

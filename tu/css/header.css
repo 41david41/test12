@@ -1,3 +1,13 @@
+/* Basic header styling */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0f2a52;
+  width: 100%;
+  min-height: 58px;
+}
+
 /* Gjør menyen skjult som standard */
 .hidden {
     display: none;
@@ -24,16 +34,6 @@
 .dropdown-menu a:hover {
     background-color: #f1f1f1;
 }
-
-/* Basic header styling */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background: #0f2a52;
-    width: 100%;
-  }
   
   .logo {
     flex: 1;

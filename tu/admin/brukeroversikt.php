@@ -2,7 +2,10 @@
 include("../db2.php"); // Inkluderer tilkoblingen til MySQL-databasen
 
 // Start session og sjekk om brukeren er logget inn som admin
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     die("❌ Ikke logget inn. Vennligst logg inn først.");
 }
