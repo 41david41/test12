@@ -35,15 +35,24 @@
     align-items: flex-start;
   }
   
+  .pil {
+    font-size: 20px;
+    color: #333;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    transform: rotate(0deg); /* eller 180deg for oppover */
+    transition: transform 0.3s ease;
+  }
+
   /* Dropdown button */
   .dropdown-btn {
-    color: #a0a0a0;  
-    font-style: italic; 
+    color: #0a0a0a;  
     background-color: white; 
     border: 1px solid #ccc; /* Match input fields */
     padding: 8px 12px;
     cursor: pointer;
   }
+  
   
   .dropdown-btn.active {
     color: black; /* Changes text color when user selects an option */
