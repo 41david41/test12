@@ -1,0 +1,61 @@
+/* =========================
+   profil.css
+   ========================= */
+
+/* Generelle stilinnstillinger for hele nettsiden */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0f1c2e; /* Mørk bakgrunn */
+    color: #ffffff; /* Hvit tekstfarge */
+    margin: 0;
+    padding: 0;
+}
+
+/* Profil container */
+.profil-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* Profilkort */
+.profil-card {
+    background-color: #1c2a38; /* Mørk bakgrunn på profilkortet */
+    width: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Lysere skygge */
+    text-align: center;
+}
+
+/* Profilbilde */
+.profil-image {
+    margin-bottom: 20px;
+}
+
+.profil-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #235f9f; /* Blå kant */
+}
+
+/* Profil informasjon */
+.profil-info h2 {
+    font-size: 1.5rem;
+    color: #ffffff; /* Hvit tekstfarge for brukernavnet */
+    margin: 0;
+}
+
+.profil-info p {
+    font-size: 1rem;
+    color: #aaaaaa; /* Lysere tekstfarge for rolle */
+}
+
+/* Riktig responsivitet */
+@media (max-width: 768px) {
+    .profil-card {
+        width: 90%;
+    }
+}

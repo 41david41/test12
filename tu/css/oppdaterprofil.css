@@ -1,0 +1,114 @@
+/* =========================
+   profil.css
+   ========================= */
+   body {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff; /* Default text color */
+    margin: 0;
+    padding: 0;
+    background-color: #0f1c2e; /* Dark background */
+}
+
+/* Shared container styling */
+.profil-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* Light background for the profile form */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styling */
+form {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light form background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Label and Inputs */
+label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    display: block;
+    color: #333; /* Dark text for labels */
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+}
+
+
+/* Målrett knappen med klassen "spesifikk-knapp" */
+.rød-knapp {
+    padding: 10px 15px;
+    background-color: red;  /* Rød bakgrunn */
+    color: black;           /* Sort tekst */
+    border: none;           /* Ingen kantlinje */
+    border-radius: 5px;     /* Runde hjørner */
+    cursor: pointer;        /* Pekeren blir en hånd når du holder over */
+    font-size: 1rem;         /* Størrelse på teksten */
+    width: 100%;             /* Knappen tar opp hele bredden av sitt element */
+    transition: background-color 0.3s; /* Smidig overgang ved hover */
+}
+
+/* Hvis du vil at knappen skal endre farge på hover (når du holder musepekeren over) */
+.rød-knapp:hover {
+    background-color: darkred; /* Mørkere rød farge når man holder over */
+}
+
+
+button:hover {
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
+    background-color: #0f2a526b; /* Darker green on hover */
+}
+
+/* Error and Success Messages */
+.error {
+    color: red;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.success {
+    color: green;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Section title */
+h2 {
+    color: #333; /* Dark color for titles */
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profil-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    form {
+        max-width: 90%;
+    }
+
+    button {
+        width: auto;
+    }
+}

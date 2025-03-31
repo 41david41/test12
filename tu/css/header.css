@@ -1,0 +1,74 @@
+/* Gjør menyen skjult som standard */
+.hidden {
+    display: none;
+}
+
+/* For dropdown-menuen kan du ha et stykke CSS for å style den slik du ønsker */
+.dropdown-menu {
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    min-width: 160px;
+    right: -1px;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Basic header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #0f2a52;
+    width: 100%;
+  }
+  
+  .logo {
+    flex: 1;
+  }
+  
+  .logo img {
+    height: 40px;
+  }
+  
+  /* Button styling */
+  .profile {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    position: relative;
+    cursor: pointer;
+    z-index: 10; /* Ensure the button is on top of the dropdown */
+  }
+  
+  /* Hover effect on the profile button */
+  .profile:hover {
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
+    background-color: #0f2a526b;
+  }
+  
+  /* Circle around the profile */
+  .profile-circle {
+    width: 35px;
+    height: 35px;
+    background: #aa5d5d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 8px;
+  }

@@ -1,0 +1,218 @@
+/* 1. Reset & Global Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  form#bedriftForm {
+    width: 70%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  
+  body {
+    background-color: #0f1c2e;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .headline-container {
+    width: 70%;
+    max-width: 1200px;
+    margin: 34px auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  /* Dropdown button */
+  .dropdown-btn {
+    color: #a0a0a0;  
+    font-style: italic; 
+    background-color: white; 
+    border: 1px solid #ccc; /* Match input fields */
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .dropdown-btn.active {
+    color: black; /* Changes text color when user selects an option */
+    font-style: normal;
+  }
+  
+  /* Dropdown content (hidden) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  /* Dropdown links */
+  .dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Show dropdown when button is clicked */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .form-group-admin{
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Container & Form Layout */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: stretch;
+  }
+  
+  .form-left,
+  .form-right,
+  .form-middel {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+
+  .form-group {
+    width: 100%;
+    padding-bottom: 16px;
+  }
+  
+  .split-input {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .preview {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .preview-container {
+    margin-top: 10px;
+  }
+  
+  .thumbnail {
+    max-width: 200px;
+    display: block;
+  }
+  
+  .preview-item {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+  }
+  
+
+  /* Form Elements */
+  input,
+  textarea {
+    background-color: white;
+    color: grey;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  input {
+    height: 40px;
+  }
+  
+  textarea {
+    height: calc(3 * 40px + 2 * 16px);
+  }
+
+  .invisble {
+    opacity: 0;
+  }
+  
+  /* Button Styles */
+  .primaryBTN {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    padding: 6px 8px;
+    width: 100%;
+  }
+  
+  .secondaryBTN {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 6px 8px;
+    width: 100%;
+  }
+  
+  .primaryBTN:hover {
+    background-color: rgb(115, 3, 3);
+  }
+  
+  .secondaryBTN:hover {
+    background-color: rgb(118, 115, 115);
+  }
+  
+  /* Button Container */
+  .button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex;
+    padding-bottom: 16px;
+  }
+  
+  .button-container button {
+    height: 40px;
+  }
+  

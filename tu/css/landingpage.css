@@ -1,0 +1,124 @@
+/* =========================
+   landingPage.css
+   ========================= */
+   body {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff; /* Default text color */
+    margin: 0;
+    padding: 0;
+    background-color: #0f1c2e;
+}
+
+/* Shared container styling */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0;  
+    box-sizing: border-box;
+}
+
+/* Top Section */
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px; /* Reduced margin */
+    padding: 0;
+}
+
+h1 {
+    margin-top: 20px; /* Reduced margin to bring it closer */
+    font-size: 30px;
+    flex-grow: 1;
+    text-align: left;
+}
+
+/* Secondary Button */
+.secondaryBTN {
+    background-color: transparent;  /* Transparent */
+    color: white;  
+    padding: 10px 20px;
+    border: 2px solid white;  /* White border */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;  /* Reduced space */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.secondaryBTN:hover {
+    background-color: white;  /* Fill color on hover */
+    color: #235f9f;  
+}
+
+/* Card Container */
+.card-container {
+    margin-top: 10px; /* Reduced margin to move closer */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.category-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px; /* Reduced space */
+}
+
+/* Card Styles */
+.card {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    margin: 0 10px;
+    cursor: pointer !important; /* Make sure it's clickable */
+    pointer-events: auto !important;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card .image-placeholder {
+    height: 100px;
+    background: #BEBEBE;
+    margin-bottom: 15px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #333;
+    font-size: 16px;
+}
+
+.card-text {
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .category-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
