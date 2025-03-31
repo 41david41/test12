@@ -353,3 +353,13 @@ th {
   visibility: hidden;
   pointer-events: none;
 }
+
+.adminrettigheter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px; /* mellomrom mellom tekst og checkbox */
+  margin-top: 1rem;
+  color: white;
+}
+

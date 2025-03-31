@@ -48,6 +48,7 @@
                 <div class="form-group"><input type="email" name="bekreft_epost" placeholder="Bekreft E-post" required></div>
                 <div class="form-group"><input type="password" name="passord" placeholder="Passord minst 6 tegn" required></div>
                 <div class="form-group"><input type="password" name="bekreft_passord" placeholder="Bekreft passord" required></div>
+                <div class="checkbox-admin"><input type="checkbox" name="adminrettigheter" value="1"><a>Adminrettigheter</a></div>
                 <div class="button-container">
                     <button class="secondaryBTN" type="reset">Nullstill</button>
                     <button id="profilbilde" class="secondaryBTN" type="button" onclick="document.getElementById('imageUpload').click();">➕ Profilbilde</button>
