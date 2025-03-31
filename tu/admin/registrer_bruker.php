@@ -65,10 +65,6 @@ try {
         die("<script>alert('Brukeren \"$brukernavn\" finnes allerede.'); window.location.href='../admin/brukeroversikt.php';</script>");
     }
 
-    // Debugging: Print SQL query before execution
-    $sql = "CREATE USER '$brukernavn'@'localhost' IDENTIFIED BY :passord";
-    echo "<pre>SQL Query: $sql</pre>"; 
-
     // Execute query (MySQL doesn't allow placeholders for usernames)
     $stmt_user = $pdo->prepare("CREATE USER '$brukernavn'@'localhost' IDENTIFIED BY :passord");
     $stmt_user->execute([

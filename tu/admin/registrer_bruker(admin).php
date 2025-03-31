@@ -46,7 +46,7 @@
 
             <div class="form-group-admin">
                 <div class="form-group"><input type="email" name="bekreft_epost" placeholder="Bekreft E-post" required></div>
-                <div class="form-group"><input type="password" name="passord" placeholder="Passord" required></div>
+                <div class="form-group"><input type="password" name="passord" placeholder="Passord minst 6 tegn" required></div>
                 <div class="form-group"><input type="password" name="bekreft_passord" placeholder="Bekreft passord" required></div>
                 <div class="button-container">
                     <button class="secondaryBTN" type="reset">Nullstill</button>
