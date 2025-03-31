@@ -68,7 +68,7 @@ try {
 <header id="header"> 
     <div class="logo">
         <a href="#" onclick="redirectToPage('landingpage/landingpage.php')">
-            <img src="../IMG/nike.png" alt="Fasade Produkter">
+            <img src="../IMG/logo.png" alt="Fasade Produkter">
         </a>
     </div>
 
