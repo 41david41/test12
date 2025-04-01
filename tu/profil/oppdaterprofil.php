@@ -41,6 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Log the success message to track the password update
         error_log("Passord for '$brukernavn' ble oppdatert.");
 
+        echo "<script>alert('Passordet er oppdatert!'); window.location.href='../login/login.html';</script>";
+
         // Reconnect to the database with the new password
         // Close the old connection
         $pdo = null;
@@ -52,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         error_log("Ny tilkobling er etablert med det nye passordet.");
 
         // Redirect to profile page with success message
-        echo "<script>alert('Passordet er oppdatert!'); window.location.href='../profil/profil.php';</script>";
+       
         exit;
 
     } catch (Exception $e) {
