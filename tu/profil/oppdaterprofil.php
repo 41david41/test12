@@ -1,45 +1,66 @@
 <?php
-session_start();
-include("../db2.php"); // Inkluder database-tilkobling
+ini_set('display_errors', 0); // Disable error display on screen
+ini_set('log_errors', 1); // Enable logging of errors
+ini_set('error_log', 'error_log.txt'); // Specify the error log file
 
-// Anta at brukernavnet lagres i sesjon etter innlogging
-$brukernavn = isset($_SESSION['db_username']) ? $_SESSION['db_username'] : "Ukjent Bruker";
+session_start(); // Start the session
 
-// Hvis skjemaet er sendt, behandles det
+// Include the database connection
+include("../db2.php"); 
+
+// Check if the user is logged in
+if (!isset($_SESSION['db_username']) || empty($_SESSION['db_username'])) {
+    die("<script>alert('Ingen bruker funnet. Logg inn på nytt.'); window.location.href='../login/login.php';</script>");
+}
+
+// Get the username from session
+$brukernavn = $_SESSION['db_username'];
+
+// Check if the form was submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the old, new, and confirmed passwords
     $oldPassword = $_POST['old_password'];
     $newPassword = $_POST['new_password'];
     $confirmPassword = $_POST['confirm_password'];
-    $newUsername = $_POST['username'];
 
-    // Sjekk om gammelt passord er riktig
-    $sql = "SELECT authentication_string FROM mysql.user WHERE username = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->bind_param("s", $_SESSION['db_username']);
-    $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($dbPassword);
-    $stmt->fetch();
+    // Validate if new and confirmed passwords match
+    if ($newPassword !== $confirmPassword) {
+        die("<script>alert('De nye passordene matcher ikke.'); window.history.back();</script>");
+    }
 
-    if (!password_verify($oldPassword, $dbPassword)) {
-        $errorMessage = "Det gamle passordet er feil.";
-    } elseif ($newPassword !== $confirmPassword) {
-        $errorMessage = "De nye passordene matcher ikke.";
-    } else {
-        // Hash nytt passord
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+    try {
+        // Change the password directly without using a transaction
+        $sql = "ALTER USER '$brukernavn'@'%' IDENTIFIED BY '$newPassword'";
 
-        // Oppdater brukernavn og passord i databasen
-        $sql = "UPDATE mysql.user SET username = ?, password = ? WHERE username = ?";
-        $stmt = $db->prepare($sql);
-        $stmt->bind_param("sss", $newUsername, $hashedPassword, $_SESSION['db_username']);
+        // Execute the SQL query to change the password
+        $pdo->exec($sql);
 
-        if ($stmt->execute()) {
-            $_SESSION['db_username'] = $newUsername; // Oppdater brukernavn i sesjon
-            $successMessage = "Profilen din er oppdatert!";
-        } else {
-            $errorMessage = "Det oppstod en feil.";
-        }
+        // Force MySQL to refresh privileges
+        $pdo->exec("FLUSH PRIVILEGES");
+
+        // Log the success message to track the password update
+        error_log("Passord for '$brukernavn' ble oppdatert.");
+
+        // Reconnect to the database with the new password
+        // Close the old connection
+        $pdo = null;
+
+        // Create a new connection using the new password
+        include("../db2.php");
+
+        // Log the new connection
+        error_log("Ny tilkobling er etablert med det nye passordet.");
+
+        // Redirect to profile page with success message
+        echo "<script>alert('Passordet er oppdatert!'); window.location.href='../profil/profil.php';</script>";
+        exit;
+
+    } catch (Exception $e) {
+        // Log the error to a file without showing it on screen
+        error_log("Feil ved oppdatering av passord: " . $e->getMessage());
+
+        // Show user-friendly alert and redirect back
+        echo "<script>alert('Noe gikk galt. Vennligst prøv igjen.'); window.history.back();</script>";
     }
 }
 ?>
@@ -52,19 +73,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Brukerprofil</title>
     <link rel="stylesheet" href="../css/oppdaterprofil.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down,arrow_drop_up" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="../redirectToPage.js"></script>
     <style>
         #header {
-          width: 100%;
-          margin: 0;
-          padding: 0;
-      }
-      #header header {
-          width: 100%;
-      }
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #header header {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -76,17 +95,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="profil-container">
         <h2>Oppdater Profil</h2>
 
-        <?php if (isset($errorMessage)): ?>
-            <div class="error"><?php echo $errorMessage; ?></div>
-        <?php endif; ?>
-
-        <?php if (isset($successMessage)): ?>
-            <div class="success"><?php echo $successMessage; ?></div>
-        <?php endif; ?>
-
-        <form action="profil.php" method="POST">
+        <form method="POST">
             <label for="username">Brukernavn:</label>
-            <input type="text" id="username" name="username" value="<?php echo $brukernavn; ?>" required>
+            <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($brukernavn); ?>" disabled>
 
             <label for="old_password">Gammelt passord:</label>
             <input type="password" id="old_password" name="old_password" required>
@@ -97,8 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="confirm_password">Bekreft nytt passord:</label>
             <input type="password" id="confirm_password" name="confirm_password" required>
 
-            <button class="rød-knapp">Endre passord</button>
-
+            <button class="rød-knapp" type="submit">Endre passord</button>
         </form>
     </div>
 
