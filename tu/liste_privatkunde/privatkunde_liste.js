@@ -20,20 +20,31 @@ function hentOgVisPrivatkunder() {
 
 // Vis kundeliste i valgt visningsmodus
 function visKunder(liste) {
-  const container = document.getElementById("privatkunde-tabell");
-  container.className = visningsmodus === 'grid' ? 'kundeprofil-grid' : 'kundeprofil-liste';
+  const gridContainer = document.getElementById("privatkunde-grid");
+  const tabell = document.getElementById("privatkunde-tabell");
+  const tbody = document.getElementById("privatkunde-tbody");
 
-  let html = liste.map(b => lagHTML(b)).join("");
+  if (visningsmodus === 'grid') {
+    gridContainer.style.display = "grid";
+    tabell.style.display = "none";
 
-  if (visningsmodus === 'grid' && liste.length < 3) {
-    const antallPlassholdere = 3 - liste.length;
-    for (let i = 0; i < antallPlassholdere; i++) {
-      html += `<div class="kundeprofil-kort placeholder-kort"></div>`;
+    let html = liste.map(p => lagHTML(p)).join("");
+    if (liste.length < 3) {
+      const plassholdere = 3 - liste.length;
+      for (let i = 0; i < plassholdere; i++) {
+        html += `<div class="kundeprofil-kort placeholder-kort"></div>`;
+      }
     }
-  }
+    gridContainer.innerHTML = html;
+  } else {
+    gridContainer.style.display = "none";
+    tabell.style.display = "table";
 
-  container.innerHTML = html;
+    const html = liste.map(p => lagHTML(p)).join("");
+    tbody.innerHTML = html;
+  }
 }
+
 
 
 // Bytt mellom grid og liste
@@ -82,13 +93,17 @@ function lagHTML(p) {
     `;
   } else {
     return `
-      <div class="kunde-rad" onclick="visProfil(${p.id})">
-        ${kortInnhold}
-        <strong>${p.fornavn} ${p.etternavn}</strong> – ${p.adresse1}, ${p.postnr} ${p.sted}
-      </div>
+      <tr onclick="visProfil(${p.id})" class="kunde-tabell-rad">
+        <td>${p.fornavn}</td>
+        <td>${p.etternavn}</td>
+        <td>${p.adresse1}</td>
+        <td>${p.postnr}</td>
+        <td>${p.sted}</td>
+      </tr>
     `;
   }
 }
+
 
 // Vis detaljert modal
 function visProfil(id) {

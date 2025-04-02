@@ -59,7 +59,23 @@
       </div>
       
     
-        <div id="borettslag-tabell" class="kundeprofil-grid"></div>
+<!-- Tabellvisning -->
+<table class="kunde-tabell" id="borettslag-tabell" style="display: none;">
+  <thead>
+    <tr>
+      <th>Borettslag</th>
+      <th>Adresse</th>
+      <th>Postnummer</th>
+      <th>Sted</th>
+    </tr>
+  </thead>
+  <tbody id="borettslag-tbody">
+    <!-- Fylles via JS -->
+  </tbody>
+</table>
+
+<!-- Grid-visning -->
+<div id="borettslag-grid" class="kundeprofil-grid"></div>
 
     </div>
 

@@ -45,16 +45,33 @@ body {
 
 .container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 70%;
   flex-direction: column;
+  width: 70%;
   background: #d2c8c8;
   padding: 24px;
   border-radius: 4px;
   margin: auto;
-    
+
+  height: 654px;
+  overflow-y: auto;
+  align-items: stretch;
 }
+
+
+.table-scroll {
+  max-height: 654px; /* juster etter behov */
+  overflow-y: auto;
+  width: 100%;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #eeeeee;
+  z-index: 2;
+}
+
+
 
 /*button-container*/
 .button-container {
@@ -258,6 +275,58 @@ th {
 .rediger-kort-btn:hover {
   background-color: #125aa6;   /* mørkere blå ved hover */
 }
+
+.rediger-tabell-btn {
+  background-color: #1976d2;      /* blå bakgrunn */
+  color: white;                   /* hvit penn */
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 32px;
+  text-align: center;
+  cursor: pointer;
+  top: 10px;
+  left: 10px;
+  padding: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.rediger-tabell-btn:hover {
+  background-color: #125aa6;   /* mørkere blå ved hover */
+}
+
+.slett-tabell-btn {
+    background-color: #e53935;      /* rød bakgrunn */
+    color: white;                   /* hvitt kryss */
+    border: none;
+    border-radius: 50%;             /* gjør knappen rund */
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    top: 10px;
+    right: 10px;
+    padding: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+  }
+  
+.slett-tabell-btn:hover {
+    background-color: #c62828;  /* mørkere rød ved hover */
+  }
 
 /*Pop up visning*/
 .modal {

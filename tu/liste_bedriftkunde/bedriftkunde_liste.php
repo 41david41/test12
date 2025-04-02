@@ -60,10 +60,19 @@
     </div>
   </div>
   
-  
-  
-  
-      <div id="bedriftkunde-tabell" class="kundeprofil-grid"></div>
+  <table class="kunde-tabell" id="bedriftkunde-tabell" style="display: none;">
+  <thead>
+    <tr>
+      <th>Bedriftsnavn</th>
+      <th>Adresse</th>
+      <th>Postnr</th>
+      <th>Sted</th>
+    </tr>
+  </thead>
+  <tbody id="bedriftkunde-tbody"> </tbody>
+</table>
+
+<div id="bedriftkunde-grid" class="kundeprofil-grid"></div>
 
   </div>
 

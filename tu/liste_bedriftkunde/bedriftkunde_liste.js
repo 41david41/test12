@@ -18,20 +18,31 @@ function hentOgVisBedriftskunder() {
 }
 
 function visKunder(liste) {
-  const container = document.getElementById("bedriftkunde-tabell");
-  container.className = visningsmodus === 'grid' ? 'kundeprofil-grid' : 'kundeprofil-liste';
+  const gridContainer = document.getElementById("bedriftkunde-grid");
+  const tabell = document.getElementById("bedriftkunde-tabell");
+  const tbody = document.getElementById("bedriftkunde-tbody");
 
-  let html = liste.map(b => lagHTML(b)).join("");
+  if (visningsmodus === 'grid') {
+    gridContainer.style.display = "grid";
+    tabell.style.display = "none";
 
-  if (visningsmodus === 'grid' && liste.length < 3) {
-    const antallPlassholdere = 3 - liste.length;
-    for (let i = 0; i < antallPlassholdere; i++) {
-      html += `<div class="kundeprofil-kort placeholder-kort"></div>`;
+    let html = liste.map(b => lagHTML(b)).join("");
+    if (liste.length < 3) {
+      const plassholdere = 3 - liste.length;
+      for (let i = 0; i < plassholdere; i++) {
+        html += `<div class="kundeprofil-kort placeholder-kort"></div>`;
+      }
     }
-  }
+    gridContainer.innerHTML = html;
+  } else {
+    gridContainer.style.display = "none";
+    tabell.style.display = "table";
 
-  container.innerHTML = html;
+    const html = liste.map(b => lagHTML(b)).join("");
+    tbody.innerHTML = html;
+  }
 }
+
 
 
 function settVisning(modus) {
@@ -78,10 +89,12 @@ function lagHTML(b) {
     `;
   } else {
     return `
-      <div class="kunde-rad" onclick="visProfil(${b.id})">
-        ${kortInnhold}
-        <strong>${b.bedriftsnavn}</strong> – ${b.adresse1}, ${b.postnr} ${b.sted}
-      </div>
+    <tr onclick="visProfil(${b.id})" class="kunde-tabell-rad">
+      <td>${b.bedriftsnavn}</td>
+      <td>${b.adresse1}</td>
+      <td>${b.postnr}</td>
+      <td>${b.sted}</td>
+    </tr>
     `;
   }
 }

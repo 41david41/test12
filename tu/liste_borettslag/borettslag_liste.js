@@ -18,19 +18,29 @@ function hentOgVisBorettslag() {
 }
 
 function visKunder(liste) {
-  const container = document.getElementById("borettslag-tabell");
-  container.className = visningsmodus === 'grid' ? 'kundeprofil-grid' : 'kundeprofil-liste';
+  const gridContainer = document.getElementById("borettslag-grid");
+  const tabell = document.getElementById("borettslag-tabell");
+  const tbody = document.getElementById("borettslag-tbody");
 
-  let html = liste.map(b => lagHTML(b)).join("");
+  if (visningsmodus === 'grid') {
+    gridContainer.style.display = "grid";
+    tabell.style.display = "none";
 
-  if (visningsmodus === 'grid' && liste.length < 3) {
-    const antallPlassholdere = 3 - liste.length;
-    for (let i = 0; i < antallPlassholdere; i++) {
-      html += `<div class="kundeprofil-kort placeholder-kort"></div>`;
+    let html = liste.map(b => lagHTML(b)).join("");
+    if (liste.length < 3) {
+      const plassholdere = 3 - liste.length;
+      for (let i = 0; i < plassholdere; i++) {
+        html += `<div class="kundeprofil-kort placeholder-kort"></div>`;
+      }
     }
-  }
+    gridContainer.innerHTML = html;
+  } else {
+    gridContainer.style.display = "none";
+    tabell.style.display = "table";
 
-  container.innerHTML = html;
+    const html = liste.map(b => lagHTML(b)).join("");
+    tbody.innerHTML = html;
+  }
 }
 
 
@@ -78,13 +88,16 @@ function lagHTML(b) {
     `;
   } else {
     return `
-      <div class="kunde-rad" onclick="visProfil(${b.id})">
-        ${kortInnhold}
-        <strong>${b.navn}</strong> – ${b.adresse1}, ${b.postnr} ${b.sted}
-      </div>
+      <tr onclick="visProfil(${b.id})" class="kunde-tabell-rad">
+        <td>${b.navn}</td>
+        <td>${b.adresse1}</td>
+        <td>${b.postnr}</td>
+        <td>${b.sted}</td>
+      </tr>
     `;
   }
 }
+
 
 function visProfil(id) {
   fetch(`hent_borettslag_med_id.php?id=${id}`)
