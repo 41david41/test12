@@ -276,9 +276,10 @@ th {
   background-color: #125aa6;   /* mørkere blå ved hover */
 }
 
+/*
 .rediger-tabell-btn {
-  background-color: #1976d2;      /* blå bakgrunn */
-  color: white;                   /* hvit penn */
+  background-color: #1976d2;      
+  color: white;                  
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -299,14 +300,14 @@ th {
 }
 
 .rediger-tabell-btn:hover {
-  background-color: #125aa6;   /* mørkere blå ved hover */
+  background-color: #125aa6;   
 }
 
 .slett-tabell-btn {
-    background-color: #e53935;      /* rød bakgrunn */
-    color: white;                   /* hvitt kryss */
+    background-color: #e53935;      
+    color: white;                   
     border: none;
-    border-radius: 50%;             /* gjør knappen rund */
+    border-radius: 50%;             
     width: 32px;
     height: 32px;
     font-size: 18px;
@@ -325,8 +326,9 @@ th {
   }
   
 .slett-tabell-btn:hover {
-    background-color: #c62828;  /* mørkere rød ved hover */
+    background-color: #c62828;  
   }
+*/
 
 /*Pop up visning*/
 .modal {

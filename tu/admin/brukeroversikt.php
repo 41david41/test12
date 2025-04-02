@@ -53,7 +53,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brukeroversikt</title>
-    <link rel="stylesheet" href="../css/registrer.css">
+    <link rel="stylesheet" href="../css/liste.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
@@ -90,8 +90,15 @@ try {
     <?php include("../header/header.php"); ?>
 </div>
 
-<h1>Brukeroversikt</h1>
+<div class="headline-container">
+        <h1 class="text-3xl font-light headline-left">Brukeroversikt</h1>
+    
+      <div class="button-container">
+        <a href="#" onclick="redirectToPage('admin/registrer_bruker(admin).php')"><button class="pluss-btn">➕</button></a>
+      </div>
+</div>
 
+<div class="container">
 <?php if ($isAdmin): ?>
     <table>
         <thead>
@@ -99,7 +106,8 @@ try {
                 <th>Brukernavn</th>
                 <th>Fornavn</th>
                 <th>Etternavn</th>
-                <th>Telefon</th>
+                <th>Rolle</th>
+                <th>Handlinger</th>
             </tr>
         </thead>
         <tbody>
@@ -108,7 +116,8 @@ try {
                     <td><?php echo htmlspecialchars($user['brukernavn']); ?></td>
                     <td><?php echo htmlspecialchars($user['fornavn']); ?></td>
                     <td><?php echo htmlspecialchars($user['etternavn']); ?></td>
-                    <td><?php echo htmlspecialchars($user['telefon']); ?></td>
+                    <td>Admin eller bruker</td>
+                    <td>✏️🗑️</td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -116,6 +125,6 @@ try {
 <?php else: ?>
     <p>Du har ikke tilstrekkelige rettigheter til å se brukeroversikten.</p>
 <?php endif; ?>
-
+</div>
 </body>
 </html>
