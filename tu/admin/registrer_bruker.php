@@ -24,7 +24,6 @@ $patterns = [
 $errors = [];
 $data = [];
 
-
 // Validate input fields
 foreach ($patterns as $key => $pattern) {
     if (!isset($_POST[$key]) || !validateInput($_POST[$key], $pattern)) {
@@ -57,7 +56,7 @@ try {
     $pdo->beginTransaction();
 
     // Check if user already exists in MySQL
-    $stmtCheck = $pdo->prepare("SELECT User FROM mysql.user WHERE User = :brukernavn AND Host = 'localhost'");
+    $stmtCheck = $pdo->prepare("SELECT User FROM mysql.user WHERE User = :brukernavn AND Host = '%'");
     $stmtCheck->execute([':brukernavn' => $brukernavn]);
     $userExists = $stmtCheck->fetchColumn();
 
@@ -65,17 +64,25 @@ try {
         die("<script>alert('Brukeren \"$brukernavn\" finnes allerede.'); window.location.href='../admin/brukeroversikt.php';</script>");
     }
 
-    // Execute query (MySQL doesn't allow placeholders for usernames)
-    $stmt_user = $pdo->prepare("CREATE USER '$brukernavn'@'localhost' IDENTIFIED BY :passord");
-    $stmt_user->execute([
-        ':passord' => $passord
-    ]);
+    // Create MySQL user
+    $createUserSQL = "CREATE USER '$brukernavn'@'%' IDENTIFIED BY :passord";
+    $stmt_user = $pdo->prepare($createUserSQL);
+    $stmt_user->execute([':passord' => $passord]);
+
+    // Gi brukeren standard database-privilegier
+    $grantSQL = "GRANT ALL PRIVILEGES ON *.* TO '$brukernavn'@'%' WITH GRANT OPTION";
+    $pdo->exec($grantSQL);
+
+    // Hvis adminrettigheter er huket av, gi brukeren admin-privilegier
+    if (isset($_POST['adminrettigheter']) && $_POST['adminrettigheter'] == "1") {
+        $grantAdminSQL = "GRANT 'adminbruker' TO '$brukernavn'@'%'";
+        $pdo->exec($grantAdminSQL);
+    }
+
+    $pdo->exec("FLUSH PRIVILEGES");
 
     // Insert user details into the database
-    $stmt_details = $pdo->prepare("
-        INSERT INTO user_details (fornavn, etternavn, user, telefon) 
-        VALUES (:fornavn, :etternavn, :brukernavn, :telefon)
-    ");
+    $stmt_details = $pdo->prepare("INSERT INTO user_details (fornavn, etternavn, user, telefon) VALUES (:fornavn, :etternavn, :brukernavn, :telefon)");
     $stmt_details->execute([
         ':fornavn' => $data['fornavn'],
         ':etternavn' => $data['etternavn'],
@@ -83,14 +90,17 @@ try {
         ':telefon' => $data['telefon']
     ]);
 
-    // Commit transaction
-    $pdo->commit();
 
-    // Redirect to success page
-    header("Location: ../admin/brukeroversikt.php");
-    exit;
-} catch (PDOException $e) {
-    // Rollback if an error occurs
+
+    // Rask omdirigering
+    echo "<script>window.location.href = '../admin/brukeroversikt.php';</script>";
+    fastcgi_finish_request(); // Avslutter PHP-prosessen umiddelbart
+        // Fullfør transaksjonen
+        $pdo->commit();
+
+} 
+catch (PDOException $e) {
+    // Rollback hvis det oppstår en feil
     $pdo->rollBack();
     echo "<script>alert('Databasefeil: " . $e->getMessage() . "'); window.location.href='registrer_bruker(admin).html';</script>";
     exit;

@@ -23,9 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             header("Location: ../landingpage/landingpage.php");
             exit();
+
         } catch (PDOException $e) {
-            echo "❌ Feil ved innlogging: " . $e->getMessage();
-        }
+    // Vis popup-feilmelding og send brukeren tilbake til login-siden
+    echo "<script>
+            alert('❌ Feil ved innlogging: " . addslashes($e->getMessage()) . "');
+            window.location.href='../login/login.html';
+          </script>";
+}
+
     } else {
         echo "⚠️ Vennligst fyll ut både brukernavn og passord!";
     }
