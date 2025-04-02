@@ -51,27 +51,10 @@ body {
   padding: 24px;
   border-radius: 4px;
   margin: auto;
-
   height: 654px;
   overflow-y: auto;
   align-items: stretch;
 }
-
-
-.table-scroll {
-  max-height: 654px; /* juster etter behov */
-  overflow-y: auto;
-  width: 100%;
-}
-
-thead th {
-  position: sticky;
-  top: 0;
-  background-color: #eeeeee;
-  z-index: 2;
-}
-
-
 
 /*button-container*/
 .button-container {
@@ -433,4 +416,30 @@ th {
   margin-top: 1rem;
   color: white;
 }
+
+ /* Button Styles */
+ .primaryBTN {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 6px 8px;
+  width: 100%;
+}
+
+.secondaryBTN {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  padding: 6px 8px;
+  width: 100%;
+}
+
+.primaryBTN:hover {
+  background-color: rgb(115, 3, 3);
+}
+
+.secondaryBTN:hover {
+  background-color: rgb(118, 115, 115);
+}
+
 

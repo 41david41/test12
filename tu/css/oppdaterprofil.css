@@ -9,6 +9,13 @@
     background-color: #0f1c2e; /* Dark background */
 }
 
+.headline-container {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    margin: 34px auto; 
+  }
+
 /* Shared container styling */
 .profil-container {
     width: 90%;
@@ -54,7 +61,7 @@ input {
 .rød-knapp {
     padding: 10px 15px;
     background-color: red;  /* Rød bakgrunn */
-    color: black;           /* Sort tekst */
+    color: rgb(255, 255, 255);           /* Sort tekst */
     border: none;           /* Ingen kantlinje */
     border-radius: 5px;     /* Runde hjørner */
     cursor: pointer;        /* Pekeren blir en hånd når du holder over */
@@ -71,7 +78,7 @@ input {
 
 button:hover {
     box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
-    background-color: #0f2a526b; /* Darker green on hover */
+    background-color: #ffffff6b; /* Darker green on hover */
 }
 
 /* Error and Success Messages */

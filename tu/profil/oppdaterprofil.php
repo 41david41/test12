@@ -94,21 +94,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php include("../header/header.php"); ?>
     </div>
 
-    <div class="profil-container">
-        <h2>Oppdater Profil</h2>
+    <div class="headline-container">
+            <h1 class="text-3xl font-light">Endre passord</h1>
+    </div>
 
+    <div class="container">
         <form method="POST">
-            <label for="username">Brukernavn:</label>
             <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($brukernavn); ?>" disabled>
 
-            <label for="old_password">Gammelt passord:</label>
-            <input type="password" id="old_password" name="old_password" required>
+            <input type="password" id="old_password" name="old_password" placeholder="Gammelt passord" required>
 
-            <label for="new_password">Nytt passord:</label>
-            <input type="password" id="new_password" name="new_password" required>
+            <input type="password" id="new_password" name="new_password" placeholder="Nytt passord" required>
 
-            <label for="confirm_password">Bekreft nytt passord:</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Bekreft nytt passord" required>
 
             <button class="rød-knapp" type="submit">Endre passord</button>
         </form>
