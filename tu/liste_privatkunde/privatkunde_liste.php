@@ -59,7 +59,24 @@
           </div>        
     
       
-          <div id="privatkunde-tabell" class="kundeprofil-grid"></div>
+<!-- Tabellvisning -->
+<table class="kunde-tabell" id="privatkunde-tabell" style="display: none;">
+  <thead>
+    <tr>
+      <th>Fornavn</th>
+      <th>Etternavn</th>
+      <th>Adresse</th>
+      <th>Postnummer</th>
+      <th>Sted</th>
+    </tr>
+  </thead>
+  <tbody id="privatkunde-tbody">
+    <!-- JS fyller inn <tr> her -->
+  </tbody>
+</table>
+
+<!-- Grid-visning -->
+<div id="privatkunde-grid" class="kundeprofil-grid"></div>
   
       </div>
 
