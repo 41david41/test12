@@ -64,6 +64,40 @@ try {
     die("Feil ved henting av brukerinformasjon: " . $e->getMessage());
 }
 
+// Slette bruker
+if (isset($_GET['delete_user'])) {
+    $userToDelete = $_GET['delete_user'];
+
+    try {
+        // Start en transaksjon
+        $pdo->beginTransaction();
+
+        // Slett brukeren fra MySQL 'user_details'-tabellen
+        $sqlDeleteUser = "DELETE FROM user_details WHERE user = :user";
+        $stmtDeleteUser = $pdo->prepare($sqlDeleteUser);
+        $stmtDeleteUser->bindParam(':user', $userToDelete, PDO::PARAM_STR);
+        $stmtDeleteUser->execute();
+
+        // Slett MySQL-brukeren fra mysql.user
+        $sqlDeleteMySQLUser = "DROP USER :user@'%'";  // Bruker 'localhost' som standard, kan tilpasses
+        $stmtDeleteMySQLUser = $pdo->prepare($sqlDeleteMySQLUser);
+        $stmtDeleteMySQLUser->bindParam(':user', $userToDelete, PDO::PARAM_STR);
+        $stmtDeleteMySQLUser->execute();
+
+        // Etter sletting, omdiriger til brukeroversikt.php
+        header("Location: brukeroversikt.php");
+
+        // Fullfør transaksjonen
+        $pdo->commit();
+        
+        exit(); // Husk å avslutte skriptet for å sikre at omdirigeringen skjer
+
+    } catch (PDOException $e) {
+        // Hvis noe går galt, rull tilbake transaksjonen
+        $pdo->rollBack();
+        echo "Feil ved sletting av bruker: " . $e->getMessage();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +170,10 @@ try {
                     <td><?php echo htmlspecialchars($user['fornavn']); ?></td>
                     <td><?php echo htmlspecialchars($user['etternavn']); ?></td>
                     <td><?php echo getUserRole($user['brukernavn'], $pdo); ?></td> <!-- Hent og vis brukerens rolle -->
-                    <td>✏️🗑️</td>
+                    <td>
+                        <a href="?delete_user=<?php echo htmlspecialchars($user['brukernavn']); ?>" onclick="return confirm('Er du sikker på at du vil slette denne brukeren?');">🗑️</a>
+                        <a href="#" onclick="alert('Redigering er ikke aktivert ennå!');">✏️</a> <!-- Redigeringsknappen, uten funksjonalitet -->
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
