@@ -36,6 +36,25 @@ try {
     echo "Feil ved henting av brukerrettigheter: " . $e->getMessage();
 }
 
+// Funksjon for å hente brukerens rolle (admin eller bruker)
+function getUserRole($username, $pdo) {
+    try {
+        $sql = sprintf("SHOW GRANTS FOR '%s'", $username);
+        $stmt = $pdo->query($sql);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $grantString = implode(" ", $row);
+            // Hvis grant-strengen inneholder 'adminbruker', så er brukeren admin
+            if (stripos($grantString, "`adminbruker`") !== false) {
+                return 'Admin';
+            }
+        }
+    } catch (PDOException $e) {
+        error_log("Feil ved sjekking av brukerrettigheter: " . $e->getMessage());
+    }
+
+    return 'Bruker'; // Hvis ikke, er brukeren vanlig bruker
+}
+
 // Hent brukere fra user_details-tabellen med spesifikke felter
 try {
     $sql = "SELECT fornavn, etternavn, user AS brukernavn, telefon FROM user_details"; // Hent spesifikke data
@@ -116,7 +135,7 @@ try {
                     <td><?php echo htmlspecialchars($user['brukernavn']); ?></td>
                     <td><?php echo htmlspecialchars($user['fornavn']); ?></td>
                     <td><?php echo htmlspecialchars($user['etternavn']); ?></td>
-                    <td>Admin eller bruker</td>
+                    <td><?php echo getUserRole($user['brukernavn'], $pdo); ?></td> <!-- Hent og vis brukerens rolle -->
                     <td>✏️🗑️</td>
                 </tr>
             <?php endforeach; ?>
