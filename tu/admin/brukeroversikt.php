@@ -172,7 +172,8 @@ if (isset($_GET['delete_user'])) {
                     <td><?php echo getUserRole($user['brukernavn'], $pdo); ?></td> <!-- Hent og vis brukerens rolle -->
                     <td>
                         <a href="?delete_user=<?php echo htmlspecialchars($user['brukernavn']); ?>" onclick="return confirm('Er du sikker på at du vil slette denne brukeren?');">🗑️</a>
-                        <a href="#" onclick="alert('Redigering er ikke aktivert ennå!');">✏️</a> <!-- Redigeringsknappen, uten funksjonalitet -->
+                        <a href="rediger_bruker.php?brukernavn=<?php echo urlencode($user['brukernavn']); ?>" class="edit-link">✏️</a>
+
                     </td>
                 </tr>
             <?php endforeach; ?>
