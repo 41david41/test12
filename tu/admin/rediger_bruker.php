@@ -10,30 +10,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     die("❌ Ikke logget inn. Vennligst logg inn først.");
 }
 
-// Sjekk om brukeren er admin
-$username = $_SESSION['db_username'];
-$isAdmin = false;
-
-try {
-    $sql = sprintf("SHOW GRANTS FOR '%s'", $username);
-    $stmt = $pdo->query($sql);
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $grantString = implode(" ", $row);
-        if (stripos($grantString, "`adminbruker`") !== false) {
-            $isAdmin = true;
-            break;
-        }
-    }
-
-    if (!$isAdmin) {
-        die("❌ Du har ikke tilstrekkelige rettigheter for å se denne siden.");
-    }
-
-} catch (PDOException $e) {
-    echo "Feil ved henting av brukerrettigheter: " . $e->getMessage();
-}
-
 // Hent brukerens data hvis brukernavn er spesifisert
 if (isset($_GET['brukernavn'])) {
     $brukernavn = $_GET['brukernavn'];
@@ -45,6 +21,33 @@ if (isset($_GET['brukernavn'])) {
     if (!$user) {
         die("❌ Bruker ikke funnet.");
     }
+
+    // Sjekk om brukeren har rollen "adminbruker"
+    function getUserRole($brukernavn, $pdo) {
+        try {
+            // Henter brukerens tillatelser
+            $sql = sprintf("SHOW GRANTS FOR '%s'", $brukernavn);
+            $stmt = $pdo->query($sql);
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $grantString = implode(" ", $row);
+                // Hvis grant-strengen inneholder 'adminbruker', så er brukeren admin
+                if (stripos($grantString, "`adminbruker`") !== false) {
+                    return 'Admin';
+                }
+            }
+        } catch (PDOException $e) {
+            error_log("Feil ved sjekking av brukerrettigheter: " . $e->getMessage());
+        }
+
+        // Hvis ikke, er brukeren vanlig bruker
+        return 'Bruker';
+    }
+
+    // Hent brukerens rolle for brukeren som skal redigeres
+    $userRole = getUserRole($brukernavn, $pdo);
+
+    // Hvis brukeren er admin, skal checkboxen være markert
+    $isAdminChecked = ($userRole === 'Admin') ? 'checked' : '';
 }
 
 // Oppdater brukerens informasjon
@@ -55,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $telefon = $_POST['telefon'];
     $epost = $_POST['epost'];
     $nyttBrukernavn = $_POST['brukernavn'];  // Nytt brukernavn
+    $isAdmin = isset($_POST['admin']) ? 1 : 0;  // Håndtere om brukeren er admin
 
     // Start en transaksjon
     $pdo->beginTransaction();
@@ -88,11 +92,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmtUpdateUserDetails->execute();
         }
 
+        // Håndter admin-rettigheter basert på checkboxen
+        if ($isAdmin) {
+            // Hvis checkboxen er krysset av, sjekk om brukeren allerede har admin-rettigheter
+            $currentRole = getUserRole($brukernavn, $pdo);
+            if ($currentRole !== 'Admin') {
+                // Hvis brukeren ikke har admin-rettigheter, tildel dem
+                $sqlGrantAdmin = "GRANT `adminbruker` TO '$brukernavn'@'%'";
+                $pdo->exec($sqlGrantAdmin);
+            }
+        } else {
+            // Hvis checkboxen ikke er krysset av, fjern admin-rettigheter hvis de finnes
+            $currentRole = getUserRole($brukernavn, $pdo);
+            if ($currentRole === 'Admin') {
+                // Fjern admin-rettigheter
+                $sqlRevokeAdmin = "REVOKE `adminbruker` FROM '$brukernavn'@'%'";
+                $pdo->exec($sqlRevokeAdmin);
+            }
+        }
+
+        header("Location: brukeroversikt.php");
         // Fullfør transaksjonen
         $pdo->commit();
 
         // Etter vellykket oppdatering, omdiriger til brukeroversikt.php
-        header("Location: brukeroversikt.php");
+        
         exit();
     } catch (PDOException $e) {
         // Hvis noe går galt, rull tilbake transaksjonen
@@ -110,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Rediger Bruker</title>
     <link rel="stylesheet" href="../css/registrer.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="../redirectToPage.js"></script>
 
@@ -145,6 +168,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group"><input type="text" name="etternavn" value="<?php echo htmlspecialchars($user['etternavn']); ?>" required></div>
                 <div class="form-group"><input type="text" name="telefon" value="<?php echo htmlspecialchars($user['telefon']); ?>" pattern="^[0-9]{8}$" required></div>
                 <div class="form-group"><input type="email" name="epost" value="<?php echo htmlspecialchars($user['epost']); ?>" required></div>
+            </div>
+
+            <div class="form-group-admin">
+                <!-- Checkbox for Admin status -->
+                <div class="form-group">
+                    <label for="admin">Er admin:</label>
+                    <input type="checkbox" name="admin" <?php echo $isAdminChecked; ?>>
+                </div>
             </div>
 
             <div class="button-container">
