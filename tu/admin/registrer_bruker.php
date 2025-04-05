@@ -15,7 +15,7 @@ $patterns = [
     "etternavn" => "/^[\p{L}\-]{2,}$/u",
     "brukernavn" => "/^[a-zA-Z0-9_-]{3,16}$/",
     "epost" => "/^[^@\s]+@[^@\s]+\.[^@\s]+$/",
-    "bekreft_epost" => "/^[^@\s]+@[^@\s]+\.[^@\s]+$/",
+    "bekreft_epost" => "/^[^@\s]+@[^@\s]+\.[^@\s]+$/", // Bekreft epost for sammenligning
     "telefon" => "/^\d{8}$/",
     "passord" => "/^.{6,}$/",
     "bekreft_passord" => "/^.{6,}$/"
@@ -81,25 +81,24 @@ try {
 
     $pdo->exec("FLUSH PRIVILEGES");
 
-    // Insert user details into the database
-    $stmt_details = $pdo->prepare("INSERT INTO user_details (fornavn, etternavn, user, telefon) VALUES (:fornavn, :etternavn, :brukernavn, :telefon)");
+    // Insert user details into the database (without `bekreft_epost`)
+    $stmt_details = $pdo->prepare("INSERT INTO user_details (fornavn, etternavn, user, telefon, epost) VALUES (:fornavn, :etternavn, :brukernavn, :telefon, :epost)");
     $stmt_details->execute([
         ':fornavn' => $data['fornavn'],
         ':etternavn' => $data['etternavn'],
         ':brukernavn' => $brukernavn,
-        ':telefon' => $data['telefon']
+        ':telefon' => $data['telefon'],
+        ':epost' => $data['epost'] // Sett kun e-post i databasen
     ]);
-
-
 
     // Rask omdirigering
     echo "<script>window.location.href = '../admin/brukeroversikt.php';</script>";
     fastcgi_finish_request(); // Avslutter PHP-prosessen umiddelbart
-        // Fullfør transaksjonen
-        $pdo->commit();
 
-} 
-catch (PDOException $e) {
+    // Fullfør transaksjonen
+    $pdo->commit();
+
+} catch (PDOException $e) {
     // Rollback hvis det oppstår en feil
     $pdo->rollBack();
     echo "<script>alert('Databasefeil: " . $e->getMessage() . "'); window.location.href='registrer_bruker(admin).html';</script>";

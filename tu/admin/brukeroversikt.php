@@ -57,7 +57,7 @@ function getUserRole($username, $pdo) {
 
 // Hent brukere fra user_details-tabellen med spesifikke felter
 try {
-    $sql = "SELECT fornavn, etternavn, user AS brukernavn, telefon FROM user_details"; // Hent spesifikke data
+    $sql = "SELECT fornavn, etternavn, user AS brukernavn, telefon, epost FROM user_details"; // Hent epost
     $stmt = $pdo->query($sql);
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -134,8 +134,7 @@ if (isset($_GET['delete_user'])) {
             border: 1px solid #ddd;
             text-align: left;
         }
-
-    </style> 
+    </style>
 
 </head>
 <body>
@@ -144,11 +143,11 @@ if (isset($_GET['delete_user'])) {
 </div>
 
 <div class="headline-container">
-        <h1 class="text-3xl font-light headline-left">Brukeroversikt</h1>
-    
-      <div class="button-container">
+    <h1 class="text-3xl font-light headline-left">Brukeroversikt</h1>
+  
+    <div class="button-container">
         <a href="#" onclick="redirectToPage('admin/registrer_bruker(admin).php')"><button class="pluss-btn">➕</button></a>
-      </div>
+    </div>
 </div>
 
 <div class="container">
@@ -159,6 +158,8 @@ if (isset($_GET['delete_user'])) {
                 <th>Brukernavn</th>
                 <th>Fornavn</th>
                 <th>Etternavn</th>
+                <th>Telefon</th> <!-- Ny kolonne for telefon -->
+                <th>E-post</th> <!-- Ny kolonne for e-post -->
                 <th>Rolle</th>
                 <th>Handlinger</th>
             </tr>
@@ -169,11 +170,12 @@ if (isset($_GET['delete_user'])) {
                     <td><?php echo htmlspecialchars($user['brukernavn']); ?></td>
                     <td><?php echo htmlspecialchars($user['fornavn']); ?></td>
                     <td><?php echo htmlspecialchars($user['etternavn']); ?></td>
+                    <td><?php echo htmlspecialchars($user['telefon']); ?></td> <!-- Vis telefonnummer -->
+                    <td><?php echo htmlspecialchars($user['epost']); ?></td> <!-- Vis e-post -->
                     <td><?php echo getUserRole($user['brukernavn'], $pdo); ?></td> <!-- Hent og vis brukerens rolle -->
                     <td>
                         <a href="?delete_user=<?php echo htmlspecialchars($user['brukernavn']); ?>" onclick="return confirm('Er du sikker på at du vil slette denne brukeren?');">🗑️</a>
                         <a href="rediger_bruker.php?brukernavn=<?php echo urlencode($user['brukernavn']); ?>" class="edit-link">✏️</a>
-
                     </td>
                 </tr>
             <?php endforeach; ?>
