@@ -179,7 +179,7 @@ function exportToCSV() {
     link.click();
 }
 </script>
-
+<script src="../preview.js"></script>
 <script src="bedriftkunde_liste.js"></script>
 
 </body>

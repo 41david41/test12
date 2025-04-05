@@ -37,6 +37,24 @@ if (!empty($errors)) {
     exit;
 }
 
+// Før vi setter inn data i databasen, sjekk om e-post eller telefonnummer allerede finnes
+try {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM privatkunde WHERE epost = :epost OR telefon = :telefon");
+    $stmt->execute([
+        ':epost' => $data['epost'],
+        ':telefon' => $data['telefon']
+    ]);
+    $existingCount = $stmt->fetchColumn();
+
+    if ($existingCount > 0) {
+        echo "<script>alert('E-post eller telefonnummer er allerede registrert.'); window.location.href='registrer_privatkunde.html';</script>";
+        exit;
+    }
+} catch (PDOException $e) {
+    echo json_encode(["status" => "error", "message" => "Databasefeil: " . $e->getMessage()]);
+    exit;
+}
+
 $bildePath = "";
 if (isset($_FILES['bilde']) && $_FILES['bilde']['error'] === UPLOAD_ERR_OK) {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];

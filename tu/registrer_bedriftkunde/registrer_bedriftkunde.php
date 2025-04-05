@@ -38,6 +38,24 @@ if (!empty($errors)) {
     exit;
 }
 
+// Før vi setter inn data i databasen, sjekk om orgnr eller e-post allerede finnes
+try {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM bedriftskunde WHERE orgnr = :orgnr OR epost = :epost");
+    $stmt->execute([
+        ':orgnr' => $data['orgnr'],
+        ':epost' => $data['epost']
+    ]);
+    $existingCount = $stmt->fetchColumn();
+
+    if ($existingCount > 0) {
+        echo "<script>alert('Organisasjonsnummer eller e-post er allerede registrert.'); window.location.href='registrer_bedriftkunde.html';</script>";
+        exit;
+    }
+} catch (PDOException $e) {
+    echo json_encode(["status" => "error", "message" => "Databasefeil: " . $e->getMessage()]);
+    exit;
+}
+
 $bildePath = "";
 if (isset($_FILES['bilde']) && $_FILES['bilde']['error'] === UPLOAD_ERR_OK) {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];

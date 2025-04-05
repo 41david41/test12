@@ -100,7 +100,7 @@ function lagHTML(b) {
 }
 
 function visProfil(id) {
-  fetch(`hent_bedriftskunde_med_id.php?id=${id}`)
+  fetch(`hent_bedriftkunde_med_id.php?id=${id}`)
     .then(response => response.json())
     .then(data => {
       const container = document.getElementById("modalInnhold");
