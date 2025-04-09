@@ -22,7 +22,7 @@
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #ffffff; /* Light background for the profile form */
+    background-color:#0f1c2e; /* Light background for the profile form */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -33,7 +33,7 @@ form {
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #f9f9f9; /* Light form background */
+    background-color:#0f1c2e; /* Light form background */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -51,7 +51,6 @@ input {
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
     font-size: 1rem;
     color: #333;
 }

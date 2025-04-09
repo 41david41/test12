@@ -100,8 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container">
         <form method="POST">
-            <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($brukernavn); ?>" disabled>
-
             <input type="password" id="old_password" name="old_password" placeholder="Gammelt passord" required>
 
             <input type="password" id="new_password" name="new_password" placeholder="Nytt passord" required>
