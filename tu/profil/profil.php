@@ -91,8 +91,9 @@ try {
                         // Vis bildet hvis det finnes
                         echo "<img src='$profileImagePath' alt='Profilbilde' class='profil-img'>";
                     } else {
-                        // Hvis bildet ikke finnes, vis et standardbilde
-                        echo "<img src='/bilder/default-profile.jpeg' alt='Profilbilde' class='profil-img'>";
+                        // Hvis bildet ikke finnes, vis standardbildet (default.jpeg)
+                        $defaultImagePath = "/bilder/default.jpeg";
+                        echo "<img src='$defaultImagePath' alt='Profilbilde' class='profil-img'>";
                     }
                 ?>
             </div>
