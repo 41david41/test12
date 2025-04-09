@@ -1,3 +1,34 @@
+<?php
+include("../db2.php");
+
+$erRedigering = false;
+$brukerdata = [
+    'user' => '',
+    'epost' => '',
+    'fornavn' => '',
+    'etternavn' => '',
+    'telefon' => '',
+    // legg til flere felter her hvis det trengs
+];
+
+// Sjekk om vi skal redigere
+if (isset($_GET['brukernavn'])) {
+    $erRedigering = true;
+    $brukernavn = $_GET['brukernavn'];  // Ikke bruk intval
+
+    $stmt = $pdo->prepare("SELECT * FROM user_details WHERE user = ?");
+    $stmt->execute([$brukernavn]);
+    $data = array_change_key_case($stmt->fetch(PDO::FETCH_ASSOC), CASE_LOWER);
+
+    if ($data) {
+        $brukerdata = array_merge($brukerdata, $data);
+    } else {
+        die("❌ Fant ikke bruker med brukernavn '$brukernavn'.");
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -29,36 +60,85 @@
 </div>
    
   <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left">Registrer ny bruker</h1>
+    <h1 class="text-3xl font-light headline-left"><?php echo $erRedigering ? "Rediger Bruker" : "Registrer Ny Bruker"; ?></h1>
   </div>
 
-  <form action="registrer_bruker.php" method="POST" enctype="multipart/form-data" id="bedriftForm">
+  <form action="rediger_bruker_backend.php" method="POST" enctype="multipart/form-data" id="bedriftForm">
+    <?php if ($erRedigering): ?>
+        <input type="hidden" name="gammelt_brukernavn" value="<?php echo htmlspecialchars($brukerdata['user']); ?>">
+    <?php endif; ?>
     <input type="file" id="imageUpload" name="profilbilde" accept="image/*" hidden>
     <div class="container">         
-            <div class="form-container">   
-            <div class="form-group-admin">
-            <div class="form-group"><input type="text" name="brukernavn" placeholder="brukernavn maks 16" required></div>
-                <div class="form-group"><input type="text" name="fornavn" placeholder="Fornavn" required></div>
-                <div class="form-group"><input type="text" name="etternavn" placeholder="Etternavn" required></div>
-                <div class="form-group"><input type="text" name="telefon" placeholder="Telefonnummer" pattern="^[0-9]{8}$"  required></div>
-                <div class="form-group"><input type="email" name="epost" placeholder="E-post" required></div>
-            </div>
+  <div class="form-container">   
+    <div class="form-group-admin">
 
-            <div class="form-group-admin">
-                <div class="form-group"><input type="email" name="bekreft_epost" placeholder="Bekreft E-post" required></div>
-                <div class="form-group"><input type="password" name="passord" placeholder="Passord minst 6 tegn" required></div>
-                <div class="form-group"><input type="password" name="bekreft_passord" placeholder="Bekreft passord" required></div>
-                <div class="checkbox-admin"><input type="checkbox" name="adminrettigheter" value="1"><a>Adminrettigheter</a></div>
-                <div class="button-container">
-                    <button class="secondaryBTN" type="reset">Nullstill</button>
-                    <button id="profilbilde" class="secondaryBTN" type="button" onclick="document.getElementById('imageUpload').click();">➕ Profilbilde</button>
-                    <button class="primaryBTN" type="submit">Registrer</button>
-            </div>
-            </div>    
-        </div>      
+      <div class="form-group">
+        <input type="text" name="brukernavn"
+          value="<?php echo htmlspecialchars($brukerdata['user']); ?>"
+          placeholder="Fyll inn brukernavn" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="fornavn"
+          value="<?php echo htmlspecialchars($brukerdata['fornavn']); ?>"
+          placeholder="Fornavn" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="etternavn"
+          value="<?php echo htmlspecialchars($brukerdata['etternavn']); ?>"
+          placeholder="Etternavn" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="telefon"
+          value="<?php echo htmlspecialchars($brukerdata['telefon']); ?>"
+          placeholder="Telefonnummer" pattern="^[0-9]{8}$" required>
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="epost"
+          value="<?php echo htmlspecialchars($brukerdata['epost']); ?>"
+          placeholder="E-post" required>
+      </div>
+
     </div>
+
+    <div class="form-group-admin">
+      <div class="form-group">
+        <input type="email" name="bekreft_epost"
+        value="<?php echo htmlspecialchars($brukerdata['epost']); ?>"
+          placeholder="Bekreft E-post" required>
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="passord"
+          placeholder="Passord minst 6 tegn" <?php echo $erRedigering ? '' : 'required'; ?>>
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="bekreft_passord"
+          placeholder="Bekreft passord" <?php echo $erRedigering ? '' : 'required'; ?>>
+      </div>
+
+      <div class="checkbox-admin">
+  <input type="checkbox" name="adminrettigheter" value="1"
+    <?php echo $erRedigering ? 'checked' : ''; ?>>
+  <a>Adminrettigheter</a>
+</div>
+
+
+      <div class="button-container">
+        <button class="secondaryBTN" type="reset">Nullstill</button>
+        <button id="profilbilde" class="secondaryBTN" type="button" onclick="document.getElementById('imageUpload').click();">➕ Profilbilde</button>
+        <button class="primaryBTN" type="submit"><?php echo $erRedigering ? 'Lagre endringer' : 'Registrer'; ?></button>
+      </div>
+    </div>    
+  </div>      
+</div>
+
     <div id="bildePreview" class="preview-container"></div>
     </form>
     <script src="../preview.js"></script>
 </body>
-</html>
+</html> 

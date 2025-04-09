@@ -2,7 +2,9 @@
 include("../db2.php"); // Inkluder databasen
 
 // Start session og hent brukernavn
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $username = isset($_SESSION['db_username']) ? $_SESSION['db_username'] : "Ukjent Bruker";
 $password = isset($_SESSION['db_password']) ? $_SESSION['db_password'] : null;
 
@@ -85,8 +87,8 @@ try {
                 <img src="profile.jpg" alt="Profilbilde" class="profil-img">
             </div>
             <div class="profil-info">
-                <h2 class="profil-name"><?php echo htmlspecialchars($username); ?></h2>
-                <p class="profil-role">Rolle: <?php echo htmlspecialchars($rolle); ?></p> <!-- Rolle vises her -->
+                <p>Brukernavn: <?php echo htmlspecialchars($username); ?></p>
+                <p>Rolle: <?php echo htmlspecialchars($rolle); ?></p> <!-- Rolle vises her -->
             </div>
         </div>
     </div>

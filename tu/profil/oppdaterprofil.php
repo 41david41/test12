@@ -3,8 +3,10 @@ ini_set('display_errors', 0); // Disable error display on screen
 ini_set('log_errors', 1); // Enable logging of errors
 ini_set('error_log', 'error_log.txt'); // Specify the error log file
 
-session_start(); // Start the session
-
+// Start session og sjekk om brukeren er logget inn som admin
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Include the database connection
 include("../db2.php"); 
 

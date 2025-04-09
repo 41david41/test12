@@ -41,13 +41,6 @@ body {
     border: 3px solid #235f9f; /* Blå kant */
 }
 
-/* Profil informasjon */
-.profil-info h2 {
-    font-size: 1.5rem;
-    color: #ffffff; /* Hvit tekstfarge for brukernavnet */
-    margin: 0;
-}
-
 .profil-info p {
     font-size: 1rem;
     color: #aaaaaa; /* Lysere tekstfarge for rolle */

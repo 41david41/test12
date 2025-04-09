@@ -22,7 +22,7 @@
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color:#0f1c2e; /* Light background for the profile form */
+    background-color:#ffffff; /* Light background for the profile form */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -47,6 +47,7 @@ label {
 }
 
 input {
+    background-color: #ffffff;
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -62,7 +63,6 @@ input {
     background-color: red;  /* Rød bakgrunn */
     color: rgb(255, 255, 255);           /* Sort tekst */
     border: none;           /* Ingen kantlinje */
-    border-radius: 5px;     /* Runde hjørner */
     cursor: pointer;        /* Pekeren blir en hånd når du holder over */
     font-size: 1rem;         /* Størrelse på teksten */
     width: 100%;             /* Knappen tar opp hele bredden av sitt element */
