@@ -43,7 +43,7 @@ if ($_POST['passord'] !== $_POST['bekreft_passord']) {
 
 // If there are errors, show alert and exit
 if (!empty($errors)) {
-    echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_bruker(admin).html';</script>";
+    echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_bruker(admin).php';</script>";
     exit;
 }
 
@@ -101,7 +101,7 @@ try {
 } catch (PDOException $e) {
     // Rollback hvis det oppstår en feil
     $pdo->rollBack();
-    echo "<script>alert('Databasefeil: " . $e->getMessage() . "'); window.location.href='registrer_bruker(admin).html';</script>";
+    echo "<script>alert('Databasefeil: " . $e->getMessage() . "'); window.location.href='registrer_bruker(admin).php';</script>";
     exit;
 }
 ?>
