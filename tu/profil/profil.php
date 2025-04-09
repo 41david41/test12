@@ -84,7 +84,20 @@ try {
         <div class="profil-card">
             <div class="profil-image">
                 <!-- Profilbildet vises her -->
-                <img src="profile.jpg" alt="Profilbilde" class="profil-img">
+                <?php
+                    // Generer bildebanen dynamisk basert på brukernavnet
+                    $profileImagePath = "/bilder/" . $username . ".jpeg";
+
+                    // Sjekk om filen eksisterer
+                    if (file_exists($_SERVER['DOCUMENT_ROOT'] . $profileImagePath)) {
+                        // Vis bildet hvis det finnes
+                        echo "<img src='$profileImagePath' alt='Profilbilde' class='profil-img'>";
+                    } else {
+                        // Hvis bildet ikke finnes, vis standardbildet (default.jpeg)
+                        $defaultImagePath = "/bilder/default.jpeg";
+                        echo "<img src='$defaultImagePath' alt='Profilbilde' class='profil-img'>";
+                    }
+                ?>
             </div>
             <div class="profil-info">
                 <p>Brukernavn: <?php echo htmlspecialchars($username); ?></p>
