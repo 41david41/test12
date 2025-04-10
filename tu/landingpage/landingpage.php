@@ -11,6 +11,7 @@ require_once("../landingpage/antall_kunder.php"); // Hent antall kunder
   <link rel="stylesheet" href="../css/landingpage.css">
   <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <script defer src="landingpage.js"></script>
@@ -35,17 +36,21 @@ require_once("../landingpage/antall_kunder.php"); // Hent antall kunder
     <?php include("../header/header.php"); ?>
 </div>
 
+<div class="headline-container">
+    <h1 class="text-3xl font-light headline-left">KUNDEGRUPPER</h1>
+
+    <div class="button-container">
+    <a href="#" onclick="redirectToPage('registrer_privatkunde/registrer_borettslaghtml.php')">
+        <button class="secondaryBTN" id="nyKundeBtn"><span class="material-icons pil">add</span></button>
+      </a>
+    </div>
+</div>  
+
+
+
   <!-- Shared Container for consistent alignment -->
   <div class="container">
-    <!-- Title Section -->
-    <section class="top-section">
-      <h1>Hvilken kundegruppe vil du se?</h1>
-      <a href="#" onclick="redirectToPage('registrer_privatkunde/registrer_privatkunde.html')">
-        <button class="secondaryBTN" id="nyKundeBtn">NY KUNDE</button>
-      </a>
-    </section>
-
-    <!-- Card Grid -->
+   <!-- Card Grid -->
     <section class="card-container">
       <div class="category-row">
         <div class="card" id="privatkunde">

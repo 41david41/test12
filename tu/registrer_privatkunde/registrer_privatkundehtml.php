@@ -6,7 +6,8 @@
     <title>registrer_privatkunde</title>
     <link rel="stylesheet" href="../css/registrer.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="../redirectToPage.js"></script>
     <script src="../header/include.js"></script>
@@ -24,19 +25,20 @@
 </head>
 
 <body>
-<div id="header"></div>
-    
+<div id="header">
+    <?php include("../header/header.php"); ?>
+</div>    
 
 
 <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left">OPPRETT NY PROFIL</h1>
+    <h1 class="text-3xl font-light headline-left">PRIVATKUNDE</h1>
 
   
     <div class="dropdown">
-        <button class="dropdown-btn" id="kundegruppeBtn">Bytt kundetype<span class="material-symbols-outlined pil">arrow_drop_down</span></button>
+        <button class="dropdown-btn" id="kundegruppeBtn"><span class="material-symbols-outlined pil">arrow_drop_down</span></button>
         <div class="dropdown-content">
-            <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslag.html')">Borettslag</a>
-            <a href="#" onclick="redirectToPage('registrer_bedriftkunde/registrer_bedriftkunde.html')">Bedriftskunde</a>
+            <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslaghtml.php')">Borettslag</a>
+            <a href="#" onclick="redirectToPage('registrer_bedriftkunde/registrer_bedriftkundehtml.php')">Bedriftskunde</a>
         </div>
     </div>
 </div>
@@ -71,12 +73,16 @@
             
             <div class="button-container">
                 <input type="file" name="bilde" id="imageUpload" accept="image/*" hidden>
-                <button id="bilde" class="secondaryBTN" type="button" onclick="document.getElementById('imageUpload').click();">➕ Bilde</button>
+                <button id="bilde" class="secondaryBTN" type="button" onclick="document.getElementById('imageUpload').click();">
+                    <span class="material-icons">image</span>
+                </button>
            
                 <input type="file" name="pdf" id="pdfUpload" accept="application/pdf" hidden>
-                <button id="PDF" class="secondaryBTN" type="button" onclick="document.getElementById('pdfUpload').click();">➕ PDF</button>
+                <button id="PDF" class="secondaryBTN" type="button" onclick="document.getElementById('pdfUpload').click();">
+                    <span class="material-icons">picture_as_pdf</span>
+                </button>
             </div>
-      
+            
               <div class="button-container">
                 <button type="submit" class="primaryBTN">Registrer</button>
               </div>

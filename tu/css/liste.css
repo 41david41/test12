@@ -1,18 +1,20 @@
 /* 1. Reset & Global Base Styles */
 body {
   background-color: #0f1c2e;
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   color: white;
   overflow-y: scroll;
 }
 
 .headline-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 34px auto;
+  padding: 8px 16px;
   display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  width: 70%;
-  margin: 34px auto; 
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .view-options {
@@ -26,7 +28,6 @@ body {
 
 .view-options button {
   background: rgb(87, 81, 81);
-  border-radius: 3px;
   padding: 5px 10px;
   cursor: pointer;
   transition: background 0.3s;
@@ -74,7 +75,6 @@ cursor: pointer;
 .dropdown-btn {
   color: #0a0a0a;  
   background-color: white; 
-  border: 1px solid #ccc; /* Match input fields */
   padding: 8px 12px;
   cursor: pointer;
 }
@@ -92,7 +92,6 @@ cursor: pointer;
   min-width: 124px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -148,7 +147,6 @@ th {
     flex-direction: column;
     justify-content: space-between;
     background: white;
-    border-radius: 1rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     padding: 1rem;
@@ -259,60 +257,6 @@ th {
   background-color: #125aa6;   /* mørkere blå ved hover */
 }
 
-/*
-.rediger-tabell-btn {
-  background-color: #1976d2;      
-  color: white;                  
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 32px;
-  text-align: center;
-  cursor: pointer;
-  top: 10px;
-  left: 10px;
-  padding: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-}
-
-.rediger-tabell-btn:hover {
-  background-color: #125aa6;   
-}
-
-.slett-tabell-btn {
-    background-color: #e53935;      
-    color: white;                   
-    border: none;
-    border-radius: 50%;             
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 32px;
-    text-align: center;
-    cursor: pointer;
-    top: 10px;
-    right: 10px;
-    padding: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease;
-  }
-  
-.slett-tabell-btn:hover {
-    background-color: #c62828;  
-  }
-*/
-
 /*Pop up visning*/
 .modal {
   position: fixed;
@@ -366,7 +310,6 @@ th {
 .pil {
   font-size: 20px;
   color: #333;
-  margin-left: 0.5rem;
   vertical-align: middle;
   transform: rotate(0deg); /* eller 180deg for oppover */
   transition: transform 0.3s ease;
@@ -430,7 +373,7 @@ th {
   background-color: white;
   color: black;
   cursor: pointer;
-  padding: 6px 8px;
+  padding: 8px 12px;  
   width: 100%;
 }
 

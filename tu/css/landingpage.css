@@ -11,41 +11,43 @@
 
 /* Shared container styling */
 .container {
-    width: 90%;
+    width: 70%;
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 0;  
     box-sizing: border-box;
 }
 
-/* Top Section */
-.top-section {
+.headline-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 34px auto;
+    padding: 8px 16px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 10px; /* Reduced margin */
-    padding: 0;
-}
-
-h1 {
-    margin-top: 20px; /* Reduced margin to bring it closer */
-    font-size: 30px;
-    flex-grow: 1;
-    text-align: left;
-}
+    align-items: flex-start;
+  }
 
 /* Secondary Button */
 .secondaryBTN {
+    vertical-align: middle;
     background-color: transparent;  /* Transparent */
     color: white;  
-    padding: 10px 20px;
+    padding: 8px 12px;
     border: 2px solid white;  /* White border */
-    border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;  /* Reduced space */
     transition: background-color 0.3s, color 0.3s;
 }
+
+.pil {
+    font-size: 20px;
+    color: #ffffff;
+    vertical-align: middle;
+    transform: rotate(0deg); /* eller 180deg for oppover */
+    transition: transform 0.3s ease;
+  }
+
+
 
 .secondaryBTN:hover {
     background-color: white;  /* Fill color on hover */
@@ -54,11 +56,11 @@ h1 {
 
 /* Card Container */
 .card-container {
+    width: 100%;
     margin-top: 10px; /* Reduced margin to move closer */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
 }
 
 .category-row {
@@ -66,20 +68,18 @@ h1 {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-bottom: 20px; /* Reduced space */
+    gap: 16px;
 }
 
 /* Card Styles */
 .card {
     background-color: #FFF;
     padding: 20px;
-    border-radius: 10px;
     text-align: center;
     font-size: 18px;
     font-weight: 600;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    width: 30%;
-    margin: 0 10px;
+    width: 100%;
     cursor: pointer !important; /* Make sure it's clickable */
     pointer-events: auto !important;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -118,7 +118,7 @@ p {
     }
 
     .card {
-        width: 80%;
+        width: 100%;
         margin-bottom: 20px;
     }
 }
