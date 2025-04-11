@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/liste.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="../redirectToPage.js"></script>
@@ -21,25 +22,6 @@
             width: 100%;
         }
 
-        .export-btn {
-            margin-left: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .export-btn:hover {
-            background-color: #45a049;
-        }
-
-        /* Disabled button style */
-        .export-btn.disabled {
-            background-color: #c0c0c0;
-            cursor: not-allowed;
-        }
     </style>   
 </head>
 
@@ -52,7 +34,7 @@
     <h1 class="text-3xl font-light headline-left">BEDRIFTSKUNDER</h1>
 
     <div class="button-container">
-    <button id="exportBtn" onclick="exportToCSV()" class="export-btn">CSV</button>
+    <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">CSV</button>
         <div class="dropdown">
             <button class="dropdown-btn" id="kundegruppeBtn"><span class="material-symbols-outlined pil">arrow_drop_down</span></button>
             <div class="dropdown-content">
@@ -70,7 +52,11 @@
 
 <div class="container">
     <div class="visning-sok-wrapper">
-        <div class="left-spacer"></div> <!-- tom plass på venstre side -->
+        <div class="left-spacer">
+            <button class="secondaryBTN" id="filter">
+                <span class="material-icons">filter_alt</span>            
+            </button>
+        </div> 
         
         <div class="view-options">
             <button onclick="settVisning('grid')">🔲</button>

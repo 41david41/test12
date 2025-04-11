@@ -20,26 +20,6 @@
         #header header {
             width: 100%;
         }
-
-        .export-btn {
-            margin-left: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .export-btn:hover {
-            background-color: #45a049;
-        }
-
-        /* Disabled button style */
-        .export-btn.disabled {
-            background-color: #c0c0c0;
-            cursor: not-allowed;
-        }
     </style>   
 </head>
 
@@ -53,7 +33,7 @@
     
     <div class="button-container">
          <!-- Export to CSV button -->
-         <button id="exportBtn" onclick="exportToCSV()" class="export-btn">CSV</button>
+         <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">CSV</button>
         <div class="dropdown">
             <button class="dropdown-btn" id="kundegruppeBtn"><span class="material-symbols-outlined pil">arrow_drop_down</span></button>
             <div class="dropdown-content">

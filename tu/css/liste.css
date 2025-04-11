@@ -28,7 +28,8 @@ body {
 
 .view-options button {
   background: rgb(87, 81, 81);
-  padding: 5px 10px;
+  padding: 6px 12px;
+  border-radius: 2px;
   cursor: pointer;
   transition: background 0.3s;
   width: 40px;        /* eller 48px, juster etter ønsket størrelse */
@@ -50,7 +51,7 @@ body {
   width: 70%;
   background: #d2c8c8;
   padding: 24px;
-  border-radius: 4px;
+  border-radius: 2px;
   margin: auto;
   height: 654px;
   overflow-y: auto;
@@ -143,6 +144,7 @@ th {
 }
 
 .kundeprofil-kort {
+    border-radius: 2px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -301,7 +303,6 @@ th {
   background-color: white;
   color: #0f1c2e;
   padding: 16px;
-  border-radius: 4px;
   display: flex;
   align-items: flex-start; 
   
@@ -332,7 +333,7 @@ th {
 
 #sokefelt {
   padding: 0.5rem;
-  border-radius: 8px;
+  border-radius: 2px;
   border: 1px solid #ccc;
   width: 100%;
   max-width: 300px;
@@ -385,4 +386,11 @@ th {
   background-color: rgb(118, 115, 115);
 }
 
+#exportBtn {
+  background-color: #4CAF50;
+  color: white;
+}
 
+#exportBtn:hover {
+  background-color: #45a049;
+}

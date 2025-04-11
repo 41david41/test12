@@ -60,7 +60,7 @@ if (isset($_GET['brukernavn'])) {
 </div>
    
   <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left"><?php echo $erRedigering ? "OPPDATER BRUKE" : "NY BRUKER"; ?></h1>
+    <h1 class="text-3xl font-light headline-left"><?php echo $erRedigering ? "OPPDATER BRUKER" : "NY BRUKER"; ?></h1>
   </div>
 
   <form action="rediger_bruker_backend.php" method="POST" enctype="multipart/form-data" id="bedriftForm">
