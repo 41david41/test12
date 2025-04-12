@@ -40,7 +40,7 @@ require_once("../landingpage/antall_kunder.php"); // Hent antall kunder
     <h1 class="text-3xl font-light headline-left">KUNDEGRUPPER</h1>
 
     <div class="button-container">
-    <a href="#" onclick="redirectToPage('registrer_privatkunde/registrer_borettslaghtml.php')">
+    <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslaghtml.php')">
         <button class="secondaryBTN" id="nyKundeBtn"><span class="material-icons pil">add</span></button>
       </a>
     </div>

@@ -33,7 +33,6 @@
     
     <div class="button-container">
          <!-- Export to CSV button -->
-         <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">CSV</button>
         <div class="dropdown">
             <button class="dropdown-btn" id="kundegruppeBtn"><span class="material-symbols-outlined pil">arrow_drop_down</span></button>
             <div class="dropdown-content">
@@ -46,6 +45,8 @@
                 <span class="material-icons pil">add</span>
             </button>
         </a>
+        <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">CSV</button>
+
     </div>
 </div>
 

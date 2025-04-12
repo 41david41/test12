@@ -37,21 +37,20 @@
     border: 2px solid white;  /* White border */
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
+    border-radius: 2px;
 }
 
 .pil {
     font-size: 20px;
-    color: #ffffff;
     vertical-align: middle;
     transform: rotate(0deg); /* eller 180deg for oppover */
     transition: transform 0.3s ease;
   }
 
 
-
 .secondaryBTN:hover {
     background-color: white;  /* Fill color on hover */
-    color: #235f9f;  
+    color: #0f1c2e;  
 }
 
 /* Card Container */
@@ -74,6 +73,7 @@
 /* Card Styles */
 .card {
     background-color: #FFF;
+    border-radius: 2px;
     padding: 20px;
     text-align: center;
     font-size: 18px;

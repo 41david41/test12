@@ -9,6 +9,7 @@ include("brukeroversikt_backend.php"); // Inkluderer session og rollelogikk
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brukeroversikt</title>
     <link rel="stylesheet" href="../css/liste.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
@@ -48,7 +49,9 @@ include("brukeroversikt_backend.php"); // Inkluderer session og rollelogikk
     <h1 class="text-3xl font-light headline-left">Brukeroversikt</h1>
   
     <div class="button-container">
-        <a href="#" onclick="redirectToPage('admin/registrer_bruker(admin).php')"><button class="pluss-btn">➕</button></a>
+        <a href="#" onclick="redirectToPage('admin/registrer_bruker(admin).php')"><button class="secondaryBTN">
+            <span class="material-icons pil">add</span>
+        </button></a>
     </div>
 </div>
 

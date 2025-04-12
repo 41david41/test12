@@ -56,6 +56,8 @@ body {
   height: 654px;
   overflow-y: auto;
   align-items: stretch;
+  margin-bottom: 100px;
+
 }
 
 /*button-container*/
@@ -64,20 +66,14 @@ body {
   gap: 8px;
 }
 
-/* + button */
-.pluss-btn{ 
-background-color: white; 
-border: 1px solid #ccc; /* Match input fields */
-padding: 8px 12px;
-cursor: pointer;
-}
-
 /* Dropdown button */
 .dropdown-btn {
   color: #0a0a0a;  
   background-color: white; 
   padding: 8px 12px;
   cursor: pointer;
+  border: 2px solid white;  /* White border */
+  border-radius: 2px;
 }
 
 .dropdown-btn.active {
@@ -310,7 +306,6 @@ th {
 
 .pil {
   font-size: 20px;
-  color: #333;
   vertical-align: middle;
   transform: rotate(0deg); /* eller 180deg for oppover */
   transition: transform 0.3s ease;
@@ -361,34 +356,26 @@ th {
   color: white;
 }
 
- /* Button Styles */
- .primaryBTN {
-  background-color: red;
-  color: white;
-  cursor: pointer;
-  padding: 6px 8px;
-  width: 100%;
-}
-
 .secondaryBTN {
-  background-color: white;
-  color: black;
+  vertical-align: middle;
+  background-color: transparent;  /* Transparent */
+  color: white;  
+  padding: 8px 12px;
+  border: 2px solid white;  /* White border */
   cursor: pointer;
-  padding: 8px 12px;  
-  width: 100%;
-}
-
-.primaryBTN:hover {
-  background-color: rgb(115, 3, 3);
+  border-radius: 2px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .secondaryBTN:hover {
-  background-color: rgb(118, 115, 115);
+  background-color: white;  /* Fill color on hover */
+  color: #235f9f;  
 }
 
 #exportBtn {
   background-color: #4CAF50;
   color: white;
+  border: none;
 }
 
 #exportBtn:hover {
