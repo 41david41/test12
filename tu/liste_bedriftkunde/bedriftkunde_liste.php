@@ -30,9 +30,10 @@
 </div>
 
 <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left">BEDRIFTSKUNDER <span class="material-symbols-outlined pil">arrow_drop_down</span></h1>
     <div class="dropdown">
-            <button class="dropdown-btn" id="kundegruppeBtn"><span class="material-symbols-outlined pil">arrow_drop_down</span></button>
+            <button class="dropdown-btn" id="kundegruppeBtn">
+                <h1 class="font-light headline-left">BEDRIFTSKUNDER <span class="material-symbols-outlined pil">arrow_drop_down</span></h1>
+            </button>
             <div class="dropdown-content">
                 <a href="#" onclick="redirectToPage('liste_privatkunde/privatkunde_liste.php')">Privatkunder</a>
                 <a href="#" onclick="redirectToPage('liste_borettslag/borettslag_liste.php')">Borettslag</a>

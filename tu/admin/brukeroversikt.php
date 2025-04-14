@@ -46,7 +46,7 @@ include("brukeroversikt_backend.php"); // Inkluderer session og rollelogikk
 </div>
 
 <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left">Brukeroversikt</h1>
+    <h1 class="text-3xl font-light headline-left">BRUKEROVERSIKT</h1>
   
     <div class="button-container">
         <a href="#" onclick="redirectToPage('admin/registrer_bruker(admin).php')"><button class="secondaryBTN">

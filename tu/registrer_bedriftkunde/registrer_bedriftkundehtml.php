@@ -31,11 +31,10 @@
     
 
 <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left">BEDRIFTSKUNDE</h1>
-
-   
     <div class="dropdown">
-        <button class="dropdown-btn" id="kundegruppeBtn"><span class="material-symbols-outlined pil">arrow_drop_down</span></button>
+        <button class="dropdown-btn" id="kundegruppeBtn">
+          <h1 class="font-light headline-left">BEDRIFTSKUNDE</h1> <span class="material-symbols-outlined pil">arrow_drop_down</span>
+        </button>
         <div class="dropdown-content">
             <a href="#" onclick="redirectToPage('registrer_privatkunde/registrer_privatkundehtml.php')">Privatkunde</a>
             <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslaghtml.php')">Borettslag</a>

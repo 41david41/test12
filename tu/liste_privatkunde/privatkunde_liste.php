@@ -29,23 +29,24 @@
 </div>
 
 <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left">PRIVATKUNDER</h1>
-    
-    <div class="button-container">
-         <!-- Export to CSV button -->
-        <div class="dropdown">
-            <button class="dropdown-btn" id="kundegruppeBtn"><span class="material-symbols-outlined pil">arrow_drop_down</span></button>
+    <div class="dropdown">
+            <button class="dropdown-btn" id="kundegruppeBtn">
+                <h1 class="font-light headline-left">PRIVATKUNDER <span class="material-symbols-outlined pil">arrow_drop_down</span>
+                </h1>
+            </button>
             <div class="dropdown-content">
                 <a href="#" onclick="redirectToPage('liste_borettslag/borettslag_liste.php')">Borettslag</a>
                 <a href="#" onclick="redirectToPage('liste_bedriftkunde/bedriftkunde_liste.php')">Bedriftskunder</a>
             </div>
-        </div>
+    </div>
+    <div class="button-container">       
         <a href="#" onclick="redirectToPage('registrer_privatkunde/registrer_privatkundehtml.php')">
         <button class="secondaryBTN" id="nyKundeBtn">
                 <span class="material-icons pil">add</span>
             </button>
         </a>
-        <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">CSV</button>
+        <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN"><span class="material-icons pil">
+        download</span> CSV</button>
 
     </div>
 </div>
