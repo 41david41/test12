@@ -6,10 +6,9 @@
   }
 
   form#bedriftForm {
-    width: 70%;
-    max-width: 1200px;
+    padding: 8px 8px;
+    width: 84%;
     margin: 0 auto;
-    padding: 0 20px;
   }
   
   
@@ -27,11 +26,10 @@
   
   .headline-container {
     width: 84%;
-    margin: 34px auto;
+    margin: 28px auto;
     padding: 8px 8px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    gap: 10px;
   }
   
   .pil {
@@ -93,6 +91,21 @@
     display: block;
   }
   
+  .secondaryBTN {
+    vertical-align: middle;
+    background-color: transparent;  /* Transparent */
+    color: white;  
+    padding: 8px 12px;
+    border: 2px solid white;  /* White border */
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .secondaryBTN:hover {
+    background-color: white;  /* Fill color on hover */
+    color: #235f9f;  
+  }
   
   .form-group-admin{
     width: 48%;
@@ -103,7 +116,6 @@
   
   /* Container & Form Layout */
   .container {
-    max-width: 1200px;
     margin: 0 auto;
     width: 100%;
     display: flex;
@@ -203,7 +215,7 @@
     width: 100%;
   }
   
-  .secondaryBTN {
+  .fileinput {
     background-color: white;
     color: black;
     cursor: pointer;
@@ -215,7 +227,7 @@
     background-color: rgb(115, 3, 3);
   }
   
-  .secondaryBTN:hover {
+  .fileinput:hover {
     background-color: rgb(118, 115, 115);
   }
   

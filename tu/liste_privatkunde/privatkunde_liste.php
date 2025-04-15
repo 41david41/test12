@@ -31,8 +31,7 @@
 <div class="headline-container">
     <div class="dropdown">
             <button class="dropdown-btn" id="kundegruppeBtn">
-                <h1 class="font-light headline-left">PRIVATKUNDER <span class="material-symbols-outlined pil">arrow_drop_down</span>
-                </h1>
+                PRIVATKUNDER <span class="material-symbols-outlined pil">arrow_drop_down</span>
             </button>
             <div class="dropdown-content">
                 <a href="#" onclick="redirectToPage('liste_borettslag/borettslag_liste.php')">Borettslag</a>

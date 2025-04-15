@@ -31,9 +31,12 @@
     
 
 <div class="headline-container">
+<button class="secondaryBTN" id="go_back" onclick="redirectToPage('liste_bedriftkunde/bedriftkunde_liste.php')">
+    <span class="material-icons pil">arrow_back</span>
+    </button>
     <div class="dropdown">
         <button class="dropdown-btn" id="kundegruppeBtn">
-          <h1 class="font-light headline-left">BEDRIFTSKUNDE</h1> <span class="material-symbols-outlined pil">arrow_drop_down</span>
+          BEDRIFTSKUNDE <span class="material-symbols-outlined pil">arrow_drop_down</span>
         </button>
         <div class="dropdown-content">
             <a href="#" onclick="redirectToPage('registrer_privatkunde/registrer_privatkundehtml.php')">Privatkunde</a>
@@ -70,12 +73,12 @@
   
           <div class="button-container">
                 <input type="file" name="bilde" id="imageUpload" accept="image/*" hidden>
-                <button id="bilde" class="secondaryBTN" type="button" onclick="document.getElementById('imageUpload').click();">
+                <button id="bilde" class="fileinput" type="button" onclick="document.getElementById('imageUpload').click();">
                     <span class="material-icons">image</span>
                 </button>
            
                 <input type="file" name="pdf" id="pdfUpload" accept="application/pdf" hidden>
-                <button id="PDF" class="secondaryBTN" type="button" onclick="document.getElementById('pdfUpload').click();">
+                <button id="PDF" class="fileinput" type="button" onclick="document.getElementById('pdfUpload').click();">
                     <span class="material-icons">picture_as_pdf</span>
                 </button>
             </div>
