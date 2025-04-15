@@ -71,7 +71,7 @@ function lagHTML(b) {
 
   const kortInnhold = `
     <div class="kort-knapper">
-      <button class="rediger-kort-btn" onclick="event.stopPropagation(); window.location.href='../registrer_bedriftkunde/registrer_bedriftkunde.html?id=${b.id}'">✏️</button>
+      <button class="rediger-kort-btn" onclick="event.stopPropagation(); window.location.href='../registrer_bedriftkunde/registrer_bedriftkundehtml.php?id=${b.id}'">✏️</button>
       <form action="slett_bedriftkunde.php" method="POST" onsubmit="event.stopPropagation(); return confirm('Er du sikker på at du vil slette denne bedriftskunden?')">
         <input type="hidden" name="id" value="${b.id}">
         <button type="submit" class="slett-kort-btn">🗑️</button>
@@ -137,3 +137,20 @@ window.addEventListener("click", e => {
   const modal = document.getElementById("profilModal");
   if (e.target === modal) lukkModal();
 });
+
+function velgVisning(modus) {
+  visningsmodus = modus;
+  settVisning(modus); // denne er allerede definert i koden din
+
+  // Oppdater visuell knapp-status
+  const grid = document.getElementById('gridBtn');
+  const liste = document.getElementById('listeBtn');
+
+  if (modus === 'grid') {
+    grid.classList.add('selected');
+    liste.classList.remove('selected');
+  } else {
+    liste.classList.add('selected');
+    grid.classList.remove('selected');
+  }
+}

@@ -93,5 +93,6 @@
       </form>
       <script src="registrer_borettslag.js"></script>
       <script src="../preview.js"></script>
+      
 </body>
 </html>

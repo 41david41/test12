@@ -46,29 +46,31 @@
                 <span class="material-icons pil">add</span>
             </button>
         </a>
-        <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">CSV</button>
+        <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">
+            <span class="material-icons pil">download</span> CSV
+        </button>    
     </div>
 </div>
 
-<div class="container">
-    <div class="visning-sok-wrapper">
-        <div class="left-spacer">
-            <button class="secondaryBTN" id="filter">
-                <span class="material-icons">filter_alt</span>            
-            </button>
-        </div> 
-        
-        <div class="view-options">
-            <button onclick="settVisning('grid')">🔲</button>
-            <button onclick="settVisning('liste')">☰</button>
-        </div>
-      
+<div class="sticky-header">
+    <div class="visning-sok-wrapper">    
         <div class="search-container">
-            <input type="text" id="sokefelt" placeholder="Søk..." oninput="filtrerKunder()">
+            <input type="text" id="sokefelt" placeholder="Søk..." oninput="filtrerKunder()"> 
+            <button class="secondaryBTN" id="filter">
+                <span class="material-icons pil">filter_alt</span>            
+            </button>
+        </div>    
+    
+        <div class="toggle">
+            <div id="gridBtn" class="option selected" onclick="velgVisning('grid')"><span class="material-icons pil">grid_view</span></div>
+            <div id="listeBtn" class="option" onclick="velgVisning('liste')"><span class="material-icons pil">list</span></div>
         </div>
-    </div>
 
-    <!-- Tabellvisning -->
+    </div>   
+</div>
+
+<div class="container">
+        <!-- Tabellvisning -->
     <table class="kunde-tabell" id="bedriftkunde-tabell" style="display: none;">
         <thead>
             <tr>

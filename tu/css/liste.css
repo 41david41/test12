@@ -5,43 +5,71 @@ body {
   margin: 0;
   color: white;
   overflow-y: scroll;
+
 }
 
 .headline-container {
   width: 84%;
-  margin: 28px auto;
-  padding: 8px 8px;
+  margin: 34px auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-.view-options {
+.sticky-header{
   display: flex;
-  gap: 10px;
+  justify-content: space-between;  
+  width: 84%;
+  margin: auto;
+}
+
+.visning-sok-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 32px 0;
+  position: sticky;
+}
+
+.search-container {
+  display: flex;
+  gap: 8px;
   margin-bottom: 24px;
-  justify-content: center;
-  margin: 0 auto;   
-
+  margin: 0;   
 }
 
-.view-options button {
-  background: rgb(87, 81, 81);
-  padding: 6px 12px;
+#sokefelt {
+  padding: 0.5rem;
   border-radius: 2px;
-  cursor: pointer;
-  transition: background 0.3s;
-  width: 40px;        /* eller 48px, juster etter ønsket størrelse */
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;    /* juster ikonstørrelse */
-  padding: 0;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 300px;
+  background-color: white;
+  color: #0a0a0a;
 }
 
-.view-options button:hover {
-  background: #e0e0e0;
+.toggle {
+  display: flex;
+  border: 2px solid white;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  
+}
+
+.option {
+  padding: 8px 12px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  transition: background 0.3s;
+}
+
+.selected {
+  background-color: white;
+  color: black;
 }
 
 .container {
@@ -49,15 +77,14 @@ body {
   flex-direction: column;
   width: 84%;
   background: transparent;
-  padding: 8px 8px;
   border-radius: 2px;
   margin: auto;
   height: 654px;
-  overflow-y: auto;
-  align-items: stretch;
   margin-bottom: 100px;
-
+  overflow-y: scroll;
 }
+
+
 
 /*button-container*/
 .button-container {
@@ -145,6 +172,8 @@ th {
   gap: 1.5rem;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 100px;
+
 }
 
 .kundeprofil-kort {
@@ -319,31 +348,6 @@ th {
   transition: transform 0.3s ease;
 }
 
-.search-container {
-  margin-left: auto;
-  height: 40px;
-}
-
-.visning-sok-wrapper {
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  display: grid;
-  width: 100%;
-  margin: 0 auto 1rem auto;
-  justify-content: space-between;
-}
-
-
-#sokefelt {
-  padding: 0.5rem;
-  border-radius: 2px;
-  border: 1px solid #ccc;
-  width: 100%;
-  max-width: 300px;
-  background-color: white;
-  color: #0a0a0a;
-}
-
 .kundeprofil-kort,
 .placeholder-kort {
   min-height: 264px; /* eller høyden dine kort vanligvis har */
@@ -365,7 +369,6 @@ th {
 }
 
 .secondaryBTN {
-  vertical-align: middle;
   background-color: transparent;  /* Transparent */
   color: white;  
   padding: 8px 12px;
@@ -387,5 +390,5 @@ th {
 }
 
 #exportBtn:hover {
-  background-color: #45a049;
+  background-color: #1d6220;
 }

@@ -34,7 +34,7 @@ foreach ($patterns as $key => $pattern) {
 }
 
 if (!empty($errors)) {
-    echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_bedriftkunde.html';</script>";
+    echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_bedriftkundehtml.php';</script>";
     exit;
 }
 
@@ -48,7 +48,7 @@ try {
     $existingCount = $stmt->fetchColumn();
 
     if ($existingCount > 0) {
-        echo "<script>alert('Organisasjonsnummer eller e-post er allerede registrert.'); window.location.href='registrer_bedriftkunde.html';</script>";
+        echo "<script>alert('Organisasjonsnummer eller e-post er allerede registrert.'); window.location.href='registrer_bedriftkundehtml.php';</script>";
         exit;
     }
 } catch (PDOException $e) {

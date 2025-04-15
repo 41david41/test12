@@ -9,18 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <script src="../redirectToPage.js"></script>
-    <style>
-        #header {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    
-        #header header {
-            width: 100%;
-        }
-    </style>   
+    <script src="../redirectToPage.js"></script> 
 </head>
 
 <body>
@@ -38,31 +27,37 @@
                 <a href="#" onclick="redirectToPage('liste_bedriftkunde/bedriftkunde_liste.php')">Bedriftskunder</a>
             </div>
         </div>
-<z    
+
     <div class="button-container">
         <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslaghtml.php')">
             <button class="secondaryBTN" id="nyKundeBtn">
                 <span class="material-icons pil">add</span>
             </button>
         </a>
-        <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">CSV</button>
+        <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">
+            <span class="material-icons pil">download</span> CSV
+        </button>    
     </div>
 </div>
 
-<div class="container">
-    <div class="visning-sok-wrapper">
-        <div class="left-spacer"></div> <!-- tom plass på venstre side -->
-        
-        <div class="view-options">
-          <button onclick="settVisning('grid')">🔲</button>
-          <button onclick="settVisning('liste')">☰</button>
-        </div>
-      
+<div class="sticky-header">
+    <div class="visning-sok-wrapper">    
         <div class="search-container">
-          <input type="text" id="sokefelt" placeholder="Søk..." oninput="filtrerKunder()">
-        </div>
-    </div>
+            <input type="text" id="sokefelt" placeholder="Søk..." oninput="filtrerKunder()"> 
+            <button class="secondaryBTN" id="filter">
+                <span class="material-icons pil">filter_alt</span>            
+            </button>
+        </div>    
     
+        <div class="toggle">
+            <div id="gridBtn" class="option selected" onclick="velgVisning('grid')"><span class="material-icons pil">grid_view</span></div>
+            <div id="listeBtn" class="option" onclick="velgVisning('liste')"><span class="material-icons pil">list</span></div>
+        </div>
+
+    </div>   
+</div>
+
+<div class="container">   
     <!-- Tabellvisning -->
     <table class="kunde-tabell" id="borettslag-tabell" style="display: none;">
         <thead>

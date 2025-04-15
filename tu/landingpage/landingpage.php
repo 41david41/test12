@@ -16,17 +16,6 @@ require_once("../landingpage/antall_kunder.php"); // Hent antall kunder
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <script defer src="landingpage.js"></script>
   <script src="../redirectToPage.js"></script>
-  <style>
-      #header {
-          width: 100%;
-          margin: 0;
-          padding: 0;
-      }
-  
-      #header header {
-          width: 100%;
-      }
-  </style>   
 </head>
 
 <body>
@@ -37,7 +26,7 @@ require_once("../landingpage/antall_kunder.php"); // Hent antall kunder
 </div>
 
 <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left">KUNDEGRUPPER</h1>
+    <h1 class="text-3xl">KUNDEGRUPPER</h1>
 
     <div class="button-container">
     <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslaghtml.php')">

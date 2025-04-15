@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = urlParams.get("id");
   
     if (id) {
-      document.querySelector(".headline-left").textContent = "REDIGER PROFIL";
       document.getElementById("bedriftForm").action = `../liste_bedriftkunde/oppdater_bedriftkunde.php?id=${id}`;
   
       fetch(`../liste_bedriftkunde/hent_bedriftkunde_med_id.php?id=${id}`)

@@ -3,10 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = urlParams.get("id");
   
     if (id) {
-      // Bytt overskrift til "Rediger profil"
-      document.querySelector(".headline-left").textContent = "REDIGER PROFIL";
-  
-      // Endre form action til oppdaterings-URL
+          // Endre form action til oppdaterings-URL
       document.getElementById("bedriftForm").action = `../liste_borettslag/oppdater_borettslag.php?id=${id}`;
   
       // Hent data for gitt ID

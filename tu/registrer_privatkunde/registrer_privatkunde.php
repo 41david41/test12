@@ -33,7 +33,7 @@ foreach ($patterns as $key => $pattern) {
 }
 
 if (!empty($errors)) {
-    echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_privatkunde.html';</script>";
+    echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_privatkundehtml.php';</script>";
     exit;
 }
 
@@ -47,7 +47,7 @@ try {
     $existingCount = $stmt->fetchColumn();
 
     if ($existingCount > 0) {
-        echo "<script>alert('E-post eller telefonnummer er allerede registrert.'); window.location.href='registrer_privatkunde.html';</script>";
+        echo "<script>alert('E-post eller telefonnummer er allerede registrert.'); window.location.href='registrer_privatkundehtml.php';</script>";
         exit;
     }
 } catch (PDOException $e) {
