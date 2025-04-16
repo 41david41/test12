@@ -10,7 +10,7 @@ body {
 
 .headline-container {
   width: 84%;
-  margin: 34px auto;
+  margin: 44px auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -27,7 +27,7 @@ body {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin: 32px 0;
+  margin: 0 0 22px 0;
   position: sticky;
 }
 

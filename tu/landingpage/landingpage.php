@@ -14,7 +14,6 @@ require_once("../landingpage/antall_kunder.php"); // Hent antall kunder
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-  <script defer src="landingpage.js"></script>
   <script src="../redirectToPage.js"></script>
 </head>
 
@@ -64,7 +63,7 @@ require_once("../landingpage/antall_kunder.php"); // Hent antall kunder
 
         <div class="card" id="borettslag">
           <a href="#" onclick="redirectToPage('liste_borettslag/borettslag_liste.php')">
-            <div class="image-placeholder"></div>
+            <div class="image-placeholder"><img src="../IMG/borettslag-bilde"></div>
             <div class="card-text">
               <h2>Borettslag</h2>
               <p><?php echo $antallBorettslag; ?></p>
