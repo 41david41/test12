@@ -22,6 +22,8 @@ header {
     border-radius: 5px;
     min-width: 160px;
     right: -1px;
+    z-index: 9999;               
+    pointer-events: auto;        
 }
 
 .dropdown-menu a {
