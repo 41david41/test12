@@ -68,6 +68,39 @@
     </div>   
 </div>
 
+<div id="filterPopup" class="filter-modal hidden">
+  <div class="filter-wrapper">
+    <form id="filterForm">
+      <div class="filter-grid">
+        <input type="text" name="fornavn" placeholder="Fornavn">
+        <input type="text" name="etternavn" placeholder="Etternavn">
+
+        <input type="text" name="epost" placeholder="E-post">
+        <input type="text" name="telefon" placeholder="Telefon (8 siffer)">
+
+        <input type="text" name="adresse1" placeholder="Adresse 1">
+        <input type="text" name="adresse2" placeholder="Adresse 2">
+
+        <div class="postnr-range">
+          <input type="text" name="postnrMin" placeholder="Postnr fra">
+          <span>–</span>
+          <input type="text" name="postnrMax" placeholder="Postnr til">
+        </div>
+
+        <input type="text" name="sted" placeholder="Sted">
+        <input type="text" name="kommentar" placeholder="Kommentar">
+      </div>
+
+      <div class="filter-actions">
+        <button type="button" id="lukkFilter">Avbryt</button>
+        <button type="reset">Nullstill</button>
+        <button type="submit" class="sok">Søk</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 <div class="container">
 <!-- Tabellvisning -->
 <table class="kunde-tabell" id="privatkunde-tabell" style="display: none;">
@@ -96,84 +129,6 @@
       <div id="modalInnhold"></div>
     </div>
 </div>
-
-<script>
-// Function to switch between grid and list view
-function settVisning(visningType) {
-    const isGridView = visningType === 'grid';
-    const grid = document.getElementById('privatkunde-grid');
-    const table = document.getElementById('privatkunde-tabell');
-    const exportBtn = document.getElementById('exportBtn');
-    
-    // Toggle the visibility of the table and grid
-    if (isGridView) {
-        grid.style.display = 'block';
-        table.style.display = 'none';
-        exportBtn.classList.add('disabled');  // Disable the export button in grid view
-    } else {
-        grid.style.display = 'none';
-        table.style.display = 'block';
-        exportBtn.classList.remove('disabled');  // Enable the export button in list view
-    }
-}
-
-// Function to export the table content to a CSV file
-function exportToCSV() {
-    const isGridView = document.getElementById('privatkunde-grid').style.display !== 'none';
-    
-    // If in grid view, show an alert to change to list view
-    if (isGridView) {
-        alert("Du må bytte til listevisning for å eksportere til CSV.");
-        return; // Prevent further action if in grid view
-    }
-
-    const rows = [];
-    
-    // If in table view, get the table data
-    if (!isGridView) {
-        const table = document.getElementById('privatkunde-tabell');
-        
-        const headers = table.querySelectorAll('thead th');
-        const headerRow = [];
-        for (let i = 0; i < headers.length; i++) {
-            headerRow.push(headers[i].innerText.trim());
-        }
-        rows.push(headerRow.join(';'));
-        
-        const tbody = table.querySelector('tbody');
-        const tableRows = tbody.querySelectorAll('tr');
-        tableRows.forEach(row => {
-            const cols = row.querySelectorAll('td');
-            const rowData = [];
-            for (let i = 0; i < cols.length; i++) {
-                rowData.push(cols[i].innerText.trim());
-            }
-            rows.push(rowData.join(';'));
-        });
-    } else {
-        const gridItems = document.querySelectorAll('#privatkunde-grid .kundeprofil');
-        const headerRow = ['Fornavn', 'Etternavn', 'Adresse', 'Postnummer', 'Sted'];
-        rows.push(headerRow.join(';'));
-
-        gridItems.forEach(item => {
-            const fornavn = item.querySelector('.fornavn').innerText.trim();
-            const etternavn = item.querySelector('.etternavn').innerText.trim();
-            const adresse = item.querySelector('.adresse').innerText.trim();
-            const postnummer = item.querySelector('.postnummer').innerText.trim();
-            const sted = item.querySelector('.sted').innerText.trim();
-            rows.push([fornavn, etternavn, adresse, postnummer, sted].join(';'));
-        });
-    }
-
-    const csvString = rows.join('\n');
-    const blob = new Blob([csvString], { type: 'text/csv' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'privatkunde_liste.csv';
-    link.click();
-}
-</script>
-
 <script src="privatkunde_liste.js"></script>
 </body>
 </html>

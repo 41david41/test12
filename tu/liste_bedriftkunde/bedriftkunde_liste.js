@@ -154,3 +154,119 @@ function velgVisning(modus) {
     grid.classList.remove('selected');
   }
 }
+
+document.getElementById("filter").addEventListener("click", () => {
+  document.getElementById("filterPopup").classList.remove("hidden");
+});
+
+document.getElementById("lukkFilter").addEventListener("click", () => {
+  document.getElementById("filterPopup").classList.add("hidden");
+});
+
+document.getElementById("filterForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const form = new FormData(this);
+
+  const tekstInneholder = (felt, sok) =>
+    (felt || "").toLowerCase().includes((sok || "").toLowerCase());
+
+  const filtrert = alleKunder.filter(kunde =>
+    (!form.get("orgnr") || (kunde.orgnr || "").includes(form.get("orgnr"))) &&
+    (!form.get("bedriftsnavn") || tekstInneholder(kunde.bedriftsnavn, form.get("bedriftsnavn"))) &&
+    (!form.get("adresse1") || tekstInneholder(kunde.adresse1, form.get("adresse1"))) &&
+    (!form.get("adresse2") || tekstInneholder(kunde.adresse2, form.get("adresse2"))) &&
+    (!form.get("sted") || tekstInneholder(kunde.sted, form.get("sted"))) &&
+    (!form.get("epost") || tekstInneholder(kunde.epost, form.get("epost"))) &&
+    (!form.get("telefon") || (kunde.telefon || "").includes(form.get("telefon"))) &&
+    (!form.get("kontaktperson") || tekstInneholder(kunde.kontaktperson, form.get("kontaktperson"))) &&
+    (!form.get("kontaktpersonTlf") || (kunde.kontaktpersonTlf || "").includes(form.get("kontaktpersonTlf"))) &&
+    (!form.get("styreleder") || tekstInneholder(kunde.styreleder, form.get("styreleder"))) &&
+    (!form.get("kommentar") || tekstInneholder(kunde.kommentar, form.get("kommentar"))) &&
+    (() => {
+      const min = parseInt(form.get("postnrMin")) || 0;
+      const max = parseInt(form.get("postnrMax")) || 9999;
+      const postnr = parseInt(kunde.postnr);
+      return isNaN(postnr) ? false : postnr >= min && postnr <= max;
+    })()
+  );
+
+  visKunder(filtrert);
+  document.getElementById("filterPopup").classList.add("hidden");
+});
+
+
+
+// Function to switch between grid and list view
+function settVisning(visningType) {
+    const isGridView = visningType === 'grid';
+    const grid = document.getElementById('bedriftkunde-grid');
+    const table = document.getElementById('bedriftkunde-tabell');
+    const exportBtn = document.getElementById('exportBtn');
+    
+    // Toggle the visibility of the table and grid
+    if (isGridView) {
+        grid.style.display = 'block';
+        table.style.display = 'none';
+        exportBtn.classList.add('disabled');  // Disable the export button in grid view
+    } else {
+        grid.style.display = 'none';
+        table.style.display = 'block';
+        exportBtn.classList.remove('disabled');  // Enable the export button in list view
+    }
+}
+
+// Function to export the table content to a CSV file
+function exportToCSV() {
+    const isGridView = document.getElementById('bedriftkunde-grid').style.display !== 'none';
+    
+    // If in grid view, show an alert to change to list view
+    if (isGridView) {
+        alert("Du må bytte til listevisning for å eksportere til CSV.");
+        return; // Prevent further action if in grid view
+    }
+
+    const rows = [];
+    
+    // If in table view, get the table data
+    if (!isGridView) {
+        const table = document.getElementById('bedriftkunde-tabell');
+        
+        const headers = table.querySelectorAll('thead th');
+        const headerRow = [];
+        for (let i = 0; i < headers.length; i++) {
+            headerRow.push(headers[i].innerText.trim());
+        }
+        rows.push(headerRow.join(';'));
+        
+        const tbody = table.querySelector('tbody');
+        const tableRows = tbody.querySelectorAll('tr');
+        tableRows.forEach(row => {
+            const cols = row.querySelectorAll('td');
+            const rowData = [];
+            for (let i = 0; i < cols.length; i++) {
+                rowData.push(cols[i].innerText.trim());
+            }
+            rows.push(rowData.join(';'));
+        });
+    } else {
+        const gridItems = document.querySelectorAll('#bedriftkunde-grid .kundeprofil');
+        const headerRow = ['Bedriftsnavn', 'Adresse', 'Postnr', 'Sted'];
+        rows.push(headerRow.join(';'));
+
+        gridItems.forEach(item => {
+            const bedriftsnavn = item.querySelector('.bedriftsnavn').innerText.trim();
+            const adresse = item.querySelector('.adresse').innerText.trim();
+            const postnummer = item.querySelector('.postnummer').innerText.trim();
+            const sted = item.querySelector('.sted').innerText.trim();
+            rows.push([bedriftsnavn, adresse, postnummer, sted].join(';'));
+        });
+    }
+
+    const csvString = rows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'bedriftkunde_liste.csv';
+    link.click();
+}
