@@ -18,6 +18,10 @@ function hentOgVisBorettslag() {
 }
 
 function visKunder(liste) {
+
+  visteKunder = liste; // 👈 viktig!
+
+
   const gridContainer = document.getElementById("borettslag-grid");
   const tabell = document.getElementById("borettslag-tabell");
   const tbody = document.getElementById("borettslag-tbody");
@@ -204,71 +208,33 @@ document.getElementById("filterForm").addEventListener("submit", function (e) {
   document.getElementById("filterPopup").classList.add("hidden");
 });
 
-// Function to switch between grid and list view
-function settVisning(visningType) {
-  const isGridView = visningType === 'grid';
-  const grid = document.getElementById('borettslag-grid');
-  const table = document.getElementById('borettslag-tabell');
-  const exportBtn = document.getElementById('exportBtn');
-  
-  // Toggle the visibility of the table and grid
-  if (isGridView) {
-      grid.style.display = 'block';
-      table.style.display = 'none';
-      exportBtn.classList.add('disabled');  // Disable the export button in grid view
-  } else {
-      grid.style.display = 'none';
-      table.style.display = 'block';
-      exportBtn.classList.remove('disabled');  // Enable the export button in list view
-  }
-}
-
-// Function to export the table content to a CSV file
 function exportToCSV() {
-  const isGridView = document.getElementById('borettslag-grid').style.display !== 'none';
-  
-  // If in grid view, show an alert to change to list view
-  if (isGridView) {
-      alert("Du må bytte til listevisning for å eksportere til CSV.");
-      return; // Prevent further action if in grid view
+  if (!visteKunder || visteKunder.length === 0) {
+    alert("Ingen borettslag å eksportere.");
+    return;
   }
 
-  const rows = [];
-  
-  // If in table view, get the table data
-  if (!isGridView) {
-      const table = document.getElementById('borettslag-tabell');
-      
-      const headers = table.querySelectorAll('thead th');
-      const headerRow = [];
-      for (let i = 0; i < headers.length; i++) {
-          headerRow.push(headers[i].innerText.trim());
-      }
-      rows.push(headerRow.join(';'));
-      
-      const tbody = table.querySelector('tbody');
-      const tableRows = tbody.querySelectorAll('tr');
-      tableRows.forEach(row => {
-          const cols = row.querySelectorAll('td');
-          const rowData = [];
-          for (let i = 0; i < cols.length; i++) {
-              rowData.push(cols[i].innerText.trim());
-          }
-          rows.push(rowData.join(';'));
-      });
-  } else {
-      const gridItems = document.querySelectorAll('#borettslag-grid .kundeprofil');
-      const headerRow = ['Borettslag', 'Adresse', 'Postnummer', 'Sted'];
-      rows.push(headerRow.join(';'));
+  const headers = [
+    'Organisasjonsnummer', 'Navn', 'Styreleder', 'Adresse 1', 'Adresse 2',
+    'Postnummer', 'Sted', 'E-post', 'Telefon', 'Kontaktperson', 'Tlf kontaktperson'
+  ];
+  const rows = [headers.join(';')];
 
-      gridItems.forEach(item => {
-          const borettslag = item.querySelector('.borettslag').innerText.trim();
-          const adresse = item.querySelector('.adresse').innerText.trim();
-          const postnummer = item.querySelector('.postnummer').innerText.trim();
-          const sted = item.querySelector('.sted').innerText.trim();
-          rows.push([borettslag, adresse, postnummer, sted].join(';'));
-      });
-  }
+  visteKunder.forEach(b => {
+    rows.push([
+      b.orgnr || '',
+      b.navn || '',
+      b.styreleder || '',
+      b.adresse1 || '',
+      b.adresse2 || '',
+      b.postnr || '',
+      b.sted || '',
+      b.epost || '',
+      b.telefon || '',
+      b.kontaktperson || '',
+      b.kontaktpersonTlf || ''
+    ].map(val => `"${val.replace(/"/g, '""')}"`).join(';'));
+  });
 
   const csvString = rows.join('\n');
   const blob = new Blob([csvString], { type: 'text/csv' });

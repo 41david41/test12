@@ -18,6 +18,8 @@ function hentOgVisBedriftskunder() {
 }
 
 function visKunder(liste) {
+  visteKunder = liste; // 👈 viktig!
+
   const gridContainer = document.getElementById("bedriftkunde-grid");
   const tabell = document.getElementById("bedriftkunde-tabell");
   const tbody = document.getElementById("bedriftkunde-tbody");
@@ -42,6 +44,7 @@ function visKunder(liste) {
     tbody.innerHTML = html;
   }
 }
+
 
 
 
@@ -202,8 +205,6 @@ document.getElementById("filterForm").addEventListener("submit", function (e) {
   document.getElementById("filterPopup").classList.add("hidden");
 });
 
-
-
 function exportToCSV() {
   if (!visteKunder || visteKunder.length === 0) {
     alert("Ingen kunder å eksportere.");
@@ -213,7 +214,7 @@ function exportToCSV() {
   const headers = [
     'Organisasjonsnummer', 'Bedriftsnavn', 'Adresse 1', 'Adresse 2', 'Postnummer',
     'Sted', 'E-post', 'Telefon', 'Kontaktperson', 'Tlf kontaktperson',
-    'Styreleder', 'Kommentar', 'Bilde', 'PDF'
+    'Styreleder', 'Kommentar'
   ];
   const rows = [headers.join(';')];
 
@@ -230,9 +231,7 @@ function exportToCSV() {
       kunde.kontaktperson || '',
       kunde.kontaktpersonTlf || '',
       kunde.styreleder || '',
-      kunde.kommentar || '',
-      kunde.bilde || '',
-      kunde.pdf || ''
+      kunde.kommentar || ''
     ].map(val => `"${val.replace(/"/g, '""')}"`).join(';'));
   });
 
@@ -243,3 +242,4 @@ function exportToCSV() {
   link.download = 'bedriftkunde_liste.csv';
   link.click();
 }
+
