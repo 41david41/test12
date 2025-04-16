@@ -1,6 +1,5 @@
 <?php
-// Start session og hent backendlogikk
-session_start();
+// Hent backendlogikk
 include("change_password_backend.php");
 ?>
 
@@ -18,17 +17,6 @@ include("change_password_backend.php");
     <!-- Tailwind og JS -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="../redirectToPage.js"></script>
-
-    <style>
-        #header {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        #header header {
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
 
