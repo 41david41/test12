@@ -1,10 +1,38 @@
 <?php
-include("../db2.php");
+include("../db2.php"); // Tilkobling til MySQL-databasen
 
-function getUserRole($brukernavn, $pdo) {
+// Hent brukernavn fra session
+$username = $_SESSION['db_username'];
+$isAdmin = false;
+
+// 🔒 Sjekk om brukeren er administrator
+try {
+    $sql = sprintf("SHOW GRANTS FOR '%s'", $username);
+    $stmt = $pdo->query($sql);
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $grantString = implode(" ", $row);
+
+        if (stripos($grantString, "`adminbruker`") !== false) {
+            $isAdmin = true;
+            break;
+        }
+    }
+
+    if (!$isAdmin) {
+        die("❌ Du har ikke tilstrekkelige rettigheter for å se denne siden.");
+    }
+
+} catch (PDOException $e) {
+    echo "Feil ved henting av brukerrettigheter: " . $e->getMessage();
+}
+
+// 🔍 Funksjon for å hente en brukers rolle
+function getUserRole($username, $pdo) {
     try {
-        $sql = sprintf("SHOW GRANTS FOR '%s'", $brukernavn);
+        $sql = sprintf("SHOW GRANTS FOR '%s'", $username);
         $stmt = $pdo->query($sql);
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $grantString = implode(" ", $row);
             if (stripos($grantString, "`adminbruker`") !== false) {
@@ -18,55 +46,43 @@ function getUserRole($brukernavn, $pdo) {
     return 'Bruker';
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $gammeltBrukernavn = $_POST['gammelt_brukernavn']; // skjult input i skjema
-    $nyttBrukernavn = $_POST['brukernavn'];
-    $fornavn = $_POST['fornavn'];
-    $etternavn = $_POST['etternavn'];
-    $telefon = $_POST['telefon'];
-    $epost = $_POST['epost'];
-    $isAdmin = isset($_POST['adminrettigheter']) ? 1 : 0;
+// 📄 Hent alle brukere fra `user_details`-tabellen
+try {
+    $sql = "SELECT fornavn, etternavn, user AS brukernavn, telefon, epost FROM user_details";
+    $stmt = $pdo->query($sql);
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Feil ved henting av brukerinformasjon: " . $e->getMessage());
+}
+
+// ❌ Sletting av bruker hvis ?delete_user er satt i URL
+if (isset($_GET['delete_user'])) {
+    $userToDelete = $_GET['delete_user'];
 
     try {
         $pdo->beginTransaction();
 
-        // Sjekk at brukeren finnes
-        $stmt = $pdo->prepare("SELECT user FROM user_details WHERE user = ?");
-        $stmt->execute([$gammeltBrukernavn]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Slett bruker fra `user_details`
+        $sqlDeleteUser = "DELETE FROM user_details WHERE brukernavn = :brukernavn";
+        $stmtDeleteUser = $pdo->prepare($sqlDeleteUser);
+        $stmtDeleteUser->bindParam(':brukernavn', $userToDelete, PDO::PARAM_STR);
+        $stmtDeleteUser->execute();
 
-        if (!$result) {
-            die("❌ Fant ikke bruker med brukernavn '$gammeltBrukernavn'.");
-        }
-
-        // Oppdater informasjon
-        $stmt = $pdo->prepare("UPDATE user_details SET user = ?, fornavn = ?, etternavn = ?, telefon = ?, epost = ? WHERE user = ?");
-        $stmt->execute([$nyttBrukernavn, $fornavn, $etternavn, $telefon, $epost, $gammeltBrukernavn]);
-
-        // Endre MySQL-brukernavn hvis det har endret seg
-        if ($nyttBrukernavn !== $gammeltBrukernavn) {
-            $stmt = $pdo->prepare("RENAME USER '$gammeltBrukernavn'@'%' TO '$nyttBrukernavn'@'%'");
-            $stmt->execute();
-            $pdo->exec("FLUSH PRIVILEGES");
-        }
-
-        // Admin-rolle
-        $currentRole = getUserRole($gammeltBrukernavn, $pdo);
-        if ($isAdmin && $currentRole !== 'Admin') {
-            $pdo->exec("GRANT `adminbruker` TO '$nyttBrukernavn'@'%'");
-        } elseif (!$isAdmin && $currentRole === 'Admin') {
-            $pdo->exec("REVOKE `adminbruker` FROM '$nyttBrukernavn'@'%'");
-        }
+        // Slett selve MySQL-brukeren
+        $sqlDeleteMySQLUser = "DROP USER :brukernavn@'%'";
+        $stmtDeleteMySQLUser = $pdo->prepare($sqlDeleteMySQLUser);
+        $stmtDeleteMySQLUser->bindParam(':brukernavn', $userToDelete, PDO::PARAM_STR);
+        $stmtDeleteMySQLUser->execute();
 
         $pdo->commit();
+
+        // Omdiriger etter sletting
         header("Location: brukeroversikt.php");
         exit();
+
     } catch (PDOException $e) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
-        }
-        echo "Feil ved oppdatering: " . $e->getMessage();
+        $pdo->rollBack();
+        echo "Feil ved sletting av bruker: " . $e->getMessage();
     }
 }
-
 ?>

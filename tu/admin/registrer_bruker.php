@@ -1,6 +1,7 @@
 <?php
 require_once("../db2.php");
 
+// 🔎 Valideringsfunksjoner
 function validateInput($data, $pattern) {
     return preg_match($pattern, $data);
 }
@@ -9,22 +10,22 @@ function sanitize($data) {
     return htmlspecialchars(trim($data));
 }
 
-// Validation patterns
+// 🧪 Regex-mønstre for inputvalidering
 $patterns = [
-    "fornavn" => "/^[\p{L}\-]{2,}$/u",
-    "etternavn" => "/^[\p{L}\-]{2,}$/u",
-    "brukernavn" => "/^[a-zA-Z0-9_-]{3,16}$/",
-    "epost" => "/^[^@\s]+@[^@\s]+\.[^@\s]+$/",
-    "bekreft_epost" => "/^[^@\s]+@[^@\s]+\.[^@\s]+$/", // Bekreft epost for sammenligning
-    "telefon" => "/^\d{8}$/",
-    "passord" => "/^.{6,}$/",
-    "bekreft_passord" => "/^.{6,}$/"
+    "fornavn"           => "/^[\p{L}\-]{2,}$/u",
+    "etternavn"         => "/^[\p{L}\-]{2,}$/u",
+    "brukernavn"        => "/^[a-zA-Z0-9_-]{3,16}$/",
+    "epost"             => "/^[^@\s]+@[^@\s]+\.[^@\s]+$/",
+    "bekreft_epost"     => "/^[^@\s]+@[^@\s]+\.[^@\s]+$/",
+    "telefon"           => "/^\d{8}$/",
+    "passord"           => "/^.{6,}$/",
+    "bekreft_passord"   => "/^.{6,}$/"
 ];
 
 $errors = [];
 $data = [];
 
-// Validate input fields
+// ✅ Valider og saniter alle felt
 foreach ($patterns as $key => $pattern) {
     if (!isset($_POST[$key]) || !validateInput($_POST[$key], $pattern)) {
         $errors[] = "$key har ugyldig eller manglende verdi.";
@@ -33,29 +34,29 @@ foreach ($patterns as $key => $pattern) {
     }
 }
 
-// Ensure email and password confirmation match
+// 📧 Sammenlign e-post og passord-feltene
 if ($_POST['epost'] !== $_POST['bekreft_epost']) {
     $errors[] = "E-postadressene er ikke like.";
 }
+
 if ($_POST['passord'] !== $_POST['bekreft_passord']) {
     $errors[] = "Passordene er ikke like.";
 }
 
-// If there are errors, show alert and exit
+// ❌ Ved valideringsfeil, gi beskjed og stopp
 if (!empty($errors)) {
-    echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_bruker(admin).php';</script>";
+    echo "<script>alert('" . implode("\\n", $errors) . "'); window.location.href='registrer_bruker(admin).php';</script>";
     exit;
 }
 
-// Store password safely
+// 🔐 Lagre passord og brukernavn
 $passord = $_POST['passord'];
 $brukernavn = $data['brukernavn'];
 
 try {
-    // Start a database transaction
     $pdo->beginTransaction();
 
-    // Check if user already exists in MySQL
+    // Sjekk om brukeren finnes fra før
     $stmtCheck = $pdo->prepare("SELECT User FROM mysql.user WHERE User = :brukernavn AND Host = '%'");
     $stmtCheck->execute([':brukernavn' => $brukernavn]);
     $userExists = $stmtCheck->fetchColumn();
@@ -64,16 +65,16 @@ try {
         die("<script>alert('Brukeren \"$brukernavn\" finnes allerede.'); window.location.href='../admin/brukeroversikt.php';</script>");
     }
 
-    // Create MySQL user
+    // Opprett MySQL-bruker
     $createUserSQL = "CREATE USER '$brukernavn'@'%' IDENTIFIED BY :passord";
     $stmt_user = $pdo->prepare($createUserSQL);
     $stmt_user->execute([':passord' => $passord]);
 
-    // Gi brukeren standard database-privilegier
+    // Gi brukeren alle rettigheter
     $grantSQL = "GRANT ALL PRIVILEGES ON *.* TO '$brukernavn'@'%' WITH GRANT OPTION";
     $pdo->exec($grantSQL);
 
-    // Hvis adminrettigheter er huket av, gi brukeren admin-privilegier
+    // Gi adminrolle dersom valgt
     if (isset($_POST['adminrettigheter']) && $_POST['adminrettigheter'] == "1") {
         $grantAdminSQL = "GRANT 'adminbruker' TO '$brukernavn'@'%'";
         $pdo->exec($grantAdminSQL);
@@ -81,25 +82,26 @@ try {
 
     $pdo->exec("FLUSH PRIVILEGES");
 
-    // Insert user details into the database (without `bekreft_epost`)
-    $stmt_details = $pdo->prepare("INSERT INTO user_details (fornavn, etternavn, user, telefon, epost) VALUES (:fornavn, :etternavn, :brukernavn, :telefon, :epost)");
+    // Sett inn brukerinfo i `user_details`
+    $stmt_details = $pdo->prepare("
+        INSERT INTO user_details (fornavn, etternavn, user, telefon, epost)
+        VALUES (:fornavn, :etternavn, :brukernavn, :telefon, :epost)
+    ");
     $stmt_details->execute([
-        ':fornavn' => $data['fornavn'],
-        ':etternavn' => $data['etternavn'],
-        ':brukernavn' => $brukernavn,
-        ':telefon' => $data['telefon'],
-        ':epost' => $data['epost'] // Sett kun e-post i databasen
+        ':fornavn'     => $data['fornavn'],
+        ':etternavn'   => $data['etternavn'],
+        ':brukernavn'  => $brukernavn,
+        ':telefon'     => $data['telefon'],
+        ':epost'       => $data['epost']
     ]);
 
-    // Rask omdirigering
+    // Ferdig – send brukeren tilbake til oversikten
     echo "<script>window.location.href = '../admin/brukeroversikt.php';</script>";
-    fastcgi_finish_request(); // Avslutter PHP-prosessen umiddelbart
+    fastcgi_finish_request(); // Avslutt PHP-prosess tidlig
 
-    // Fullfør transaksjonen
     $pdo->commit();
 
 } catch (PDOException $e) {
-    // Rollback hvis det oppstår en feil
     $pdo->rollBack();
     echo "<script>alert('Databasefeil: " . $e->getMessage() . "'); window.location.href='registrer_bruker(admin).php';</script>";
     exit;

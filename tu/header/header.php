@@ -1,50 +1,39 @@
 <?php
-include("../db2.php"); // Inkluder databasen
+// Koble til databasen
+include("../db2.php");
 
-// Start session og hent brukernavn
+// Start session hvis ikke startet
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Hent brukernavn og passord fra session
 $username = isset($_SESSION['db_username']) ? $_SESSION['db_username'] : "Ukjent Bruker";
 $password = isset($_SESSION['db_password']) ? $_SESSION['db_password'] : null;
 
-// Standard rolle
-$rolle = "Bruker"; // Antar at brukeren er en vanlig bruker som standard
+// Standard rolle er 'Bruker'
+$rolle = "Bruker";
 
 // Sjekk om brukeren er logget inn
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     die("❌ Ikke logget inn. Vennligst logg inn først.");
 }
 
-// Hent brukerens rettigheter med SHOW GRANTS ved hjelp av PDO
+// Hent rettigheter med SHOW GRANTS for å sjekke admin-status
 try {
-    // Dynamisk bygg SQL-spørringen med brukernavnet
-    $sql = sprintf("SHOW GRANTS FOR '%s'", $username);  // Sett inn brukernavnet i SQL-spørringen
-    //echo "<p>SQL-spørring: $sql</p>"; // Skriv ut SQL-spørringen før den kjøres
-
-    // Forbered og kjør SQL-spørringen
+    $sql = sprintf("SHOW GRANTS FOR '%s'", $username);
     $stmt = $pdo->query($sql);
 
-    // Variabel for å sjekke om brukeren er medlem av adminrollen
     $isAdmin = false;
 
-    // Gå gjennom resultatene
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $grantString = implode(" ", $row);
-
-        // Sjekk om brukeren er medlem av adminrollen
         if (stripos($grantString, "`adminbruker`") !== false) {
             $isAdmin = true;
         }
     }
 
-    // Sett riktig rolle basert på om brukeren er admin eller ikke
-    if ($isAdmin) {
-        $rolle = "Admin";
-    } else {
-        $rolle = "Bruker";
-    }
+    $rolle = $isAdmin ? "Admin" : "Bruker";
 
 } catch (PDOException $e) {
     echo "Feil ved henting av brukerrettigheter: " . $e->getMessage();
@@ -58,43 +47,53 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header med Dropdown</title>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts og Material-symboler -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down,arrow_drop_up" />
 
-    <!-- Egen CSS -->
+    <!-- Egendefinert stil for header -->
     <link rel="stylesheet" href="../css/header.css">
 </head>
 <body>
 
+<!-- Hovedheader som vises øverst på siden -->
 <header id="header"> 
+
+    <!-- Logo med klikkbar lenke til landingssiden -->
     <div class="logo">
         <a href="#" onclick="redirectToPage('landingpage/landingpage.php')">
             <img src="../IMG/logo.png" alt="Fasade Produkter">
         </a>
     </div>
 
+    <!-- Brukermeny til høyre med profilknapp og dropdown -->
     <div class="user-menu">
+
+        <!-- Knapp som viser profilbilde og pil for å åpne menyen -->
         <button id="userMenuButton" class="profile">
-            <div class="profile-circle">??</div> <!-- Initialer vises her -->
+            <div class="profile-circle">??</div> <!-- Her kan initialer vises -->
             <span class="material-symbols-outlined" id="dropdownArrow">arrow_drop_down</span>
         </button>
+
+        <!-- Selve dropdown-menyen som åpnes når man klikker -->
         <div id="dropdownMenu" class="dropdown-menu hidden">
-            <!-- Ny bruker knapp som kun vises for admin, plassert øverst i menyen -->
+
+            <!-- Vises kun for administratorer -->
             <?php if ($isAdmin): ?>
                 <a href="../admin/registrer_bruker(admin).php">Ny Bruker</a>
-                <a href="../admin/brukeroversikt.php" class="admin-dropdown-item">Brukeroversikt</a> <!-- Skjult admin knapp -->
+                <a href="../admin/brukeroversikt.php" class="admin-dropdown-item">Brukeroversikt</a>
             <?php endif; ?>
 
-            <!-- Andre menyvalg -->
+            <!-- Vanlige brukervalg -->
             <a href="#" id="profileLink">Profil</a>
-            <a href="../profil/oppdaterprofil.php">Endre passord</a>
+            <a href="../profil/change_password_frontend.php">Endre passord</a>
             <a href="../header/logout.php">Logg ut</a>
         </div>
     </div>
 </header>
 
-<script src="../header/include.js"></script> <!-- Inkluderer header.js -->
+<!-- JavaScript for å håndtere dropdown og annet interaktivt -->
+<script src="../header/include.js"></script>
+
 </body>
 </html>

@@ -4,26 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../css/login.css">
+
+    <!-- Fonter og ikoner -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script></head>
+
+    <!-- Eget stilark -->
+    <link rel="stylesheet" href="../css/login.css">
+
+    <!-- Tailwind (valgfritt) -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
 <body>
+
+    <!-- Logo-header -->
     <header>
         <img src="../IMG/logo.png" alt="Fasade Produkter Logo" class="logo">
     </header>
+
+    <!-- Login-skjema -->
     <div class="login-container">
         <h1>Velkommen</h1>
 
         <form action="login.php" method="POST">
+            <!-- Brukernavnfelt -->
             <div class="input-group">
                 <input type="text" name="username" placeholder="ID" required>
             </div>
+
+            <!-- Passordfelt -->
             <div class="input-group">
                 <input type="password" name="password" placeholder="Passord" required>
             </div>
+
+            <!-- Innloggingsknapp -->
             <button type="submit" class="login-button">Logg inn</button>
         </form>
     </div>
+
 </body>
 </html>

@@ -1,41 +1,14 @@
-/* Basic header styling */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #0f2a52;
-  width: 100%;
-  min-height: 58px;
-}
-
-/* Gjør menyen skjult som standard */
-.hidden {
-    display: none;
-}
-
-/* For dropdown-menuen kan du ha et stykke CSS for å style den slik du ønsker */
-.dropdown-menu {
-    position: absolute;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    border-radius: 5px;
-    min-width: 160px;
-    right: -1px;
-    z-index: 9999;               
-    pointer-events: auto;        
-}
-
-.dropdown-menu a {
-    display: block;
-    padding: 8px 12px;
-    color: #333;
-    text-decoration: none;
-}
-
-.dropdown-menu a:hover {
-    background-color: #f1f1f1;
-}
+/* =========================
+   Header-styling
+   ========================= */
+   header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0f2a52;
+    width: 100%;
+    min-height: 58px;
+  }
   
   .logo {
     flex: 1;
@@ -45,7 +18,9 @@ header {
     height: 40px;
   }
   
-  /* Button styling */
+  /* =========================
+     Profilknapp og brukerikon
+     ========================= */
   .profile {
     display: flex;
     align-items: center;
@@ -54,16 +29,14 @@ header {
     font-size: 16px;
     position: relative;
     cursor: pointer;
-    z-index: 10; /* Ensure the button is on top of the dropdown */
+    z-index: 10;
   }
   
-  /* Hover effect on the profile button */
   .profile:hover {
     box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
     background-color: #0f2a526b;
   }
   
-  /* Circle around the profile */
   .profile-circle {
     width: 35px;
     height: 35px;
@@ -74,3 +47,34 @@ header {
     border-radius: 50%;
     margin-right: 8px;
   }
+  
+  /* =========================
+     Dropdown-meny
+     ========================= */
+  .hidden {
+    display: none;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    min-width: 160px;
+    right: -1px;
+    z-index: 9999;
+    pointer-events: auto;
+  }
+  
+  .dropdown-menu a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #f1f1f1;
+  }
+  

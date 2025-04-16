@@ -1,16 +1,11 @@
-/* 1. Reset & Global Base Styles */
-* {
+/* =========================
+   Reset & Grunnstil
+   ========================= */
+   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-
-  form#bedriftForm {
-    padding: 8px 8px;
-    width: 84%;
-    margin: 0 auto;
-  }
-  
   
   body {
     background-color: #0f1c2e;
@@ -24,6 +19,15 @@
     min-height: 100vh;
   }
   
+  /* =========================
+     Hovedstruktur og layout
+     ========================= */
+  form#bedriftForm {
+    padding: 8px 8px;
+    width: 84%;
+    margin: 0 auto;
+  }
+  
   .headline-container {
     width: 84%;
     margin: 28px auto;
@@ -32,89 +36,6 @@
     gap: 10px;
   }
   
-  .pil {
-    font-size: 20px;
-    vertical-align: middle;
-    transform: rotate(0deg); /* eller 180deg for oppover */
-    transition: transform 0.3s ease;
-  }
-
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    width: fit-content; /* or set a fixed width like 250px */
-  }
-  
-  
-  /* Dropdown button */
-  .dropdown-btn {
-    vertical-align: middle;
-    background-color: transparent;  /* Transparent */
-    color: white;  
-    padding: 8px 12px;
-    border: 2px solid white;  /* White border */
-    cursor: pointer;
-    border-radius: 2px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .dropdown-btn.active {
-    color: black; /* Changes text color when user selects an option */
-    font-style: normal;
-  }
-  
-  /* Dropdown content (hidden) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    overflow: hidden;
-  }
-  
-  /* Dropdown links */
-  .dropdown-content a {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: black;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Show dropdown when button is clicked */
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  .secondaryBTN {
-    vertical-align: middle;
-    background-color: transparent;  /* Transparent */
-    color: white;  
-    padding: 8px 12px;
-    border: 2px solid white;  /* White border */
-    cursor: pointer;
-    border-radius: 2px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .secondaryBTN:hover {
-    background-color: white;  /* Fill color on hover */
-    color: #235f9f;  
-  }
-  
-  .form-group-admin{
-    width: 48%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  /* Container & Form Layout */
   .container {
     margin: 0 auto;
     width: 100%;
@@ -129,6 +50,13 @@
     align-items: stretch;
   }
   
+  .form-group-admin {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
   .form-left,
   .form-right,
   .form-middel {
@@ -137,8 +65,7 @@
     flex-direction: column;
     justify-content: space-between;
   }
-
-
+  
   .form-group {
     width: 100%;
     padding-bottom: 16px;
@@ -149,11 +76,148 @@
     gap: 8px;
   }
   
+  /* =========================
+     Inputfelt og tekstområder
+     ========================= */
+  input,
+  textarea {
+    background-color: white;
+    color: #18191a;
+    width: 100%;
+    padding: 10px;
+    font-size: small;
+  }
+  
+  input {
+    height: 40px;
+  }
+  
+  textarea {
+    height: calc(3 * 40px + 2 * 16px);
+  }
+  
+  .invisble {
+    opacity: 0;
+  }
+  
+  /* =========================
+     Knappestiler
+     ========================= */
+  .secondaryBTN {
+    vertical-align: middle;
+    background-color: transparent;
+    color: white;
+    padding: 8px 12px;
+    border: 2px solid white;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .secondaryBTN:hover {
+    background-color: white;
+    color: #235f9f;
+  }
+  
+  .primaryBTN {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    padding: 6px 8px;
+    width: 100%;
+  }
+  
+  .primaryBTN:hover {
+    background-color: rgb(115, 3, 3);
+  }
+  
+  .fileinput {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 6px 8px;
+    width: 100%;
+  }
+  
+  .fileinput:hover {
+    background-color: rgb(118, 115, 115);
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 16px;
+  }
+  
+  .button-container button {
+    height: 40px;
+  }
+  
+  /* =========================
+     Ikoner og dropdowns
+     ========================= */
+  .pil {
+    font-size: 20px;
+    vertical-align: middle;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+  }
+  
+  .dropdown-btn {
+    vertical-align: middle;
+    background-color: transparent;
+    color: white;
+    padding: 8px 12px;
+    border: 2px solid white;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .dropdown-btn.active {
+    color: black;
+    font-style: normal;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow: hidden;
+  }
+  
+  .dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* =========================
+     Forhåndsvisning av bilde
+     ========================= */
   .preview {
     display: flex;
     justify-content: space-between;
   }
-
+  
   .preview-container {
     margin-top: 10px;
   }
@@ -181,65 +245,5 @@
     font-size: 14px;
     width: 20px;
     height: 20px;
-  }
-  
-
-  /* Form Elements */
-  input,
-  textarea {
-    background-color: white;
-    color: #18191a;
-    width: 100%;
-    padding: 10px;
-    font-size: small;
-  }
-  
-  input {
-    height: 40px;
-  }
-  
-  textarea {
-    height: calc(3 * 40px + 2 * 16px);
-  }
-
-  .invisble {
-    opacity: 0;
-  }
-  
-  /* Button Styles */
-  .primaryBTN {
-    background-color: red;
-    color: white;
-    cursor: pointer;
-    padding: 6px 8px;
-    width: 100%;
-  }
-  
-  .fileinput {
-    background-color: white;
-    color: black;
-    cursor: pointer;
-    padding: 6px 8px;
-    width: 100%;
-  }
-  
-  .primaryBTN:hover {
-    background-color: rgb(115, 3, 3);
-  }
-  
-  .fileinput:hover {
-    background-color: rgb(118, 115, 115);
-  }
-  
-  /* Button Container */
-  .button-container {
-    display: flex;
-    gap: 10px;
-    justify-content: flex;
-    padding-bottom: 16px;
-  }
-  
-  .button-container button {
-    height: 40px;
   }
   
