@@ -54,13 +54,15 @@ function filtrerKunder() {
   const sok = document.getElementById("sokefelt").value.toLowerCase();
 
   const filtrert = alleKunder.filter(b =>
+    (b.orgnr && b.orgnr.toLowerCase().includes(sok)) ||
     b.bedriftsnavn.toLowerCase().includes(sok) ||
     b.adresse1.toLowerCase().includes(sok) ||
     b.adresse2.toLowerCase().includes(sok) ||
     b.sted.toLowerCase().includes(sok) ||
     b.kontaktperson.toLowerCase().includes(sok) ||
     b.epost.toLowerCase().includes(sok) ||
-    (b.orgnr && b.orgnr.toLowerCase().includes(sok))
+    b.kontaktperson.toLowerCase().includes(sok) ||
+    b.kontaktpersonTlf.toLowerCase().includes(sok)
   );
 
   visKunder(filtrert);
@@ -90,10 +92,15 @@ function lagHTML(b) {
   } else {
     return `
     <tr onclick="visProfil(${b.id})" class="kunde-tabell-rad">
+      <td>${b.orgnr}</td>   
       <td>${b.bedriftsnavn}</td>
       <td>${b.adresse1}</td>
+      <td>${b.adresse2}</td>
       <td>${b.postnr}</td>
-      <td>${b.sted}</td>
+      <td>${b.sted}</td>      
+      <td>${b.epost}</td>
+      <td>${b.kontaktperson}</td>
+      <td>${b.kontaktpersonTlf}</td>
     </tr>
     `;
   }
@@ -197,76 +204,42 @@ document.getElementById("filterForm").addEventListener("submit", function (e) {
 
 
 
-// Function to switch between grid and list view
-function settVisning(visningType) {
-    const isGridView = visningType === 'grid';
-    const grid = document.getElementById('bedriftkunde-grid');
-    const table = document.getElementById('bedriftkunde-tabell');
-    const exportBtn = document.getElementById('exportBtn');
-    
-    // Toggle the visibility of the table and grid
-    if (isGridView) {
-        grid.style.display = 'block';
-        table.style.display = 'none';
-        exportBtn.classList.add('disabled');  // Disable the export button in grid view
-    } else {
-        grid.style.display = 'none';
-        table.style.display = 'block';
-        exportBtn.classList.remove('disabled');  // Enable the export button in list view
-    }
-}
-
-// Function to export the table content to a CSV file
 function exportToCSV() {
-    const isGridView = document.getElementById('bedriftkunde-grid').style.display !== 'none';
-    
-    // If in grid view, show an alert to change to list view
-    if (isGridView) {
-        alert("Du må bytte til listevisning for å eksportere til CSV.");
-        return; // Prevent further action if in grid view
-    }
+  if (!visteKunder || visteKunder.length === 0) {
+    alert("Ingen kunder å eksportere.");
+    return;
+  }
 
-    const rows = [];
-    
-    // If in table view, get the table data
-    if (!isGridView) {
-        const table = document.getElementById('bedriftkunde-tabell');
-        
-        const headers = table.querySelectorAll('thead th');
-        const headerRow = [];
-        for (let i = 0; i < headers.length; i++) {
-            headerRow.push(headers[i].innerText.trim());
-        }
-        rows.push(headerRow.join(';'));
-        
-        const tbody = table.querySelector('tbody');
-        const tableRows = tbody.querySelectorAll('tr');
-        tableRows.forEach(row => {
-            const cols = row.querySelectorAll('td');
-            const rowData = [];
-            for (let i = 0; i < cols.length; i++) {
-                rowData.push(cols[i].innerText.trim());
-            }
-            rows.push(rowData.join(';'));
-        });
-    } else {
-        const gridItems = document.querySelectorAll('#bedriftkunde-grid .kundeprofil');
-        const headerRow = ['Bedriftsnavn', 'Adresse', 'Postnr', 'Sted'];
-        rows.push(headerRow.join(';'));
+  const headers = [
+    'Organisasjonsnummer', 'Bedriftsnavn', 'Adresse 1', 'Adresse 2', 'Postnummer',
+    'Sted', 'E-post', 'Telefon', 'Kontaktperson', 'Tlf kontaktperson',
+    'Styreleder', 'Kommentar', 'Bilde', 'PDF'
+  ];
+  const rows = [headers.join(';')];
 
-        gridItems.forEach(item => {
-            const bedriftsnavn = item.querySelector('.bedriftsnavn').innerText.trim();
-            const adresse = item.querySelector('.adresse').innerText.trim();
-            const postnummer = item.querySelector('.postnummer').innerText.trim();
-            const sted = item.querySelector('.sted').innerText.trim();
-            rows.push([bedriftsnavn, adresse, postnummer, sted].join(';'));
-        });
-    }
+  visteKunder.forEach(kunde => {
+    rows.push([
+      kunde.orgnr || '',
+      kunde.bedriftsnavn || '',
+      kunde.adresse1 || '',
+      kunde.adresse2 || '',
+      kunde.postnr || '',
+      kunde.sted || '',
+      kunde.epost || '',
+      kunde.telefon || '',
+      kunde.kontaktperson || '',
+      kunde.kontaktpersonTlf || '',
+      kunde.styreleder || '',
+      kunde.kommentar || '',
+      kunde.bilde || '',
+      kunde.pdf || ''
+    ].map(val => `"${val.replace(/"/g, '""')}"`).join(';'));
+  });
 
-    const csvString = rows.join('\n');
-    const blob = new Blob([csvString], { type: 'text/csv' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'bedriftkunde_liste.csv';
-    link.click();
+  const csvString = rows.join('\n');
+  const blob = new Blob([csvString], { type: 'text/csv' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'bedriftkunde_liste.csv';
+  link.click();
 }

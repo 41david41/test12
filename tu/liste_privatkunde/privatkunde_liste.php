@@ -108,7 +108,10 @@
     <tr>
       <th>Fornavn</th>
       <th>Etternavn</th>
-      <th>Adresse</th>
+      <th>Epost</th>
+      <th>Telefonnr</th>
+      <th>Adresse1</th>
+      <th>Adresse2</th>
       <th>Postnummer</th>
       <th>Sted</th>
     </tr>

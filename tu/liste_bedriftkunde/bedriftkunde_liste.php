@@ -107,10 +107,15 @@
     <table class="kunde-tabell" id="bedriftkunde-tabell" style="display: none;">
         <thead>
             <tr>
+                <th>Organisasjonsnummer</th>
                 <th>Bedriftsnavn</th>
-                <th>Adresse</th>
+                <th>Adresse1</th>
+                <th>Adresse2</th>
                 <th>Postnr</th>
                 <th>Sted</th>
+                <th>Epost</th>
+                <th>Kontaktperson</th>
+                <th>kontaktpersontelefon</th>
             </tr>
         </thead>
         <tbody id="bedriftkunde-tbody">

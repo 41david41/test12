@@ -91,10 +91,17 @@
     <table class="kunde-tabell" id="borettslag-tabell" style="display: none;">
         <thead>
             <tr>
+                <th>Organisasjonsnummer</th>
                 <th>Borettslag</th>
-                <th>Adresse</th>
-                <th>Postnummer</th>
+                <th>Styreleder</th>
+                <th>Adresse1</th>
+                <th>Adresse2</th>
+                <th>Postnr</th>
                 <th>Sted</th>
+                <th>Epost</th>
+                <th>Telefon</th>
+                <th>Kontaktperson</th>
+                <th>Kontaktpersontelefon</th>
             </tr>
         </thead>
         <tbody id="borettslag-tbody">

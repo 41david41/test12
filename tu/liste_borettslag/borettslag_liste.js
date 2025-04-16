@@ -53,13 +53,18 @@ function filtrerKunder() {
   const sok = document.getElementById("sokefelt").value.toLowerCase();
 
   const filtrert = alleBorettslag.filter(b =>
+    b.orgnr.toLowerCase().includes(sok) ||
     b.navn.toLowerCase().includes(sok) ||
+    b.styreleder.toLowerCase().includes(sok) ||
     b.adresse1.toLowerCase().includes(sok) ||
     b.adresse2.toLowerCase().includes(sok) ||
+    b.postnr.toLowerCase().includes(sok) ||
     b.sted.toLowerCase().includes(sok) ||
+    b.epost.toLowerCase().includes(sok) ||
+    b.telefon.toLowerCase().includes(sok) ||
     b.styreleder.toLowerCase().includes(sok) ||
     b.kontaktperson.toLowerCase().includes(sok) ||
-    b.epost.toLowerCase().includes(sok)
+    b.kontaktpersonTlf.toLowerCase().includes(sok) 
   );
 
   visKunder(filtrert);
@@ -89,10 +94,17 @@ function lagHTML(b) {
   } else {
     return `
       <tr onclick="visProfil(${b.id})" class="kunde-tabell-rad">
+        <td>${b.orgnr}</td>
         <td>${b.navn}</td>
+        <td>${b.styreleder}</td>
+        <td>${b.adresse1}</td>
         <td>${b.adresse1}</td>
         <td>${b.postnr}</td>
         <td>${b.sted}</td>
+        <td>${b.epost}</td>
+        <td>${b.telefon}</td>
+        <td>${b.kontaktperson}</td>
+        <td>${b.kontaktpersonTlf}</td>
       </tr>
     `;
   }
