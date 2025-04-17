@@ -10,18 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="../redirectToPage.js"></script>
-    <script src="../header/include.js"></script>
-    <style>
-        #header {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    
-        #header header {
-            width: 100%;
-        }
-    </style>   
+    <script src="../header/include.js"></script> 
 </head>
 
 <body>

@@ -49,7 +49,7 @@ include("header_backend.php");
 
             <!-- Vanlige brukervalg -->
             <a href="#" id="profileLink">Profil</a>
-            <a href="../profil/change_password_frontend.php">Endre passord</a>
+            <a href="../profil/change_password.php">Endre passord</a>
             <a href="../header/logout.php">Logg ut</a>
         </div>
     </div>

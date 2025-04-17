@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (profileLink) {
         profileLink.addEventListener("click", function (event) {
             event.preventDefault();  // Hindrer standard navigasjon
-            window.location.href = "../profil/profile_frontend.php";  // Naviger til profilsiden
+            window.location.href = "../profil/profile.php";  // Naviger til profilsiden
         });
     }
 });
