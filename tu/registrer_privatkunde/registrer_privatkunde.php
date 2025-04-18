@@ -1,14 +1,17 @@
 <?php
-require_once("../db.php");
+require_once("../db.php"); // Koble til databasen
 
+// Funksjon for regex-validering
 function validateInput($data, $pattern) {
     return preg_match($pattern, $data);
 }
 
+// Funksjon for å rense inputdata mot XSS
 function sanitize($data) {
     return htmlspecialchars(trim($data));
 }
 
+// Definerer regex-mønstre for alle relevante felt
 $patterns = [
     "fornavn" => "/^[\p{L}\-]{2,}$/u",
     "etternavn" => "/^[\p{L}\-]{2,}$/u",
@@ -24,6 +27,7 @@ $patterns = [
 $errors = [];
 $data = [];
 
+// Valider og rens inputfelter
 foreach ($patterns as $key => $pattern) {
     if (!isset($_POST[$key]) || !validateInput($_POST[$key], $pattern)) {
         $errors[] = "$key har ugyldig eller manglende verdi.";
@@ -32,12 +36,13 @@ foreach ($patterns as $key => $pattern) {
     }
 }
 
+// Hvis det finnes feil, vis alert og send bruker tilbake
 if (!empty($errors)) {
     echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_privatkundehtml.php';</script>";
     exit;
 }
 
-// Før vi setter inn data i databasen, sjekk om e-post eller telefonnummer allerede finnes
+// Sjekk om epost eller telefon allerede er registrert
 try {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM privatkunde WHERE epost = :epost OR telefon = :telefon");
     $stmt->execute([
@@ -55,6 +60,7 @@ try {
     exit;
 }
 
+// Håndtering av bildeopplasting
 $bildePath = "";
 if (isset($_FILES['bilde']) && $_FILES['bilde']['error'] === UPLOAD_ERR_OK) {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -67,6 +73,7 @@ if (isset($_FILES['bilde']) && $_FILES['bilde']['error'] === UPLOAD_ERR_OK) {
     }
 }
 
+// Håndtering av PDF-opplasting
 $pdfPath = "";
 if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] === UPLOAD_ERR_OK) {
     if ($_FILES['pdf']['type'] === 'application/pdf') {
@@ -78,9 +85,13 @@ if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] === UPLOAD_ERR_OK) {
     }
 }
 
+// Sett inn gyldige data i databasen
 try {
-    $stmt = $pdo->prepare("INSERT INTO privatkunde (fornavn, etternavn, epost, telefon, adresse1, adresse2, postnr, sted, kommentar, bilde, pdf)
-        VALUES (:fornavn, :etternavn, :epost, :telefon, :adresse1, :adresse2, :postnr, :sted, :kommentar, :bilde, :pdf)");
+    $stmt = $pdo->prepare("INSERT INTO privatkunde (
+        fornavn, etternavn, epost, telefon, adresse1, adresse2, postnr, sted, kommentar, bilde, pdf
+    ) VALUES (
+        :fornavn, :etternavn, :epost, :telefon, :adresse1, :adresse2, :postnr, :sted, :kommentar, :bilde, :pdf
+    )");
 
     $stmt->execute([
         ':fornavn' => $data['fornavn'],
@@ -96,7 +107,8 @@ try {
         ':pdf' => $pdfPath
     ]);
 
-    header("Location: ../liste_privatkunde/privatkunde_liste.php"); 
+    // Gå til oversikten ved suksess
+    header("Location: ../liste_privatkunde/privatkunde_liste.php");
 
 } catch (PDOException $e) {
     echo json_encode(["status" => "error", "message" => "Databasefeil: " . $e->getMessage()]);

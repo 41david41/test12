@@ -3,7 +3,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
 // Sjekk om brukeren er logget inn
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     die("❌ Ikke logget inn. Vennligst logg inn først.");

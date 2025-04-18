@@ -1,9 +1,12 @@
 <?php
+// Inkluderer databaseoppsett
 require_once("../db.php");
 
+// Sjekker at forespørselen er av typen POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $id = $_GET['id'];
+    $id = $_GET['id']; // Henter ID fra URL
 
+    // Henter verdier fra skjemaet
     $fornavn = $_POST["fornavn"];
     $etternavn = $_POST["etternavn"];
     $epost = $_POST["epost"];
@@ -14,8 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sted = $_POST["sted"];
     $kommentar = $_POST["kommentar"];
 
+    // Mappe for opplastede filer
     $uploadDir = "liste_privatkunde/Uploads/";
 
+    // Håndtering av bildeopplasting
     $bildePath = null;
     if (isset($_FILES["bilde"]) && $_FILES["bilde"]["error"] === UPLOAD_ERR_OK) {
         $bildeName = uniqid() . "_" . basename($_FILES["bilde"]["name"]);
@@ -23,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         move_uploaded_file($_FILES["bilde"]["tmp_name"], $bildePath);
     }
 
+    // Håndtering av PDF-opplasting
     $pdfPath = null;
     if (isset($_FILES["pdf"]) && $_FILES["pdf"]["error"] === UPLOAD_ERR_OK) {
         $pdfName = uniqid() . "_" . basename($_FILES["pdf"]["name"]);
@@ -30,11 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         move_uploaded_file($_FILES["pdf"]["tmp_name"], $pdfPath);
     }
 
+    // SQL-spørring for å oppdatere kundeinformasjonen
     $sql = "UPDATE privatkunde SET 
         fornavn = ?, etternavn = ?, adresse1 = ?, adresse2 = ?, postnr = ?, sted = ?, telefon = ?, epost = ?, kommentar = ?";
 
     $params = [$fornavn, $etternavn, $adresse1, $adresse2, $postnr, $sted, $telefon, $epost, $kommentar];
 
+    // Legger til bilde og PDF hvis de ble opplastet
     if ($bildePath !== null) {
         $sql .= ", bilde = ?";
         $params[] = $bildePath;
@@ -45,11 +53,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $params[] = $pdfPath;
     }
 
+    // Fullfører spørringen med WHERE for å spesifisere kunde-ID
     $sql .= " WHERE id = ?";
     $params[] = $id;
 
+    // Utfører SQL-spørringen
     $stmt = $pdo->prepare($sql);
     if ($stmt->execute($params)) {
+        // Ved suksess, videresend tilbake til oversikt
         header("Location: ../liste_privatkunde/privatkunde_liste.php");
         exit();
     } else {

@@ -1,106 +1,61 @@
 <?php
+// Inkluderer databasekobling
 require_once("../db.php");
 
-function validateInput($data, $pattern) {
-    return preg_match($pattern, $data);
-}
+// Sjekker at forespørselen er POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Henter data fra skjemaet
+    $orgnr = $_POST["orgnr"];
+    $bedriftsnavn = $_POST["bedriftsnavn"];
+    $adresse1 = $_POST["adresse1"];
+    $adresse2 = $_POST["adresse2"];
+    $postnr = $_POST["postnr"];
+    $sted = $_POST["sted"];
+    $epost = $_POST["epost"];
+    $kontaktperson = $_POST["kontaktperson"];
+    $kontaktpersonTlf = $_POST["kontaktpersonTlf"];
+    $kommentar = $_POST["kommentar"];
 
-function sanitize($data) {
-    return htmlspecialchars(trim($data));
-}
+    // Mappe for opplastede filer
+    $uploadDir = "Uploads/";
 
-$patterns = [
-    "orgnr" => "/^\d{9}$/",
-    "bedriftsnavn" => "/^[\p{L}0-9\s\-\.]{2,}$/u",
-    "adresse1" => "/^.{2,}$/",
-    "adresse2" => "/^.{0,}$/",
-    "postnr" => "/^\d{4}$/",
-    "sted" => "/^[\p{L}\s\-]{2,}$/u",
-    "epost" => "/^[^@\s]+@[^@\s]+\.[^@\s]+$/",
-    "kontaktperson" => "/^[\p{L}\s\-]{2,}$/u",
-    "kontaktpersonTlf" => "/^\d{8}$/",
-    "kommentar" => "/.*/"
-];
+    // Behandler bildeopplasting hvis aktuelt
+    $bildePath = null;
+    if (isset($_FILES["bilde"]) && $_FILES["bilde"]["error"] === UPLOAD_ERR_OK) {
+        $bildeName = uniqid() . "_" . basename($_FILES["bilde"]["name"]);
+        $bildePath = $uploadDir . $bildeName;
+        move_uploaded_file($_FILES["bilde"]["tmp_name"], $bildePath);
+    }
 
-$errors = [];
-$data = [];
+    // Behandler PDF-opplasting hvis aktuelt
+    $pdfPath = null;
+    if (isset($_FILES["pdf"]) && $_FILES["pdf"]["error"] === UPLOAD_ERR_OK) {
+        $pdfName = uniqid() . "_" . basename($_FILES["pdf"]["name"]);
+        $pdfPath = $uploadDir . $pdfName;
+        move_uploaded_file($_FILES["pdf"]["tmp_name"], $pdfPath);
+    }
 
-foreach ($patterns as $key => $pattern) {
-    if (!isset($_POST[$key]) || !validateInput($_POST[$key], $pattern)) {
-        $errors[] = "$key har ugyldig eller manglende verdi.";
+    // Setter opp SQL-spørring med parametre
+    $sql = "INSERT INTO bedriftskunde (
+                orgnr, bedriftsnavn, adresse1, adresse2, postnr, sted,
+                epost, kontaktperson, kontaktpersonTlf, kommentar, bilde, pdf
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $pdo->prepare($sql);
+
+    // Utfører spørringen med tilhørende verdier
+    if ($stmt->execute([
+        $orgnr, $bedriftsnavn, $adresse1, $adresse2, $postnr, $sted,
+        $epost, $kontaktperson, $kontaktpersonTlf, $kommentar,
+        $bildePath, $pdfPath
+    ])) {
+        // Går tilbake til oversikten ved suksess
+        header("Location: ../liste_bedriftkunde/bedriftkunde_liste.php");
+        exit();
     } else {
-        $data[$key] = sanitize($_POST[$key]);
+        echo "Feil ved registrering av bedriftskunde.";
     }
-}
-
-if (!empty($errors)) {
-    echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_bedriftkundehtml.php';</script>";
-    exit;
-}
-
-// Før vi setter inn data i databasen, sjekk om orgnr eller e-post allerede finnes
-try {
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM bedriftskunde WHERE orgnr = :orgnr OR epost = :epost");
-    $stmt->execute([
-        ':orgnr' => $data['orgnr'],
-        ':epost' => $data['epost']
-    ]);
-    $existingCount = $stmt->fetchColumn();
-
-    if ($existingCount > 0) {
-        echo "<script>alert('Organisasjonsnummer eller e-post er allerede registrert.'); window.location.href='registrer_bedriftkundehtml.php';</script>";
-        exit;
-    }
-} catch (PDOException $e) {
-    echo json_encode(["status" => "error", "message" => "Databasefeil: " . $e->getMessage()]);
-    exit;
-}
-
-$bildePath = "";
-if (isset($_FILES['bilde']) && $_FILES['bilde']['error'] === UPLOAD_ERR_OK) {
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    if (in_array($_FILES['bilde']['type'], $allowedTypes)) {
-        $ext = pathinfo($_FILES['bilde']['name'], PATHINFO_EXTENSION);
-        $newName = uniqid("bilde_", true) . '.' . $ext;
-        $uploadPath = "../liste_bedriftkunde/Uploads/" . $newName;
-        move_uploaded_file($_FILES['bilde']['tmp_name'], $uploadPath);
-        $bildePath = $uploadPath;
-    }
-}
-
-$pdfPath = "";
-if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] === UPLOAD_ERR_OK) {
-    if ($_FILES['pdf']['type'] === 'application/pdf') {
-        $ext = pathinfo($_FILES['pdf']['name'], PATHINFO_EXTENSION);
-        $newName = uniqid("pdf_", true) . '.' . $ext;
-        $uploadPath = "../liste_bedriftkunde/Uploads/" . $newName;
-        move_uploaded_file($_FILES['pdf']['tmp_name'], $uploadPath);
-        $pdfPath = $uploadPath;
-    }
-}
-
-try {
-    $stmt = $pdo->prepare("INSERT INTO bedriftskunde (orgnr, bedriftsnavn, adresse1, adresse2, postnr, sted, epost, kontaktperson, kontaktpersonTlf, kommentar, bilde, pdf)
-        VALUES (:orgnr, :bedriftsnavn, :adresse1, :adresse2, :postnr, :sted, :epost, :kontaktperson, :kontaktpersonTlf, :kommentar, :bilde, :pdf)");
-
-    $stmt->execute([
-        ':orgnr' => $data['orgnr'],
-        ':bedriftsnavn' => $data['bedriftsnavn'],
-        ':adresse1' => $data['adresse1'],
-        ':adresse2' => $data['adresse2'],
-        ':postnr' => $data['postnr'],
-        ':sted' => $data['sted'],
-        ':epost' => $data['epost'],
-        ':kontaktperson' => $data['kontaktperson'],
-        ':kontaktpersonTlf' => $data['kontaktpersonTlf'],
-        ':kommentar' => $data['kommentar'],
-        ':bilde' => $bildePath,
-        ':pdf' => $pdfPath
-    ]);
-
-    header("Location: ../liste_bedriftkunde/bedriftkunde_liste.php"); 
-
-} catch (PDOException $e) {
-    echo json_encode(["status" => "error", "message" => "Databasefeil: " . $e->getMessage()]);
+} else {
+    echo "Ugyldig forespørsel.";
 }
 ?>

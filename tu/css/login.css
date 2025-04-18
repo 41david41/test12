@@ -1,41 +1,65 @@
+/* =============================== */
+/* 1. Grunnstil for body */
+/* =============================== */
+
 body {
     align-items: center;
     justify-content: center;    
     background-color: #0A1B34;
     font-family: 'Montserrat', sans-serif;
     margin: 0;
-}
-
-header {
+  }
+  
+  /* =============================== */
+  /* 2. Header og logo */
+  /* =============================== */
+  
+  header {
     position: absolute;
     top: 10px;
     left: 10px;
-}
-
-.logo {
-    height: 50px; /* Adjust size as needed */
-}
-
-.login-container {
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  /* =============================== */
+  /* 3. Beholder for innloggingsskjema */
+  /* =============================== */
+  
+  .login-container {
     display: flex;
     flex-direction: column;
     margin: 144px;
     opacity: 100%;
     border-radius: 10px;
     text-align: center;
-}
-
-h1 {
+  }
+  
+  /* =============================== */
+  /* 4. Overskrift */
+  /* =============================== */
+  
+  h1 {
     color: #eff1f4;
     font-size: 24px;
     font-weight: 600;
-}
-
-.input-group {
+  }
+  
+  /* =============================== */
+  /* 5. Inndeling av input-felt */
+  /* =============================== */
+  
+  .input-group {
     margin: 24px;
-}
-
-input {
+  }
+  
+  /* =============================== */
+  /* 6. Stil for input-felt */
+  /* =============================== */
+  
+  input {
     width: 64%;
     padding: 12px;
     font-size: 16px;
@@ -44,9 +68,13 @@ input {
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     border: none;
-}
-
-.login-button {
+  }
+  
+  /* =============================== */
+  /* 7. Innloggingsknapp */
+  /* =============================== */
+  
+  .login-button {
     margin-top: 20px;
     padding: 10px 20px; 
     border: none;
@@ -55,14 +83,19 @@ input {
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
     color: #FFFF;
-}
-
-.login-button:hover {
+  }
+  
+  .login-button:hover {
     background-color: #9e0723;
-}
-
-.error-message {
+  }
+  
+  /* =============================== */
+  /* 8. Feilmeldingstekst */
+  /* =============================== */
+  
+  .error-message {
     color: red;
     font-weight: bold;
     text-align: center;
-}
+  }
+  

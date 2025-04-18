@@ -1,14 +1,17 @@
 <?php
-require_once("../db.php");
+require_once("../db.php"); // Koble til databasen
 
+// Funksjon for enkel regex-validering
 function validateInput($data, $pattern) {
     return preg_match($pattern, $data);
 }
 
+// Funksjon for å rense inputdata
 function sanitize($data) {
     return htmlspecialchars(trim($data));
 }
 
+// Definerer regex-mønstre for alle felt
 $patterns = [
     "orgnr" => "/^\d{9}$/",
     "navn" => "/^[\p{L}0-9\s\-\.]{2,}$/u",
@@ -27,6 +30,7 @@ $patterns = [
 $errors = [];
 $data = [];
 
+// Valider og rens inputdata
 foreach ($patterns as $key => $pattern) {
     if (!isset($_POST[$key]) || !validateInput($_POST[$key], $pattern)) {
         $errors[] = "$key har ugyldig eller manglende verdi.";
@@ -35,12 +39,13 @@ foreach ($patterns as $key => $pattern) {
     }
 }
 
+// Hvis feil, vis alert og gå tilbake til skjema
 if (!empty($errors)) {
     echo "<script>alert('" . implode("\n", $errors) . "'); window.location.href='registrer_borettslaghtml.php';</script>";
     exit;
 }
 
-// Før vi setter inn data i databasen, sjekk om orgnr eller e-post allerede finnes
+// Sjekk om orgnr eller e-post allerede finnes i databasen
 try {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM borettslagkunde WHERE orgnr = :orgnr OR epost = :epost");
     $stmt->execute([
@@ -58,6 +63,7 @@ try {
     exit;
 }
 
+// Håndtering av bildeopplasting
 $bildePath = "";
 if (isset($_FILES['bilde']) && $_FILES['bilde']['error'] === UPLOAD_ERR_OK) {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -70,6 +76,7 @@ if (isset($_FILES['bilde']) && $_FILES['bilde']['error'] === UPLOAD_ERR_OK) {
     }
 }
 
+// Håndtering av PDF-opplasting
 $pdfPath = "";
 if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] === UPLOAD_ERR_OK) {
     if ($_FILES['pdf']['type'] === 'application/pdf') {
@@ -81,9 +88,13 @@ if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] === UPLOAD_ERR_OK) {
     }
 }
 
+// Sett inn data i databasen
 try {
-    $stmt = $pdo->prepare("INSERT INTO borettslagkunde (orgnr, navn, styreleder, adresse1, adresse2, postnr, sted, epost, telefon, kontaktperson, kontaktpersonTlf, kommentar, bilde, pdf)
-        VALUES (:orgnr, :navn, :styreleder, :adresse1, :adresse2, :postnr, :sted, :epost, :telefon, :kontaktperson, :kontaktpersonTlf, :kommentar, :bilde, :pdf)");
+    $stmt = $pdo->prepare("INSERT INTO borettslagkunde (
+        orgnr, navn, styreleder, adresse1, adresse2, postnr, sted, epost, telefon, kontaktperson, kontaktpersonTlf, kommentar, bilde, pdf
+    ) VALUES (
+        :orgnr, :navn, :styreleder, :adresse1, :adresse2, :postnr, :sted, :epost, :telefon, :kontaktperson, :kontaktpersonTlf, :kommentar, :bilde, :pdf
+    )");
 
     $stmt->execute([
         ':orgnr' => $data['orgnr'],
@@ -102,6 +113,7 @@ try {
         ':pdf' => $pdfPath
     ]);
 
+    // Send bruker tilbake til oversiktssiden ved suksess
     header("Location: ../liste_borettslag/borettslag_liste.php"); 
 
 } catch (PDOException $e) {

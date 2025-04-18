@@ -1,12 +1,18 @@
-/* 1. Reset & Global Base Styles */
+/* =============================== */
+/* 1. Basislayout og global stil */
+/* =============================== */
+
 body {
   background-color: #0f1c2e;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   color: white;
   overflow-y: scroll;
-
 }
+
+/* =============================== */
+/* 2. Hovedcontainere og struktur */
+/* =============================== */
 
 .headline-container {
   width: 84%;
@@ -16,12 +22,28 @@ body {
   align-items: flex-start;
 }
 
-.sticky-header{
+.sticky-header {
   display: flex;
   justify-content: space-between;  
   width: 84%;
   margin: auto;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 84%;
+  background: transparent;
+  border-radius: 2px;
+  margin: auto;
+  height: 654px;
+  margin-bottom: 100px;
+  overflow-y: scroll;
+}
+
+/* =============================== */
+/* 3. Søkefelt og visningsvalg */
+/* =============================== */
 
 .visning-sok-wrapper {
   display: flex;
@@ -34,8 +56,7 @@ body {
 .search-container {
   display: flex;
   gap: 8px;
-  margin-bottom: 24px;
-  margin: 0;   
+  margin: 0;
 }
 
 #sokefelt {
@@ -54,7 +75,6 @@ body {
   border-radius: 2px;
   overflow: hidden;
   cursor: pointer;
-  
 }
 
 .option {
@@ -72,21 +92,10 @@ body {
   color: black;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 84%;
-  background: transparent;
-  border-radius: 2px;
-  margin: auto;
-  height: 654px;
-  margin-bottom: 100px;
-  overflow-y: scroll;
-}
+/* =============================== */
+/* 4. Nedtrekksmeny og knapper */
+/* =============================== */
 
-
-
-/*button-container*/
 .button-container {
   display: flex;
   gap: 8px;
@@ -95,28 +104,25 @@ body {
 .dropdown {
   position: relative;
   display: inline-block;
-  width: fit-content; /* or set a fixed width like 250px */
+  width: fit-content;
 }
 
-
-/* Dropdown button */
 .dropdown-btn {
   vertical-align: middle;
-  background-color: transparent;  /* Transparent */
-  color: white;  
+  background-color: transparent;
+  color: white;
   padding: 8px 12px;
-  border: 2px solid white;  /* White border */
+  border: 2px solid white;
   cursor: pointer;
   border-radius: 2px;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .dropdown-btn.active {
-  color: black; /* Changes text color when user selects an option */
+  color: black;
   font-style: normal;
 }
 
-/* Dropdown content (hidden) */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -127,7 +133,6 @@ body {
   overflow: hidden;
 }
 
-/* Dropdown links */
 .dropdown-content a {
   display: block;
   padding: 10px;
@@ -139,11 +144,13 @@ body {
   background-color: #f1f1f1;
 }
 
-/* Show dropdown when button is clicked */
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
+/* =============================== */
+/* 5. Tabellvisning */
+/* =============================== */
 
 table {
   width: 100%;
@@ -164,8 +171,10 @@ th {
   font-weight: bold;
 }
 
+/* =============================== */
+/* 6. Kort/grid-visning */
+/* =============================== */
 
-/*TEST*/
 .kundeprofil-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -175,15 +184,38 @@ th {
 }
 
 .kundeprofil-kort {
-    border-radius: 2px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 1rem;
-    transition: transform 0.2s ease;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  min-height: 264px;
+  box-sizing: border-box;
+}
+
+.kundeprofil-kort:hover {
+  transform: translateY(-5px);
+}
+
+.kundeprofil-bilde {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.kundeprofil-navn {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .kort-knapper {
@@ -195,77 +227,23 @@ th {
   justify-content: space-between;
   opacity: 0;
   transition: opacity 0.2s ease;
-  pointer-events: none; /* hindrer interaksjon når usynlig */
+  pointer-events: none;
 }
 
 .kundeprofil-kort:hover .kort-knapper {
   opacity: 1;
-  pointer-events: auto; /* aktiver klikk når synlig */
-}
-
-
-.kundeprofil-kort:hover {
-    transform: translateY(-5px);
-}
-
-.kundeprofil-bilde {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  object-position: top; /* <-- viktig */
-  border-radius: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-
-.kundeprofil-navn {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-}
-
-.slett-kort-btn {
-  background-color: #e53935;      /* rød bakgrunn */
-  color: white;                   /* hvitt kryss */
-  border: none;
-  border-radius: 50%;             /* gjør knappen rund */
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 32px;
-  text-align: center;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-}
-
-.slett-kort-btn:hover {
-  background-color: #c62828;  /* mørkere rød ved hover */
-}
-
-
-.kundeprofil-kort {
-  cursor: pointer;
-  position: relative; 
+  pointer-events: auto;
 }
 
 .placeholder-kort {
   background: transparent;
   border: 2px dashed #ccc;
-  visibility: hidden; 
+  visibility: hidden;
+  pointer-events: none;
 }
 
+.slett-kort-btn,
 .rediger-kort-btn {
-  background-color: #1976d2;      /* blå bakgrunn */
-  color: white;                   /* hvit penn */
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -277,26 +255,43 @@ th {
   cursor: pointer;
   position: absolute;
   top: 10px;
-  left: 10px;
   padding: 0;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s ease;
+  color: white;
+}
+
+.slett-kort-btn {
+  background-color: #e53935;
+  right: 10px;
+}
+
+.slett-kort-btn:hover {
+  background-color: #c62828;
+}
+
+.rediger-kort-btn {
+  background-color: #1976d2;
+  left: 10px;
 }
 
 .rediger-kort-btn:hover {
-  background-color: #125aa6;   /* mørkere blå ved hover */
+  background-color: #125aa6;
 }
 
-/*Pop up visning*/
+/* =============================== */
+/* 7. Modal for detaljert visning */
+/* =============================== */
+
 .modal {
   position: fixed;
   z-index: 50;
   left: 0;
   top: 0;
-  width: 100%;
+  width:  100%;
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
@@ -312,11 +307,10 @@ th {
   border-radius: 1rem;
   width: 90%;
   max-width: 600px;
-  max-height: 90vh;          /* 👈 viktig */
-  overflow-y: auto;          /* 👈 viktig for scroll ved mye innhold */
+  max-height: 90vh;
+  overflow-y: auto;
   position: relative;
 }
-
 
 .close {
   position: absolute;
@@ -330,55 +324,39 @@ th {
   display: none;
 }
 
-.kundeprofil-liste .kunde-rad {
-  background-color: white;
-  color: #0f1c2e;
-  padding: 16px;
-  display: flex;
-  align-items: flex-start; 
-  
-}
+/* =============================== */
+/* 8. Diverse tilleggselementer */
+/* =============================== */
 
 .pil {
   font-size: 20px;
   vertical-align: middle;
-  transform: rotate(0deg); /* eller 180deg for oppover */
+  transform: rotate(0deg);
   transition: transform 0.3s ease;
-}
-
-.kundeprofil-kort,
-.placeholder-kort {
-  min-height: 264px; /* eller høyden dine kort vanligvis har */
-  box-sizing: border-box;
-}
-
-.placeholder-kort {
-  visibility: hidden;
-  pointer-events: none;
 }
 
 .adminrettigheter {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px; /* mellomrom mellom tekst og checkbox */
+  gap: 12px;
   margin-top: 1rem;
   color: white;
 }
 
 .secondaryBTN {
-  background-color: transparent;  /* Transparent */
-  color: white;  
+  background-color: transparent;
+  color: white;
   padding: 8px 12px;
-  border: 2px solid white;  /* White border */
+  border: 2px solid white;
   cursor: pointer;
   border-radius: 2px;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .secondaryBTN:hover {
-  background-color: white;  /* Fill color on hover */
-  color: #235f9f;  
+  background-color: white;
+  color: #235f9f;
 }
 
 #exportBtn {
@@ -391,6 +369,9 @@ th {
   background-color: #1d6220;
 }
 
+/* =============================== */
+/* 9. Filter popup og skjema */
+/* =============================== */
 
 .filter-modal {
   color: #0f1c2e;
@@ -435,10 +416,6 @@ th {
   cursor: pointer;
 }
 
-.filter input {
-  border: 1px solid #0a0a0a;
-}
-
 .filter-actions .sok {
   background-color: crimson;
   color: white;
@@ -473,4 +450,3 @@ th {
   font-size: 0.95rem;
   box-sizing: border-box;
 }
-

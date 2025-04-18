@@ -1,33 +1,41 @@
-/* =========================
-   profil.css
-   ========================= */
+/* =============================== */
+/* 1. Grunnstil for nettsiden */
+/* =============================== */
 
-/* Generelle stilinnstillinger for hele nettsiden */
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #0f1c2e; /* Mørk bakgrunn */
-    color: #ffffff; /* Hvit tekstfarge */
+    background-color: #0f1c2e;
+    color: #ffffff;
     margin: 0;
     padding: 0;
 }
 
-/* Profil container */
+/* =============================== */
+/* 2. Hovedcontainer for profil */
+/* =============================== */
+
 .profil-container {
     display: flex;
     justify-content: center;
     margin-top: 40px;
 }
 
-/* Profilkort */
+/* =============================== */
+/* 3. Profilkort med info og bilde */
+/* =============================== */
+
 .profil-card {
-    background-color: #1c2a38; /* Mørk bakgrunn på profilkortet */
+    background-color: #1c2a38;
     width: 350px;
     padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Lysere skygge */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
-/* Profilbilde */
+/* =============================== */
+/* 4. Bildeinnpakning og utforming */
+/* =============================== */
+
 .profil-image {
     margin-bottom: 20px;
 }
@@ -37,15 +45,22 @@ body {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #235f9f; /* Blå kant */
+    border: 3px solid #235f9f;
 }
+
+/* =============================== */
+/* 5. Tekstlig info under bilde */
+/* =============================== */
 
 .profil-info p {
     font-size: 1rem;
-    color: #aaaaaa; /* Lysere tekstfarge for rolle */
+    color: #aaaaaa;
 }
 
-/* Riktig responsivitet */
+/* =============================== */
+/* 6. Responsiv tilpasning */
+/* =============================== */
+
 @media (max-width: 768px) {
     .profil-card {
         width: 90%;

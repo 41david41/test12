@@ -1,10 +1,21 @@
-let visningsmodus = 'grid';
-let alleKunder = [];
+// ===============================
+// JavaScript for visning og filtrering av bedriftskunder
+// ===============================
 
+let visningsmodus = 'grid'; // Startvisning er grid
+let alleKunder = [];        // Alle hentede kunder
+let visteKunder = [];       // Kundene som vises basert på søk/filter
+
+// ===============================
+// Henter bedriftskunder ved innlasting av siden
+// ===============================
 window.onload = function () {
   hentOgVisBedriftskunder();
 };
 
+// ===============================
+// Henter kundeliste fra PHP og viser dem
+// ===============================
 function hentOgVisBedriftskunder() {
   fetch("hent_bedriftkunde.php")
     .then(response => response.json())
@@ -17,8 +28,11 @@ function hentOgVisBedriftskunder() {
     });
 }
 
+// ===============================
+// Viser kundene i grid eller listevisning
+// ===============================
 function visKunder(liste) {
-  visteKunder = liste; // 👈 viktig!
+  visteKunder = liste;
 
   const gridContainer = document.getElementById("bedriftkunde-grid");
   const tabell = document.getElementById("bedriftkunde-tabell");
@@ -45,114 +59,21 @@ function visKunder(liste) {
   }
 }
 
-
-
-
+// ===============================
+// Endrer visningsmodus og viser kundene igjen
+// ===============================
 function settVisning(modus) {
   visningsmodus = modus;
   visKunder(alleKunder);
 }
 
-function filtrerKunder() {
-  const sok = document.getElementById("sokefelt").value.toLowerCase();
-
-  const filtrert = alleKunder.filter(b =>
-    (b.orgnr && b.orgnr.toLowerCase().includes(sok)) ||
-    b.bedriftsnavn.toLowerCase().includes(sok) ||
-    b.adresse1.toLowerCase().includes(sok) ||
-    b.adresse2.toLowerCase().includes(sok) ||
-    b.sted.toLowerCase().includes(sok) ||
-    b.kontaktperson.toLowerCase().includes(sok) ||
-    b.epost.toLowerCase().includes(sok) ||
-    b.kontaktperson.toLowerCase().includes(sok) ||
-    b.kontaktpersonTlf.toLowerCase().includes(sok)
-  );
-
-  visKunder(filtrert);
-}
-
-function lagHTML(b) {
-  const bilde = b.bilde ? b.bilde : "uploads/standard.png";
-
-  const kortInnhold = `
-    <div class="kort-knapper">
-      <button class="rediger-kort-btn" onclick="event.stopPropagation(); window.location.href='../registrer_bedriftkunde/registrer_bedriftkundehtml.php?id=${b.id}'">✏️</button>
-      <form action="slett_bedriftkunde.php" method="POST" onsubmit="event.stopPropagation(); return confirm('Er du sikker på at du vil slette denne bedriftskunden?')">
-        <input type="hidden" name="id" value="${b.id}">
-        <button type="submit" class="slett-kort-btn">🗑️</button>
-      </form>
-    </div>
-  `;
-
-  if (visningsmodus === 'grid') {
-    return `
-      <div class="kundeprofil-kort" onclick="visProfil(${b.id})">
-        ${kortInnhold}
-        <img src="${bilde}" class="kundeprofil-bilde">
-        <h2 class="kundeprofil-navn">${b.bedriftsnavn}</h2>
-      </div>
-    `;
-  } else {
-    return `
-    <tr onclick="visProfil(${b.id})" class="kunde-tabell-rad">
-      <td>${b.orgnr}</td>   
-      <td>${b.bedriftsnavn}</td>
-      <td>${b.adresse1}</td>
-      <td>${b.adresse2}</td>
-      <td>${b.postnr}</td>
-      <td>${b.sted}</td>      
-      <td>${b.epost}</td>
-      <td>${b.kontaktperson}</td>
-      <td>${b.kontaktpersonTlf}</td>
-    </tr>
-    `;
-  }
-}
-
-function visProfil(id) {
-  fetch(`hent_bedriftkunde_med_id.php?id=${id}`)
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById("modalInnhold");
-      container.innerHTML = `
-        <div style="text-align: left;">
-          <h2 style="margin-bottom: 1rem;">${data.bedriftsnavn}</h2>
-          <p><strong>Organisasjonsnummer:</strong> ${data.orgnr}</p>
-          <p><strong>Adresse:</strong> ${data.adresse1}, ${data.adresse2}</p>
-          <p><strong>Postnr/Sted:</strong> ${data.postnr} ${data.sted}</p>
-          <p><strong>E-post:</strong> ${data.epost}</p>
-          <p><strong>Kontaktperson:</strong> ${data.kontaktperson} (${data.kontaktpersonTlf})</p>
-          <p><strong>Kommentar:</strong> ${data.kommentar || "Ingen"}</p>
-          ${data.bilde ? `<img src="${data.bilde}" style="max-width: 34%; margin-top: 1rem;">` : ""}
-          ${data.pdf ? `<p style="margin-top: 1rem;"><a href="${data.pdf}" target="_blank">📄 Åpne PDF</a></p>` : ""}
-        </div>
-      `;
-
-      document.getElementById("profilModal").classList.remove("hidden");
-    })
-    .catch(error => {
-      console.error("Feil ved henting av profil:", error);
-    });
-}
-
-function lukkModal() {
-  document.getElementById("profilModal").classList.add("hidden");
-}
-
-window.addEventListener("keydown", e => {
-  if (e.key === "Escape") lukkModal();
-});
-
-window.addEventListener("click", e => {
-  const modal = document.getElementById("profilModal");
-  if (e.target === modal) lukkModal();
-});
-
+// ===============================
+// Bytter mellom grid og listevisning og oppdaterer knappene visuelt
+// ===============================
 function velgVisning(modus) {
   visningsmodus = modus;
-  settVisning(modus); // denne er allerede definert i koden din
+  settVisning(modus);
 
-  // Oppdater visuell knapp-status
   const grid = document.getElementById('gridBtn');
   const liste = document.getElementById('listeBtn');
 
@@ -165,6 +86,29 @@ function velgVisning(modus) {
   }
 }
 
+// ===============================
+// Filtrerer kundene ut fra søketekst
+// ===============================
+function filtrerKunder() {
+  const sok = document.getElementById("sokefelt").value.toLowerCase();
+
+  const filtrert = alleKunder.filter(b =>
+    (b.orgnr && b.orgnr.toLowerCase().includes(sok)) ||
+    b.bedriftsnavn.toLowerCase().includes(sok) ||
+    b.adresse1.toLowerCase().includes(sok) ||
+    b.adresse2.toLowerCase().includes(sok) ||
+    b.sted.toLowerCase().includes(sok) ||
+    b.epost.toLowerCase().includes(sok) ||
+    b.kontaktperson.toLowerCase().includes(sok) ||
+    b.kontaktpersonTlf.toLowerCase().includes(sok)
+  );
+
+  visKunder(filtrert);
+}
+
+// ===============================
+// Åpne og lukk filter-popup
+// ===============================
 document.getElementById("filter").addEventListener("click", () => {
   document.getElementById("filterPopup").classList.remove("hidden");
 });
@@ -173,6 +117,9 @@ document.getElementById("lukkFilter").addEventListener("click", () => {
   document.getElementById("filterPopup").classList.add("hidden");
 });
 
+// ===============================
+// Utfør avansert filter basert på verdier i filter-skjema
+// ===============================
 document.getElementById("filterForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -205,6 +152,97 @@ document.getElementById("filterForm").addEventListener("submit", function (e) {
   document.getElementById("filterPopup").classList.add("hidden");
 });
 
+
+// ===============================
+// Lager HTML for én kunde (kort eller tabellrad)
+// ===============================
+function lagHTML(b) {
+  const bilde = b.bilde ? b.bilde : "uploads/standard.png";
+
+  const kortInnhold = `
+    <div class="kort-knapper">
+      <button class="rediger-kort-btn" onclick="event.stopPropagation(); window.location.href='../registrer_bedriftkunde/registrer_bedriftkundehtml.php?id=${b.id}'">✏️</button>
+      <form action="slett_bedriftkunde.php" method="POST" onsubmit="event.stopPropagation(); return confirm('Er du sikker på at du vil slette denne bedriftskunden?')">
+        <input type="hidden" name="id" value="${b.id}">
+        <button type="submit" class="slett-kort-btn">🗑️</button>
+      </form>
+    </div>
+  `;
+
+  if (visningsmodus === 'grid') {
+    return `
+      <div class="kundeprofil-kort" onclick="visProfil(${b.id})">
+        ${kortInnhold}
+        <img src="${bilde}" class="kundeprofil-bilde">
+        <h2 class="kundeprofil-navn">${b.bedriftsnavn}</h2>
+      </div>
+    `;
+  } else {
+    return `
+      <tr onclick="visProfil(${b.id})" class="kunde-tabell-rad">
+        <td>${b.orgnr}</td>
+        <td>${b.bedriftsnavn}</td>
+        <td>${b.adresse1}</td>
+        <td>${b.adresse2}</td>
+        <td>${b.postnr}</td>
+        <td>${b.sted}</td>
+        <td>${b.epost}</td>
+        <td>${b.kontaktperson}</td>
+        <td>${b.kontaktpersonTlf}</td>
+      </tr>
+    `;
+  }
+}
+
+// ===============================
+// Viser detaljert profil for én kunde i modal
+// ===============================
+function visProfil(id) {
+  fetch(`hent_bedriftkunde_med_id.php?id=${id}`)
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById("modalInnhold");
+      container.innerHTML = `
+        <div style="text-align: left;">
+          <h2 style="margin-bottom: 1rem;">${data.bedriftsnavn}</h2>
+          <p><strong>Organisasjonsnummer:</strong> ${data.orgnr}</p>
+          <p><strong>Adresse:</strong> ${data.adresse1}, ${data.adresse2}</p>
+          <p><strong>Postnr/Sted:</strong> ${data.postnr} ${data.sted}</p>
+          <p><strong>E-post:</strong> ${data.epost}</p>
+          <p><strong>Kontaktperson:</strong> ${data.kontaktperson} (${data.kontaktpersonTlf})</p>
+          <p><strong>Kommentar:</strong> ${data.kommentar || "Ingen"}</p>
+          ${data.bilde ? `<img src="${data.bilde}" style="max-width: 34%; margin-top: 1rem;">` : ""}
+          ${data.pdf ? `<p style="margin-top: 1rem;"><a href="${data.pdf}" target="_blank">📄 Åpne PDF</a></p>` : ""}
+        </div>
+      `;
+
+      document.getElementById("profilModal").classList.remove("hidden");
+    })
+    .catch(error => {
+      console.error("Feil ved henting av profil:", error);
+    });
+}
+
+
+// ===============================
+// Lukker modalen manuelt eller med Escape/klikk utenfor innhold
+// ===============================
+function lukkModal() {
+  document.getElementById("profilModal").classList.add("hidden");
+}
+
+window.addEventListener("keydown", e => {
+  if (e.key === "Escape") lukkModal();
+});
+
+window.addEventListener("click", e => {
+  const modal = document.getElementById("profilModal");
+  if (e.target === modal) lukkModal();
+});
+
+// ===============================
+// Eksporterer viste kunder til CSV-format
+// ===============================
 function exportToCSV() {
   if (!visteKunder || visteKunder.length === 0) {
     alert("Ingen kunder å eksportere.");
@@ -232,7 +270,7 @@ function exportToCSV() {
       kunde.kontaktpersonTlf || '',
       kunde.styreleder || '',
       kunde.kommentar || ''
-    ].map(val => `"${val.replace(/"/g, '""')}"`).join(';'));
+    ].map(val => `"${val.replace(/"/g, '""')}` ).join(';'));
   });
 
   const csvString = rows.join('\n');
@@ -242,4 +280,3 @@ function exportToCSV() {
   link.download = 'bedriftkunde_liste.csv';
   link.click();
 }
-

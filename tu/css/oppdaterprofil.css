@@ -1,42 +1,57 @@
-/* =========================
-   profil.css
-   ========================= */
-   body {
+/* =============================== */
+/* 1. Grunnstil for hele dokumentet */
+/* =============================== */
+
+body {
     font-family: 'Montserrat', sans-serif;
-    color: #ffffff; /* Default text color */
+    color: #ffffff;
     margin: 0;
     padding: 0;
-    background-color: #0f1c2e; /* Dark background */
-}
-
-.headline-container {
+    background-color: #0f1c2e;
+  }
+  
+  /* =============================== */
+  /* 2. Overskriftseksjon (f.eks. side-header) */
+  /* =============================== */
+  
+  .headline-container {
     display: flex;
     align-items: center;
     width: 70%;
-    margin: 34px auto; 
+    margin: 34px auto;
   }
-
-/* Shared container styling */
-.profil-container {
+  
+  /* =============================== */
+  /* 3. Hovedcontainer for profilseksjon */
+  /* =============================== */
+  
+  .profil-container {
     width: 90%;
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color:#ffffff; /* Light background for the profile form */
+    background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Form Styling */
-form {
+  }
+  
+  /* =============================== */
+  /* 4. Stil for skjemaet i profilen */
+  /* =============================== */
+  
+  form {
     width: 100%;
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
-    background-color:#0f1c2e; /* Light form background */
+    background-color: #0f1c2e;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-input {
+  }
+  
+  /* =============================== */
+  /* 5. Tekstinnfyllingsfelt */
+  /* =============================== */
+  
+  input {
     background-color: #ffffff;
     width: 100%;
     padding: 10px;
@@ -44,67 +59,81 @@ input {
     border: 1px solid #ccc;
     font-size: 1rem;
     color: #333;
-}
-
-
-/* Målrett knappen med klassen "spesifikk-knapp" */
-.rød-knapp {
+  }
+  
+  /* =============================== */
+  /* 6. Rød handlingsknapp */
+  /* =============================== */
+  
+  .rød-knapp {
     padding: 10px 15px;
-    background-color: red;  /* Rød bakgrunn */
-    color: rgb(255, 255, 255);           /* Sort tekst */
-    border: none;           /* Ingen kantlinje */
-    cursor: pointer;        /* Pekeren blir en hånd når du holder over */
-    font-size: 1rem;         /* Størrelse på teksten */
-    width: 100%;             /* Knappen tar opp hele bredden av sitt element */
-    transition: background-color 0.3s; /* Smidig overgang ved hover */
-}
-
-/* Hvis du vil at knappen skal endre farge på hover (når du holder musepekeren over) */
-.rød-knapp:hover {
-    background-color: darkred; /* Mørkere rød farge når man holder over */
-}
-
-
-button:hover {
+    background-color: red;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+  
+  .rød-knapp:hover {
+    background-color: darkred;
+  }
+  
+  /* =============================== */
+  /* 7. Hover-effekt for alle knapper */
+  /* =============================== */
+  
+  button:hover {
     box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
-    background-color: #ffffff6b; /* Darker green on hover */
-}
-
-/* Error and Success Messages */
-.error {
+    background-color: #ffffff6b;
+  }
+  
+  /* =============================== */
+  /* 8. Feil- og suksessmeldinger */
+  /* =============================== */
+  
+  .error {
     color: red;
     font-size: 1rem;
     text-align: center;
     margin-bottom: 10px;
-}
-
-.success {
+  }
+  
+  .success {
     color: green;
     font-size: 1rem;
     text-align: center;
     margin-bottom: 10px;
-}
-
-/* Section title */
-h2 {
-    color: #333; /* Dark color for titles */
+  }
+  
+  /* =============================== */
+  /* 9. Seksjonstitler */
+  /* =============================== */
+  
+  h2 {
+    color: #333;
     font-size: 1.8rem;
     text-align: center;
     margin-bottom: 20px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+  }
+  
+  /* =============================== */
+  /* 10. Responsivt design for mobilvisning */
+  /* =============================== */
+  
+  @media (max-width: 768px) {
     .profil-container {
-        width: 100%;
-        padding: 10px;
+      width: 100%;
+      padding: 10px;
     }
-
+  
     form {
-        max-width: 90%;
+      max-width: 90%;
     }
-
+  
     button {
-        width: auto;
+      width: auto;
     }
-}
+  }
+  

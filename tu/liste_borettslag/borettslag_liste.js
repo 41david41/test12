@@ -1,6 +1,14 @@
-let visningsmodus = 'grid';
-let alleBorettslag = [];
+// ===============================
+// JavaScript for visning og filtrering av borettslag
+// ===============================
 
+let visningsmodus = 'grid';           // Standard visningsmodus
+let alleBorettslag = [];              // Alle hentede borettslag
+let visteKunder = [];                 // Borettslag som vises i grensesnittet
+
+// ===============================
+// Henter borettslag ved innlasting av siden
+// ===============================
 window.onload = function () {
   hentOgVisBorettslag();
 };
@@ -17,10 +25,11 @@ function hentOgVisBorettslag() {
     });
 }
 
+// ===============================
+// Viser kundelisten (grid eller tabell)
+// ===============================
 function visKunder(liste) {
-
-  visteKunder = liste; // 👈 viktig!
-
+  visteKunder = liste;
 
   const gridContainer = document.getElementById("borettslag-grid");
   const tabell = document.getElementById("borettslag-tabell");
@@ -47,12 +56,33 @@ function visKunder(liste) {
   }
 }
 
-
 function settVisning(modus) {
   visningsmodus = modus;
   visKunder(alleBorettslag);
 }
 
+// ===============================
+// Bytter visningsmodus og markerer aktiv knapp
+// ===============================
+function velgVisning(modus) {
+  visningsmodus = modus;
+  settVisning(modus);
+
+  const grid = document.getElementById('gridBtn');
+  const liste = document.getElementById('listeBtn');
+
+  if (modus === 'grid') {
+    grid.classList.add('selected');
+    liste.classList.remove('selected');
+  } else {
+    liste.classList.add('selected');
+    grid.classList.remove('selected');
+  }
+}
+
+// ===============================
+// Søker i borettslagslisten
+// ===============================
 function filtrerKunder() {
   const sok = document.getElementById("sokefelt").value.toLowerCase();
 
@@ -66,14 +96,53 @@ function filtrerKunder() {
     b.sted.toLowerCase().includes(sok) ||
     b.epost.toLowerCase().includes(sok) ||
     b.telefon.toLowerCase().includes(sok) ||
-    b.styreleder.toLowerCase().includes(sok) ||
     b.kontaktperson.toLowerCase().includes(sok) ||
-    b.kontaktpersonTlf.toLowerCase().includes(sok) 
+    b.kontaktpersonTlf.toLowerCase().includes(sok)
   );
 
   visKunder(filtrert);
 }
 
+// ===============================
+// Filter-popup: åpne/lukke og avansert filtrering
+// ===============================
+document.getElementById("filter").addEventListener("click", () => {
+  document.getElementById("filterPopup").classList.remove("hidden");
+});
+
+document.getElementById("lukkFilter").addEventListener("click", () => {
+  document.getElementById("filterPopup").classList.add("hidden");
+});
+
+document.getElementById("filterForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const form = new FormData(this);
+
+  const filtrert = alleBorettslag.filter(kunde =>
+    (!form.get("navn") || kunde.navn.toLowerCase().includes(form.get("navn").toLowerCase())) &&
+    (!form.get("adresse") || kunde.adresse1.toLowerCase().includes(form.get("adresse").toLowerCase())) &&
+    (() => {
+      const min = parseInt(form.get("postnrMin")) || 0;
+      const max = parseInt(form.get("postnrMax")) || 9999;
+      const postnr = parseInt(kunde.postnr);
+      return isNaN(postnr) ? false : postnr >= min && postnr <= max;
+    })() &&
+    (!form.get("sted") || kunde.sted.toLowerCase().includes(form.get("sted").toLowerCase())) &&
+    (!form.get("styreleder") || kunde.styreleder.toLowerCase().includes(form.get("styreleder").toLowerCase())) &&
+    (!form.get("styrelederTlf") || kunde.telefon.includes(form.get("styrelederTlf"))) &&
+    (!form.get("epost") || kunde.epost.toLowerCase().includes(form.get("epost").toLowerCase())) &&
+    (!form.get("kontaktperson") || kunde.kontaktperson.toLowerCase().includes(form.get("kontaktperson").toLowerCase())) &&
+    (!form.get("kontaktpersonTlf") || kunde.kontaktpersonTlf.includes(form.get("kontaktpersonTlf")))
+  );
+
+  visKunder(filtrert);
+  document.getElementById("filterPopup").classList.add("hidden");
+});
+
+// ===============================
+// Genererer HTML for ett borettslag (kort eller tabellrad)
+// ===============================
 function lagHTML(b) {
   const bilde = b.bilde ? b.bilde : "uploads/standard.png";
 
@@ -102,7 +171,7 @@ function lagHTML(b) {
         <td>${b.navn}</td>
         <td>${b.styreleder}</td>
         <td>${b.adresse1}</td>
-        <td>${b.adresse1}</td>
+        <td>${b.adresse2}</td>
         <td>${b.postnr}</td>
         <td>${b.sted}</td>
         <td>${b.epost}</td>
@@ -114,7 +183,9 @@ function lagHTML(b) {
   }
 }
 
-
+// ===============================
+// Viser profilinfo for valgt borettslag i modal
+// ===============================
 function visProfil(id) {
   fetch(`hent_borettslag_med_id.php?id=${id}`)
     .then(response => response.json())
@@ -143,6 +214,9 @@ function visProfil(id) {
     });
 }
 
+// ===============================
+// Modal-lukking med esc eller klikk utenfor
+// ===============================
 function lukkModal() {
   document.getElementById("profilModal").classList.add("hidden");
 }
@@ -156,58 +230,9 @@ window.addEventListener("click", e => {
   if (e.target === modal) lukkModal();
 });
 
-function velgVisning(modus) {
-  visningsmodus = modus;
-  settVisning(modus); // denne er allerede definert i koden din
-
-  // Oppdater visuell knapp-status
-  const grid = document.getElementById('gridBtn');
-  const liste = document.getElementById('listeBtn');
-
-  if (modus === 'grid') {
-    grid.classList.add('selected');
-    liste.classList.remove('selected');
-  } else {
-    liste.classList.add('selected');
-    grid.classList.remove('selected');
-  }
-}
-
-
-document.getElementById("filter").addEventListener("click", () => {
-  document.getElementById("filterPopup").classList.remove("hidden");
-});
-
-document.getElementById("lukkFilter").addEventListener("click", () => {
-  document.getElementById("filterPopup").classList.add("hidden");
-});
-
-document.getElementById("filterForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  const form = new FormData(this);
-
-  const filtrert = alleBorettslag.filter(kunde =>
-    (!form.get("navn") || kunde.navn.toLowerCase().includes(form.get("navn").toLowerCase())) &&
-    (!form.get("adresse") || kunde.adresse1.toLowerCase().includes(form.get("adresse").toLowerCase())) &&
-    (() => {
-      const min = parseInt(form.get("postnrMin")) || 0;
-      const max = parseInt(form.get("postnrMax")) || 9999;
-      const postnr = parseInt(kunde.postnr);
-      return isNaN(postnr) ? false : postnr >= min && postnr <= max;
-    })() &&
-        (!form.get("sted") || kunde.sted.toLowerCase().includes(form.get("sted").toLowerCase())) &&
-    (!form.get("styreleder") || kunde.styreleder.toLowerCase().includes(form.get("styreleder").toLowerCase())) &&
-    (!form.get("styrelederTlf") || kunde.telefon.includes(form.get("styrelederTlf"))) &&
-    (!form.get("epost") || kunde.epost.toLowerCase().includes(form.get("epost").toLowerCase())) &&
-    (!form.get("kontaktperson") || kunde.kontaktperson.toLowerCase().includes(form.get("kontaktperson").toLowerCase())) &&
-    (!form.get("kontaktpersonTlf") || kunde.kontaktpersonTlf.includes(form.get("kontaktpersonTlf")))
-  );
-
-  visKunder(filtrert);
-  document.getElementById("filterPopup").classList.add("hidden");
-});
-
+// ===============================
+// Eksport til CSV-fil
+// ===============================
 function exportToCSV() {
   if (!visteKunder || visteKunder.length === 0) {
     alert("Ingen borettslag å eksportere.");
