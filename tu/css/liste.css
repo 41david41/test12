@@ -3,7 +3,7 @@
 /* =============================== */
 
 body {
-  background-color: #0f1c2e;
+  background-color: #0A1B34;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   color: white;
@@ -374,7 +374,7 @@ th {
 /* =============================== */
 
 .filter-modal {
-  color: #0f1c2e;
+  color: black;
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -386,7 +386,7 @@ th {
 }
 
 .filter-wrapper {
-  background: #e7e7e7;
+  background: #ccc;
   padding: 2rem;
   border-radius: 2px;
   min-width: 600px;
@@ -409,7 +409,7 @@ th {
 
 .filter-actions button {
   padding: 0.5rem 1rem;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
   color: rgb(0, 0, 0);
   border: none;
   border-radius: 2px;
@@ -417,11 +417,15 @@ th {
 }
 
 .filter-actions .sok {
-  background-color: crimson;
+  background-color: #D62E40;
   color: white;
   border: none;
   border-radius: 2px;
   cursor: pointer;
+}
+
+.filter-actions .sok:hover {
+  background-color: #781a24;
 }
 
 .postnr-range {

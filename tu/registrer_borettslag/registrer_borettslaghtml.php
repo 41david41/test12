@@ -15,10 +15,8 @@
 
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
-        <!-- Eksterne .js -->
+    <!-- Eksterne .js -->
     <script src="../redirectToPage.js"></script>
-    <script src="../header/include.js"></script>
-</head>
 </head>
 
 <body>

@@ -4,7 +4,7 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #0f1c2e;
+    background-color: #0A1B34;
     color: #ffffff;
     margin: 0;
     padding: 0;
@@ -54,7 +54,7 @@ body {
 
 .profil-info p {
     font-size: 1rem;
-    color: #aaaaaa;
+    color: white;
 }
 
 /* =============================== */

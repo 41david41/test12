@@ -63,8 +63,8 @@ body {
     width: 64%;
     padding: 12px;
     font-size: 16px;
-    color: #080303;
-    background-color: #eff1f4;
+    color: black;
+    background-color: white;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     border: none;
@@ -78,15 +78,15 @@ body {
     margin-top: 20px;
     padding: 10px 20px; 
     border: none;
-    background-color: #CB1336;
+    background-color: #D62E40;
     cursor: pointer;
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
-    color: #FFFF;
+    color: white;
   }
   
   .login-button:hover {
-    background-color: #9e0723;
+    background-color: #781a24;
   }
   
   /* =============================== */

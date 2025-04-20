@@ -128,9 +128,8 @@ if (isset($_GET['brukernavn'])) {
 
                 <!-- Admin-rettighetsvalg -->
                 <div class="checkbox-admin">
-                    <input type="checkbox" name="adminrettigheter" value="1"
-                        <?php echo $erRedigering ? 'checked' : ''; ?>>
-                    <a>Adminrettigheter</a>
+                    <h2>Adminrettigheter</h2> 
+                    <input id="checkbox" type="checkbox" name="adminrettigheter" value="1" <?php echo $erRedigering ? 'checked' : ''; ?>> 
                 </div>
 
                 <!-- Handlingsknapper -->
