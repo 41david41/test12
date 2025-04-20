@@ -1,60 +1,65 @@
-  /* ========================== 
-     Basislayout 
-     ========================== */
+/* ========================== 
+   Basislayout 
+   ========================== */
 
-  body {
+   body {
     background-color: #0A1B34;
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     color: white;
     overflow-y: scroll;
   } 
-
+  
   /* =========================
      Hovedstruktur og layout
      ========================= */
+  
   form#bedriftForm {
-    padding: 8px 8px;
     width: 84%;
+    padding: 8px;
     margin: 0 auto;
   }
   
   .headline-container {
-    width: 84%;
-    margin: 28px auto;
-    padding: 8px 8px;
     display: flex;
     gap: 10px;
+    width: 84%;
+    margin: 28px auto;
+    padding: 8px;
+  }
+
+  .headline-container h1 {
+    padding: 4px;
   }
   
   .container {
-    margin: 0 auto;
-    width: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
   }
   
   .form-container {
     display: flex;
     justify-content: space-between;
-    width: 100%;
     align-items: stretch;
+    width: 100%;
   }
   
   .form-group-admin {
-    width: 48%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 48%;
   }
   
   .form-left,
   .form-right,
   .form-middel {
-    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 30%;
   }
   
   .form-group {
@@ -70,13 +75,14 @@
   /* =========================
      Inputfelt og tekstområder
      ========================= */
+  
   input,
   textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: small;
     background-color: white;
     color: black;
-    width: 100%;
-    padding: 10px;
-    font-size: small;
     border-radius: 2px;
   }
   
@@ -91,28 +97,28 @@
   .invisble {
     opacity: 0;
   }
-
-  .checkbox-admin{
+  
+  .checkbox-admin {
     display: flex;
     padding-bottom: 16px;
   }
-
+  
   .checkbox-admin input {
     height: 40px;
-
   }
   
   /* =========================
      Knappestiler
      ========================= */
+  
   .secondaryBTN {
     vertical-align: middle;
-    background-color: transparent;
-    color: white;
     padding: 8px 12px;
     border: 2px solid white;
-    cursor: pointer;
     border-radius: 2px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
   }
   
@@ -122,12 +128,12 @@
   }
   
   .primaryBTN {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 2px;
     background-color: #D62E40;
     color: white;
     cursor: pointer;
-    padding: 6px 8px;
-    width: 100%;
-    border-radius: 2px;
   }
   
   .primaryBTN:hover {
@@ -135,11 +141,12 @@
   }
   
   .fileinput {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 2px;
     background-color: white;
     color: black;
     cursor: pointer;
-    padding: 6px 8px;
-    width: 100%;
   }
   
   .fileinput:hover {
@@ -148,7 +155,7 @@
   
   .button-container {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     padding-bottom: 16px;
   }
   
@@ -159,11 +166,14 @@
   /* =========================
      Ikoner og dropdowns
      ========================= */
+  
   .pil {
     font-size: 20px;
     vertical-align: middle;
-    transform: rotate(0deg);
-    transition: transform 0.3s ease;
+  }
+  
+  .icons {
+    font-size: 20px;
   }
   
   .dropdown {
@@ -174,23 +184,23 @@
   
   .dropdown-btn {
     vertical-align: middle;
-    background-color: transparent;
-    color: white;
     padding: 8px 12px;
     border: 2px solid white;
-    cursor: pointer;
     border-radius: 2px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
   }
   
   .dropdown-btn.active {
-    color: black;
     font-style: normal;
+    color: black;
   }
   
   .dropdown-content {
-    display: none;
     position: absolute;
+    display: none;
     width: 100%;
     background-color: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -200,9 +210,9 @@
   
   .dropdown-content a {
     display: block;
-    padding: 10px;
-    text-decoration: none;
+    padding: 8px;
     color: black;
+    text-decoration: none;
   }
   
   .dropdown-content a:hover {
@@ -216,37 +226,38 @@
   /* =========================
      Forhåndsvisning av bilde
      ========================= */
+  
   .preview {
     display: flex;
     justify-content: space-between;
   }
   
   .preview-container {
-    margin-top: 10px;
+    margin-top: 8px;
   }
   
   .thumbnail {
-    max-width: 200px;
     display: block;
+    max-width: 200px;
   }
   
   .preview-item {
     position: relative;
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 8px;
   }
   
   .remove-btn {
     position: absolute;
     top: -8px;
     right: -8px;
+    width: 18px;
+    height: 18px;
     background: red;
     color: white;
     border: none;
     border-radius: 50%;
-    cursor: pointer;
     font-size: 14px;
-    width: 20px;
-    height: 20px;
+    cursor: pointer;
   }
   

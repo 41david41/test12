@@ -54,7 +54,10 @@ if (isset($_GET['brukernavn'])) {
 
 <!-- Overskrift -->
 <div class="headline-container">
-    <h1 class="text-3xl font-light headline-left">
+<button class="secondaryBTN" id="go_back" onclick="redirectToPage('landingpage/landingpage.php')">
+    <span class="material-icons pil">arrow_back</span>
+  </button>
+    <h1 class="text-3xl font-light">
         <?php echo $erRedigering ? "OPPDATER BRUKER" : "NY BRUKER"; ?>
     </h1>
 </div>
@@ -135,11 +138,11 @@ if (isset($_GET['brukernavn'])) {
                 <!-- Handlingsknapper -->
                 <div class="button-container">
                     <button class="secondaryBTN" type="reset">
-                        <span class="material-icons pil">undo</span>
+                        <span class="material-icons icons">undo</span>
                     </button>
                     <button id="profilbilde" class="secondaryBTN" type="button"
                         onclick="document.getElementById('imageUpload').click();">
-                        <span class="material-icons pil">account_circle</span>
+                        <span class="material-icons icons">account_circle</span>
                     </button>
                     <button class="primaryBTN" type="submit">
                         <?php echo $erRedigering ? 'Lagre endringer' : 'Registrer'; ?>

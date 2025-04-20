@@ -1,0 +1,63 @@
+1. Posisjonering
+
+2. Flex/Grid
+
+3. Dimensjoner
+
+4. Margin og Padding
+
+5. Border og Outline
+
+6. Bakgrunn og skygge
+
+7. Tekst og fonter
+
+8. Diverse
+
+/* 1. Posisjonering */
+position: relative;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+z-index: 1;
+
+/* 2. Flex/Grid-layout */
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+
+/* 3. Dimensjoner */
+width: 100%;
+min-width: 200px;
+height: 50px;
+max-height: 100px;
+
+/* 4. Margin og Padding */
+margin: 0 auto;
+padding: 10px 20px;
+
+/* 5. Border og Outline */
+border: 1px solid #ccc;
+border-radius: 8px;
+outline: none;
+
+/* 6. Bakgrunn og skygge */
+background: #f9f9f9;
+background-color: #fff;
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+/* 7. Tekst og fonter */
+font-size: 16px;
+font-weight: bold;
+color: #333;
+text-align: center;
+text-decoration: none;
+
+/* 8. Diverse */
+cursor: pointer;
+pointer-events: auto;
+overflow: hidden;
+transition: all 0.3s ease;
+}
