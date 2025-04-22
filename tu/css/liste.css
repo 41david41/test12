@@ -103,8 +103,7 @@ body {
 
 .primaryBTN {
   width: 100%;
-  padding: 8px 12px;
-  border: 2px solid #D62E40;
+  padding: 10px 14px;
   border-radius: 2px;
   background-color: #D62E40;
   color: white;
@@ -112,6 +111,7 @@ body {
 }
 
 .primaryBTN:hover {
+  border: #781a24;
   background-color: #781a24;
 }
 
