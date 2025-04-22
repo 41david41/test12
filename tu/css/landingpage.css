@@ -35,6 +35,19 @@
   /* =========================
      Knapper og ikoner
      ========================= */
+  .primaryBTN {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 2px;
+    background-color: #D62E40;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .primaryBTN:hover {
+    background-color: #781a24;
+  }
+     
   .secondaryBTN {
     display: inline-block;
     padding: 8px 12px;
