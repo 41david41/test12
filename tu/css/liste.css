@@ -101,6 +101,35 @@ body {
   gap: 8px;
 }
 
+.primaryBTN {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid #D62E40;
+  border-radius: 2px;
+  background-color: #D62E40;
+  color: white;
+  cursor: pointer;
+}
+
+.primaryBTN:hover {
+  background-color: #781a24;
+}
+
+.secondaryBTN {
+  padding: 8px 12px;
+  border: 2px solid white;
+  border-radius: 2px;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.secondaryBTN:hover {
+  background-color: white;
+  color: #235f9f;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -342,31 +371,6 @@ th {
   gap: 12px;
   margin-top: 1rem;
   color: white;
-}
-
-.secondaryBTN {
-  padding: 8px 12px;
-  border: 2px solid white;
-  border-radius: 2px;
-  background-color: transparent;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.secondaryBTN:hover {
-  background-color: white;
-  color: #235f9f;
-}
-
-#exportBtn {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-}
-
-#exportBtn:hover {
-  background-color: #1d6220;
 }
 
 /* =============================== */

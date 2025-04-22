@@ -37,13 +37,13 @@
   <div class="button-container">
     <!-- Registrer nytt borettslag -->
     <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslaghtml.php')">
-      <button class="secondaryBTN" id="nyKundeBtn">
+      <button class="primaryBTN" id="nyKundeBtn">
         <span class="material-icons pil">add</span>
       </button>
     </a>
 
     <!-- Eksportknapp -->
-    <button id="exportBtn" onclick="exportToCSV()" class="secondaryBTN">
+    <button onclick="exportToCSV()" class="secondaryBTN">
       <span class="material-icons pil">download</span> CSV
     </button>    
   </div>
