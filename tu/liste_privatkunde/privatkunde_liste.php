@@ -55,7 +55,7 @@
         <div class="button-container">
             <input type="text" id="sokefelt" placeholder="Søk..." oninput="filtrerKunder()"> 
             <button class="secondaryBTN" id="filter">
-                <span class="material-icons pil">filter_alt</span>            
+                <span class="material-icons pil">filter_alt</span> Filter            
             </button>
         </div>    
 
