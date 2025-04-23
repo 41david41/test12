@@ -38,7 +38,7 @@
     <!-- Registrer nytt borettslag -->
     <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslaghtml.php')">
       <button class="primaryBTN" id="nyKundeBtn">
-        <span class="material-icons pil">add</span>
+        <span class="material-icons pil">add</span> Ny kunde 
       </button>
     </a>
 
@@ -52,10 +52,10 @@
 <!-- Søke- og visningskontroller -->
 <div class="sticky-header">
   <div class="visning-sok-wrapper">    
-    <div class="search-container">
+    <div class="button-container">
       <input type="text" id="sokefelt" placeholder="Søk..." oninput="filtrerKunder()"> 
       <button class="secondaryBTN" id="filter">
-        <span class="material-icons pil">filter_alt</span>            
+        <span class="material-icons pil">filter_alt</span> Filter            
       </button>
     </div>    
 

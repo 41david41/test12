@@ -35,7 +35,7 @@ require_once("../landingpage/antall_kunder.php");
     <div class="button-container">
       <a href="#" onclick="redirectToPage('registrer_borettslag/registrer_borettslaghtml.php')">
         <button class="primaryBTN">
-          <span class="material-icons pil">add</span>
+          <span class="material-icons pil">add</span> Ny kunde 
         </button>
       </a>
     </div>

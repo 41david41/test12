@@ -53,12 +53,6 @@ body {
   margin: 0 0 22px 0;
 }
 
-.search-container {
-  display: flex;
-  gap: 8px;
-  margin: 0;
-}
-
 #sokefelt {
   width: 100%;
   max-width: 300px;
@@ -115,6 +109,7 @@ body {
 }
 
 .secondaryBTN {
+  display: flex;
   padding: 8px 12px;
   border: 2px solid white;
   border-radius: 2px;

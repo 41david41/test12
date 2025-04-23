@@ -40,7 +40,7 @@
         <!-- Ny kunde -->
         <a href="#" onclick="redirectToPage('registrer_bedriftkunde/registrer_bedriftkundehtml.php')">
             <button class="primaryBTN" id="nyKundeBtn">
-                <span class="material-icons pil">add</span>
+                <span class="material-icons pil">add</span> Ny kunde 
             </button>
         </a>
 
@@ -55,10 +55,10 @@
 <div class="sticky-header">
     <div class="visning-sok-wrapper">    
         <!-- Søkeinput -->
-        <div class="search-container">
+        <div class="button-container">
             <input type="text" id="sokefelt" placeholder="Søk..." oninput="filtrerKunder()"> 
             <button class="secondaryBTN" id="filter">
-                <span class="material-icons pil">filter_alt</span>            
+                <span class="material-icons pil">filter_alt</span>             
             </button>
         </div>    
 

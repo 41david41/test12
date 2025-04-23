@@ -75,12 +75,12 @@
         <div class="button-container">
           <input type="file" name="bilde" id="imageUpload" accept="image/*" hidden>
           <button id="bilde" class="fileinput" type="button" onclick="document.getElementById('imageUpload').click();">
-            <span class="material-icons">image</span>
+            <span class="material-icons pil">image</span> Legg til bilde
           </button>
 
           <input type="file" name="pdf" id="pdfUpload" accept="application/pdf" hidden>
           <button id="PDF" class="fileinput" type="button" onclick="document.getElementById('pdfUpload').click();">
-            <span class="material-icons">picture_as_pdf</span>
+            <span class="material-icons pil">picture_as_pdf</span> Legg til PDF
           </button>
         </div>
 
