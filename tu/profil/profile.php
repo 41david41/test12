@@ -41,10 +41,16 @@ include("profile_backend.php");
                     }
                 ?>
             </div>
+        
+         
             <div class="profil-info">
                 <p>Brukernavn: <?php echo htmlspecialchars($username); ?></p>
                 <p>E-post: <?php echo htmlspecialchars($epost); ?></p>
                 <p>Rolle: <?php echo htmlspecialchars($rolle); ?></p>
+                <br>
+                <div class="profil-button">
+                    <button class="secondaryBTN"><p>Endre passord</p></button>
+                </div>
             </div>
         </div>
     </div>

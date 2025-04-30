@@ -52,6 +52,11 @@ body {
   /* 5. Tekstlig info under bilde */
   /* =============================== */
   
+  .profil-button{
+    display: flex;
+    justify-content: center;
+  }
+
   .profil-info p {
     font-size: 1rem;
     color: white;
@@ -65,5 +70,22 @@ body {
     .profil-card {
       width: 90%;
     }
+  }
+  
+  .secondaryBTN {
+    display: flex;
+    vertical-align: middle;
+    padding: 8px 12px;
+    border: 2px solid white;
+    border-radius: 2px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .secondaryBTN:hover {
+    background-color: white;
+    color: #235f9f;
   }
   
