@@ -112,6 +112,7 @@
      ========================= */
   
   .secondaryBTN {
+    display: flex;
     vertical-align: middle;
     padding: 8px 12px;
     border: 2px solid white;

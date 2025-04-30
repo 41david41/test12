@@ -137,12 +137,14 @@ if (isset($_GET['brukernavn'])) {
 
                 <!-- Handlingsknapper -->
                 <div class="button-container">
-                    <button class="secondaryBTN" type="reset">
-                        <span class="material-icons icons">undo</span>
+                    <button class="fileinput" type="reset">
+                        <span class="material-icons pil">undo</span> 
+                        Nullstill
                     </button>
-                    <button id="profilbilde" class="secondaryBTN" type="button"
+                    <button class="fileinput" id="profilbilde" type="button"
                         onclick="document.getElementById('imageUpload').click();">
-                        <span class="material-icons icons">account_circle</span>
+                        <span class="material-icons pil">account_circle</span> 
+                        Profilbilde
                     </button>
                     <button class="primaryBTN" type="submit">
                         <?php echo $erRedigering ? 'Lagre endringer' : 'Registrer'; ?>
